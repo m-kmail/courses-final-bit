@@ -1,51 +1,61 @@
 import React, { Component } from "react";
 import Course from "./Course";
 import "../styles/teacher.css";
-import Addcourse from "./Addcourse";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
+import Addcourse from "./Addcourse";
 class TeacherHome extends Component {
   constructor() {
     super();
-
     this.state = {
       courses: [],
     };
   }
-  add = (e) => {
-    let x = [...this.state.courses];
-    x.push(e);
-    this.setState({ courses: x });
+
+  async componentDidMount() {
+    let courses = await this.getCourses();
+    this.setState({
+      courses: courses.data,
+    });
+  }
+
+  componentDidUpdate() {
+    this.componentDidMount();
+  }
+
+  createCourse = (e) => {
+    let newCourse = {
+      name: e.name,
+      creditHours: e.creditHours,
+      days: e.days,
+      time: e.time,
+    };
+    axios.post("http://localhost:5000/courses", newCourse);
   };
 
-  delete = (Name) => {
-    let x = [...this.state.courses];
+  async getCourses() {
+    return await axios.get("http://localhost:5000/courses");
+  }
 
-    let y = 0;
-    for (let i in x) {
-      if (x[i].Name === Name) {
-        y = i;
-        break;
-      }
-    }
-    x.splice(y, 1);
-    this.setState({ courses: x });
-  };
+  async deleteCourse(id) {
+    return await axios.delete(`http://localhost:5000/course/${id}`);
+  }
 
   render() {
     return (
       <div className="teacher">
         <div className="nav">
           <button className="myProfile">My Profile</button>
+          <button className="myTable">My Table</button>
+          <Link to="/teacherhome/createCourse">
+            <button className="addCourse">add course</button>
+          </Link>
         </div>
-
-        <Addcourse add={this.add} />
-
-        <hr></hr>
         <div>
           {this.state.courses.map((t) => (
-            <Course data={t} delete={this.delete} />
+            <Course key={t._id} data={t} deleteCourse={this.deleteCourse} />
           ))}
+          <Addcourse createCourse={this.createCourse} />
         </div>
       </div>
     );

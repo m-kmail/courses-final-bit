@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -6,7 +6,7 @@ import {
   Routes,
 } from "react-router-dom";
 import "./App.css";
-import { Link } from "react-router-dom";
+import Addcourse from "./components/Addcourse";
 import axios from "axios";
 import StudentHome from "./components/StudentHome";
 import TeacherHome from "./components/TeacherHome";
@@ -14,8 +14,6 @@ import TeacherModel from "./components/TeacherModel";
 import StudentModel from "./components/StudentModel";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { useNavigate } from "react-router-dom";
-import React, { Fragment } from "react";
 import { Navigate } from "react-router-dom";
 
 class App extends Component {
@@ -93,7 +91,14 @@ class App extends Component {
               path="/teacherhome"
               exact
               element={<TeacherHome checkSession={this.checkSession} />}
-            />
+            >
+              <Route
+                path="createCourse"
+                exact
+                element={<Addcourse add={this.add} />}
+              />
+            </Route>
+
             <Route path="/teachermodel" exact element={<TeacherModel />} />
             <Route path="/Studentmodel" exact element={<StudentModel />} />
           </Routes>
