@@ -1,62 +1,39 @@
+body {
+	font-family: sans-serif;	
+	background-image: url("../bg.jpeg");	
+	background-repeat: no-repeat;
+	overflow: hidden;
+	background-size:cover;	
+}
+.container {
+	width: 450px;
+	margin:7% auto;
+	border-radius: 25px;
+	background-color: rgba(0, 0, 0, 0.527);
+	box-shadow: rgba(128, 128, 234, 0.25) 0px 50px 100px -20px, rgba(255, 255, 255, 0.3) 0px 30px 60px -30px;
+}
 .button-box{
     width: 220px;
-    height: 36.8px;
-    margin: 35px auto;
+    height: 37px;
+    margin: 19% ;
     position: relative;
-    box-shadow: 0 0 20px 9px #ff61241f;
-    border-radius: 30px;
+	border-bottom: 3px solid;
+	padding-right: 55px;
+	color: rgb(212, 224, 237);	
 }
-
 .toggle-btn{
     width: 50px;
-    padding: 10px 30px;
+    padding: 0px 30px;
     cursor: pointer;
     background: transparent;
-    border: 0;
-    outline: none;
     position: relative;
      white-space: nowrap;
    text-align: center;
+   color: rgb(212, 224, 237);		
+	font-weight: bold;
 }
-
-.btn{
-    left: 0;
-    position: absolute;
-    width: 110px;
-    height: 100px;
-    border-radius: 30px;
-    transition: .5s;
-}
-
-body {
-	font-family: sans-serif;	
-	background-image: url("../b7.jpg");
-	background-repeat: no-repeat;
-	overflow: hidden;
-	background-size:cover;
-}
-
-.container {
-	width: 380px;
-	margin:7% auto;
-	border-radius: 25px;
-	background-color: rgba(0,0,0,0.1);
-	box-shadow: 0 0 17px #333;
-}
-
-.header h1 {
-	color: #333;
-	font-size: 45px;
-	margin-bottom: 80px;
-}
-
-.header {
-	text-align: center;
-	padding-top: 75px;
-}
-
-.main {
-	text-align: center;
+h1{
+	color: rgb(212, 224, 237);	
 }
 .Error{
     display: none;
@@ -65,24 +42,34 @@ body {
 }
 
 .main input, button {
-	width: 300px;
-	height: 40px;
+	width: 270px;
+	height: 39px;
 	border:none;
 	outline: none;
 	padding-left: 40px;
 	box-sizing: border-box;
 	font-size: 15px;
-	color: #333;
+	color: rgb(63, 62, 66);
 	margin-bottom: 40px;
-    border-radius: 24px;
+    border-radius: 20px;
+}
+.gender{
+width: 190px;
+padding-left: 130px;
+}
+.roll{
+	width: 190px;
+	padding-left: 130px;	
 }
 
 .main button {
 	padding-left: 0;
-	background-color: #83acf1;
+	background-color: #3169cb;
 	letter-spacing: 1px;
-	font-weight: bold;
+	font-weight:900;
 	margin-bottom: 70px;
+	color: #ddd;
+
 }
 
 .main button:hover {
@@ -93,9 +80,9 @@ body {
 	box-shadow: 2px 2px 5px #555;
 	background-color: #ddd;
 }
-
 .main span {
 	position: relative;
+	
 }
 
 .main i {
@@ -104,25 +91,9 @@ body {
 	color: #333;
 	font-size: 16px;
 	top: 2px;
+	
 }
-
-.main{
-    overflow: hidden;
-}
-
 #radios{
     display: flex;   
-}
-
-#student, #teacher{
-width: 50px;
-margin-left: 40px;
-box-shadow: none;
-}
-
-.radioText{
-font-size: 20px;
-}
-.singleradio{
-    margin: 0px;
+	color: rgb(212, 224, 237);	
 }

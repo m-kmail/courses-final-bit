@@ -77,7 +77,6 @@ class Register extends Component {
     return (
       <div className="container">
         <div className="button-box">
-          <div id="btn"></div>
           <Link to="/">
             <button type="button" className="toggle-btn" id="lgin">
               Log In
@@ -90,70 +89,63 @@ class Register extends Component {
           </Link>
         </div>
         <div className="main">
-          <div id="register">
-            <div className="Error" style={this.state.errorStyle}>
-              Invalid Email or Password
-            </div>
-            <div className="Error" style={this.state.blankStyle}>
-              Please Fill All The Fields
-            </div>
-            <h1>Register</h1>
-            <span>
-              <i className="fa fa-user"></i>
-              <input
-                type="text"
-                placeholder="Name"
-                className="name"
-                required
-                value={this.state.name}
-                onChange={this.valuechanged}
-              ></input>
-            </span>
-            <br></br>
-            <span>
-              <i className="fa fa-envelope"></i>
-              <input
-                type="text"
-                placeholder="email"
-                className="email"
-                required
-                value={this.state.email}
-                onChange={this.valuechanged}
-              ></input>
-            </span>
-            <br></br>
-            <span>
-              <i className="fa fa-lock"></i>
-              <input
-                type="password"
-                placeholder="password"
-                className="pass"
-                required
-                value={this.state.password}
-                onChange={this.valuechanged}
-              ></input>
-            </span>
-            <br></br>
-            <div className="gender" id="radios" onChange={this.valuechanged}>
-              <input
-                type="radio"
-                className="gender"
-                value="Male"
-                name="gender"
-              />
-              <p className="radiotext">Male</p>
-              <input
-                type="radio"
-                className="gender"
-                value="Female"
-                name="gender"
-              />
-              <p className="radiotext">Female</p>
-            </div>
-            <button className="regbtn" onClick={this.register}>
-              Register
-            </button>
+          <div className="Error" style={this.state.errorStyle}>
+            Invalid Email or Password
           </div>
+          <div className="Error" style={this.state.blankStyle}>
+            Please Fill All The Fields
+          </div>
+          <h1>Register</h1>
+          <span>
+            <i className="fa fa-user"></i>
+            <input
+              type="text"
+              placeholder="Name"
+              className="name"
+              required
+              value={this.state.name}
+              onChange={this.valuechanged}
+            ></input>
+          </span>
+          <br></br>
+          <span>
+            <i className="fa fa-envelope"></i>
+            <input
+              type="text"
+              placeholder="email"
+              className="email"
+              required
+              value={this.state.email}
+              onChange={this.valuechanged}
+            ></input>
+          </span>
+          <br></br>
+          <span>
+            <i className="fa fa-lock"></i>
+            <input
+              type="password"
+              placeholder="password"
+              className="pass"
+              required
+              value={this.state.password}
+              onChange={this.valuechanged}
+            ></input>
+          </span>
+          <br></br>
+          <div className="gender" id="radios" onChange={this.valuechanged}>
+            <input type="radio" className="gender" value="Male" name="gender" />
+            <p className="radiotext">Male</p>
+            <input
+              type="radio"
+              className="gender"
+              value="Female"
+              name="gender"
+            />
+            <p className="radiotext">Female</p>
+          </div>
+          <button className="regbtn" onClick={this.register}>
+            Register
+          </button>
         </div>
       </div>
     );
