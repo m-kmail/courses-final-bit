@@ -15,7 +15,6 @@ import StudentModel from "./components/StudentModel";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { Navigate } from "react-router-dom";
-import Addcourse from "./components/Addcourse";
 
 class App extends Component {
   constructor() {
@@ -75,6 +74,15 @@ class App extends Component {
     });
   }
 
+  async createCourse(course) {
+    let x;
+    try {
+      x = await axios.post("http://localhost:5000/courses", course);
+    } catch (err) {
+      alert("this time is already taken");
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -101,7 +109,10 @@ class App extends Component {
               exact
               element={<TeacherHome checkSession={this.checkSession} />}
             >
-              <Route path="add" element={<Addcourse />} />
+              <Route
+                path="createCourse"
+                element={<Addcourse createCourse={this.createCourse} />}
+              />
             </Route>
             <Route path="/teachermodel" exact element={<TeacherModel />} />
             <Route path="/Studentmodel" exact element={<StudentModel />} />

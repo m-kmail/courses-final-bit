@@ -25,13 +25,12 @@ router.get("/:roll/:email", async function (req, res) {
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
-  Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
+  Teacher.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
-      const newStudent = new Student({
+      const newStudent = new Teacher({
         Name: userInfo.Name,
         Email: userInfo.Email,
         Password: userInfo.Password,
-        NumOfHours: 0,
         IMG: "",
         Gender: userInfo.Gender,
       });
@@ -69,7 +68,7 @@ router.get("/courses", function (req, res) {
 router.post("/courses", async function (request, response) {
   const teacherEmail = request.session.email;
   const courseBody = request.body;
-  Teacher.findOne({ email: teacherEmail }).exec(function (err, t) {
+  Teacher.findOne({ email: teacherEmail }).exec(async function (err, t) {
     let newCourse = new Course({
       Name: courseBody.name,
       Teacher: t._id,
@@ -83,7 +82,7 @@ router.post("/courses", async function (request, response) {
     });
 
     let ok = true;
-    let p = Teacher.findOne({ email: teacherEmail })
+    await Teacher.findOne({ email: teacherEmail })
       .populate("Courses")
       .exec(function (error, teacher) {
         teacher.Courses.forEach((course) => {
@@ -95,11 +94,12 @@ router.post("/courses", async function (request, response) {
           teacher.Courses.push(newCourse);
           teacher.save();
           newCourse.save();
+          response.send();
+        } else {
+          response.status(409);
+          response.send();
         }
       });
-    if (!ok) response.status(409);
-
-    response.end();
   });
 });
 router.get("/logout", function (req, res) {
