@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "../styles/course.css";
 
 class Course extends Component {
-  delete = () => {
-    this.props.delete(this.props.data.Name);
+  deleteCourse = () => {
+    this.props.deleteCourse(this.props.data._id);
   };
   render() {
     return (
@@ -12,8 +12,9 @@ class Course extends Component {
         <h2>{this.props.data.Time}</h2>
         <h2>{this.props.data.Day}</h2>
         <h2>{this.props.data.noOfStudent}</h2>
-        <button className="deleteButton" onClick={this.delete}>
-          <i class="fa fa-trash"></i>
+        <h2>{this.props.data._id}</h2>
+        <button className="deleteButton" onClick={this.deleteCourse}>
+          <i className="fa fa-trash"></i>
         </button>
       </div>
     );

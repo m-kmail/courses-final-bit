@@ -5,7 +5,12 @@ class Addcourse extends Component {
   constructor() {
     super();
 
-    this.state = { inputname: "", inputtime: "", inputday: "" };
+    this.state = {
+      inputname: "",
+      inputtime: "",
+      inputday: "",
+      inputCreditHour: "",
+    };
   }
   nameChanged = (e) => {
     this.setState({ inputname: e.target.value });
@@ -16,15 +21,19 @@ class Addcourse extends Component {
   dayChanged = (e) => {
     this.setState({ inputday: e.target.value });
   };
-  add = (e) => {
+  creditHourChanged = (e) => {
+    this.setState({ inputCreditHour: e.target.value });
+  };
+  createCourse = (e) => {
     if (e.currentTarget.className === "addButton") {
       let y = {
-        Name: this.state.inputname,
-        Time: this.state.inputtime,
-        Day: this.state.inputday,
+        name: this.state.inputname,
+        time: this.state.inputtime,
+        days: this.state.inputday,
+        creditHours: this.state.inputCreditHour,
       };
 
-      this.props.add(y);
+      this.props.createCourse(y);
     }
   };
 
@@ -34,6 +43,11 @@ class Addcourse extends Component {
         <div>
           <h1>Add courses</h1>
           <div className="inputsDiv">
+            <input
+              placeholder="credit hour "
+              onChange={this.creditHourChanged}
+              value={this.state.inputCreditHour}
+            ></input>
             <input
               placeholder="Course Name"
               onChange={this.nameChanged}
@@ -60,7 +74,7 @@ class Addcourse extends Component {
           </div>
 
           <div>
-            <button className="addButton" onClick={this.add}>
+            <button className="addButton" onClick={this.createCourse}>
               add course
             </button>
           </div>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Course from "./Course";
 import "../styles/teacher.css";
-import Addcourse from "./Addcourse";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
@@ -18,47 +17,57 @@ class TeacherHome extends Component {
       courses: [],
     };
   }
-  add = (e) => {
-    let x = [...this.state.courses];
-    x.push(e);
-    this.setState({ courses: x });
+
+  async componentDidMount() {
+    let courses = await this.getCourses();
+    this.setState({
+      courses: courses.data,
+    });
+  }
+
+  componentDidUpdate() {
+    this.componentDidMount();
+  }
+
+  createCourse = (e) => {
+    let newCourse = {
+      name: e.name,
+      creditHours: e.creditHours,
+      days: e.days,
+      time: e.time,
+    };
+    axios.post("http://localhost:5000/courses", newCourse);
   };
-  delete = (Name) => {
-    let x = [...this.state.courses];
-    let y = 0;
-    for (let i in x) {
-      if (x[i].Name === Name) {
-        y = i;
-        break;
-      }
-    }
-    x.splice(y, 1);
-    this.setState({ courses: x });
-  };
+
+  async getCourses() {
+    return await axios.get("http://localhost:5000/courses");
+  }
+
+  async deleteCourse(id) {
+    return await axios.delete(`http://localhost:5000/course/${id}`);
+  }
+
   render() {
     /*
     const { match } = this.props;
     console.log(match.url);
     */
     return (
-      <>
-        <div className="teacher">
-          <div className="nav">
-            <button className="myProfile">My Profile</button>
-            <button className="myTable">My Table</button>
-            <Link to="add">
-              <button className="addCourse">add course</button>
-            </Link>
-          </div>
-
-          <div>
-            {this.state.courses.map((t) => (
-              <Course data={t} delete={this.delete} />
-            ))}
-          </div>
+      <div className="teacher">
+        <div className="nav">
+          <button className="myProfile">My Profile</button>
+          <button className="myTable">My Table</button>
+          <Link to="/teacherhome/createCourse">
+            <button className="addCourse">add course</button>
+          </Link>
         </div>
-        <Outlet />
-      </>
+        <div>
+          {this.state.courses.map((t) => (
+            <Course key={t._id} data={t} deleteCourse={this.deleteCourse} />
+          ))}
+          <Addcourse createCourse={this.createCourse} />
+        </div>
+      </div>
     );
   }
 }

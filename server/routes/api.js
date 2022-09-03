@@ -22,6 +22,7 @@ router.get("/:roll/:email", async function (req, res) {
   }
   res.send(user);
 });
+
 router.post("/user", function (req, res) {
   const userInfo = req.body;
   Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
@@ -51,13 +52,13 @@ router.post("/user", function (req, res) {
 
 router.get("/courses", function (req, res) {
   if (req.session.roll == "Student") {
-    Student.findOne({ Email: req.session.email })
+    Student.findOne({ Email: session.email })
       .populate("Courses")
       .exec(function (err, user) {
         res.send(user.Courses);
       });
   } else {
-    Teacher.findOne({ Email: req.session.email })
+    Teacher.findOne({ Email: session.email })
       .populate("Courses")
       .exec(function (err, user) {
         res.send(user.Courses);
@@ -67,18 +68,18 @@ router.get("/courses", function (req, res) {
 
 router.post("/courses", async function (request, response) {
   const teacherEmail = request.session.email;
-
   const courseBody = request.body;
   Teacher.findOne({ email: teacherEmail }).exec(function (err, t) {
     let newCourse = new Course({
       Name: courseBody.name,
-      Teacher: request.session.Name,
+      Teacher: t._id,
       CreditHours: courseBody.creditHours,
       Time: courseBody.time,
       Days: courseBody.days,
       Status: "in progress",
       FinalGrade: 0,
       numOfStudents: 0,
+      Students: [],
     });
 
     let ok = true;
@@ -101,21 +102,6 @@ router.post("/courses", async function (request, response) {
     response.end();
   });
 });
-
-router.put("/courses", function (request, response) {
-  const courseToAdd = request.body.courseId;
-  const StudentEmail = request.session.email;
-  Student.findOne({ Email: StudentEmail }).exec(function (err, student) {
-    Course.findOne({ _id: courseToAdd }).exec(function (err, course) {
-      course.numOfStudents++;
-      student.courses.push(course);
-      course.Students.push(student);
-      course.save();
-      student.save();
-      response.end();
-    });
-  });
-});
 router.get("/logout", function (req, res) {
   session = req.session;
   res.end();
@@ -126,4 +112,25 @@ router.get("/active", function (req, res) {
   res.end();
 });
 
+router.delete("/course/:courseid", function (req, res) {
+  let courseToDel = req.params.courseid;
+  Course.findOneAndDelete({ _id: courseToDel }).exec(function (err, course) {});
+  res.end();
+});
+
+/////////
+router.put("/courses", function (request, response) {
+  const courseToAdd = request.body.courseId;
+  const StudentEmail = request.session.email;
+  Student.findOne({ Email: StudentEmail }).exec(function (err, student) {
+    Course.findOne({ _id: courseToAdd }).exec(function (err, course) {
+      course.numOfStudents++;
+      student.Courses.push(course);
+      course.Students.push(student);
+      course.save();
+      student.save();
+      response.end();
+    });
+  });
+});
 module.exports = router;
