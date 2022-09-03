@@ -53,8 +53,16 @@ class App extends Component {
     <Navigate to="/studenthome" />;
   }
 
-  logout() {
-    axios.get("`http://localhost:5000/logout");
+  async logout() {
+    await axios.get("`http://localhost:5000/logout");
+
+    //=>redirect to login page
+  }
+
+  async checkSession() {
+    await axios.get("http://localhost:5000/testSession", {
+      credentials: "include",
+    });
   }
 
   render() {
@@ -78,6 +86,7 @@ class App extends Component {
             <Route path="/Studentmodel" exact element={<StudentModel />} />
           </Routes>
         </Router>
+        <button onClick={this.checkSession}>OK</button>
       </div>
     );
   }

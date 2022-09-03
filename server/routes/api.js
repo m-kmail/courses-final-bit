@@ -20,6 +20,8 @@ router.get("/:roll/:email", async function (req, res) {
     req.session.email = user.Email;
     req.session.roll = req.params.roll;
     req.session.name = user.Name;
+    req.session.save();
+    console.log(req.session);
   }
   res.send(user);
 });
@@ -42,6 +44,7 @@ router.post("/user", function (req, res) {
       req.session.email = newStudent.Email;
       req.session.roll = "Student";
       req.session.name = userInfo.Name;
+      req.session.save();
 
       res.send();
     } else {
