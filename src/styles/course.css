@@ -1,0 +1,11 @@
+.data {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr 1fr;
+  background-color: #256d85;
+  border-radius: 100px;
+
+  margin: 20px;
+}
+h2 {
+  text-align: center;
+}
