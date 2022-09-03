@@ -17,6 +17,7 @@ import Register from "./components/Register";
 import { useNavigate } from "react-router-dom";
 import React, { Fragment } from "react";
 import { Navigate } from "react-router-dom";
+import Addcourse from "./components/Addcourse";
 
 class App extends Component {
   constructor() {
@@ -101,13 +102,17 @@ class App extends Component {
               path="/teacherhome"
               exact
               element={<TeacherHome checkSession={this.checkSession} />}
-            />
+            >
+              <Route path="add" element={<Addcourse />} />
+            </Route>
             <Route path="/teachermodel" exact element={<TeacherModel />} />
             <Route path="/Studentmodel" exact element={<StudentModel />} />
           </Routes>
         </Router>
+        {/*
         <button onClick={this.checkSession}>OK</button>
         <button onClick={this.active}>active</button>
+        */}
       </div>
     );
   }
