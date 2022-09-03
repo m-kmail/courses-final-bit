@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../styles/addcourse.css";
-
+import { Link } from "react-router-dom";
 class Addcourse extends Component {
   constructor() {
     super();
@@ -74,9 +74,11 @@ class Addcourse extends Component {
           </div>
 
           <div>
-            <button className="addButton" onClick={this.createCourse}>
-              add course
-            </button>
+            <Link to="/teacherhome">
+              <button className="addButton" onClick={this.createCourse}>
+                add course
+              </button>
+            </Link>
           </div>
         </div>
       </div>

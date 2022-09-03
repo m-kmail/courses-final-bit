@@ -10,8 +10,8 @@ import Addcourse from "./components/Addcourse";
 import axios from "axios";
 import StudentHome from "./components/StudentHome";
 import TeacherHome from "./components/TeacherHome";
-import TeacherModel from "./components/TeacherModel";
-import StudentModel from "./components/StudentModel";
+import TeacherMoodle from "./components/TeacherMoodle";
+import StudentMoodle from "./components/StudentMoodle";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { Navigate } from "react-router-dom";
@@ -114,8 +114,8 @@ class App extends Component {
                 element={<Addcourse createCourse={this.createCourse} />}
               />
             </Route>
-            <Route path="/teachermodel" exact element={<TeacherModel />} />
-            <Route path="/Studentmodel" exact element={<StudentModel />} />
+            <Route path="/teacherMoodle" exact element={<TeacherMoodle />} />
+            <Route path="/studentMoodle" exact element={<StudentMoodle />} />
           </Routes>
         </Router>
         {/*
