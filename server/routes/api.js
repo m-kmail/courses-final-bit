@@ -1,12 +1,9 @@
-const { json } = require("body-parser");
-const { response } = require("express");
-
 const express = require("express");
-const session = require("express-session");
 const router = express.Router();
 const Student = require("../models/Student");
 const Teacher = require("../models/Teacher");
 const Course = require("../models/Course");
+let session = require("express-session");
 
 router.get("/:roll/:email", async function (req, res) {
   let user;
@@ -19,18 +16,15 @@ router.get("/:roll/:email", async function (req, res) {
   else {
     req.session.email = user.Email;
     req.session.roll = req.params.roll;
-    req.session.name = user.Name;
+    req.session.Name = user.Name;
     req.session.save();
-    console.log(req.session);
+    session = req.session;
   }
   res.send(user);
 });
-
 router.post("/user", function (req, res) {
   const userInfo = req.body;
-  console.log(userInfo);
   Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
-    console.log(user);
     if (user == null) {
       const newStudent = new Student({
         Name: userInfo.Name,
@@ -43,7 +37,7 @@ router.post("/user", function (req, res) {
       newStudent.save();
       req.session.email = newStudent.Email;
       req.session.roll = "Student";
-      req.session.name = userInfo.Name;
+      req.session.Name = userInfo.Name;
       req.session.save();
 
       res.send();
@@ -53,11 +47,6 @@ router.post("/user", function (req, res) {
       });
     }
   });
-});
-
-router.get("/logout", function (req, res) {
-  req.session.destroy();
-  res.end();
 });
 
 router.get("/courses", function (req, res) {
@@ -83,7 +72,7 @@ router.post("/courses", async function (request, response) {
   Teacher.findOne({ email: teacherEmail }).exec(function (err, t) {
     let newCourse = new Course({
       Name: courseBody.name,
-      Teacher: req.session.name,
+      Teacher: request.session.Name,
       CreditHours: courseBody.creditHours,
       Time: courseBody.time,
       Days: courseBody.days,
@@ -126,6 +115,15 @@ router.put("/courses", function (request, response) {
       response.end();
     });
   });
+});
+router.get("/logout", function (req, res) {
+  session = req.session;
+  res.end();
+});
+router.get("/active", function (req, res) {
+  if (session.email) console.log("logged in");
+  else console.log("not logged in");
+  res.end();
 });
 
 module.exports = router;

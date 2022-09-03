@@ -23,6 +23,16 @@ class App extends Component {
     super();
     this.state = {};
   }
+  async checkSession() {
+    await axios.get("http://localhost:5000/logout", {
+      credentials: "include",
+    });
+  }
+  async active() {
+    await axios.get("http://localhost:5000/active", {
+      credentials: "include",
+    });
+  }
 
   async register(userinfo) {
     let user = null;
@@ -32,11 +42,12 @@ class App extends Component {
       return null;
     }
   }
-
   async login(email, pass, roll) {
     let user = null;
     try {
-      user = await axios.get(`http://localhost:5000/${roll}/${email}`);
+      user = await axios.get(`http://localhost:5000/${roll}/${email}`, {
+        credentials: "include",
+      });
     } catch (err) {
       //show the error div
       return null;
@@ -79,14 +90,24 @@ class App extends Component {
             <Route
               path="/studenthome"
               exact
-              element={<StudentHome logout={this.logout} />}
+              element={
+                <StudentHome
+                  checkSession={this.checkSession}
+                  logout={this.logout}
+                />
+              }
             />
-            <Route path="/teacherhome" exact element={<TeacherHome />} />
+            <Route
+              path="/teacherhome"
+              exact
+              element={<TeacherHome checkSession={this.checkSession} />}
+            />
             <Route path="/teachermodel" exact element={<TeacherModel />} />
             <Route path="/Studentmodel" exact element={<StudentModel />} />
           </Routes>
         </Router>
         <button onClick={this.checkSession}>OK</button>
+        <button onClick={this.active}>active</button>
       </div>
     );
   }
