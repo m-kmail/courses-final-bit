@@ -1,7 +1,16 @@
 const express = require("express");
 const app = express();
 const session = require("express-session");
-app.use(session({ secret: "kmail" }));
+const cookieParser = require("cookie-parser");
+app.use(
+  session({
+    secret: "kmail",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 },
+  })
+);
+app.use(cookieParser());
 const mongoose = require("mongoose");
 const path = require("path");
 mongoose.connect("mongodb://localhost/finalDB");
