@@ -28,7 +28,6 @@ class App extends Component {
     let user = null;
     try {
       user = await axios.post("http://localhost:5000/user", userinfo);
-      console.log(user);
     } catch (err) {
       return null;
     }
