@@ -72,6 +72,25 @@ router.get("/courses", function (req, res) {
       });
   }
 });
+router.get("/searchCourses", function (request, response) {
+  let query = request.query;
+  console.log(query);
+  if (query.teacherName) {
+    Teacher.find({ Name: query.teacherName })
+      .populate("Courses")
+      .exec(function (err, user) {
+        response.send(user[0].Courses);
+      });
+  } else if (query.courseName) {
+    Course.find({ Name: query.courseName }).exec(function (err, courses) {
+      response.send(courses);
+    });
+  } else {
+    Course.find({}).exec(function (err, courses) {
+      response.send(courses);
+    });
+  }
+});
 
 router.post("/courses", async function (request, response) {
   const teacherEmail = request.session.email;
@@ -128,7 +147,7 @@ router.delete("/course/:courseid", function (req, res) {
 
 router.put("/course", function (request, response) {
   const courseToAdd = request.body.courseId;
-  const StudentEmail = request.body.email;
+  const StudentEmail = session.email;
   Student.findOne({ Email: StudentEmail }).exec(function (err, student) {
     Course.findOne({ _id: courseToAdd }).exec(function (err, course) {
       course.numOfStudents++;
@@ -140,13 +159,28 @@ router.put("/course", function (request, response) {
     });
   });
 });
-router.get("/coursese", function (request, response) {
-  let query = request.query;
-  if (query.teacherName && query.courseName) {
-    console.log("both");
-  }
-  response.send(query);
+router.delete("/courseStudent/:courseId", function (request, response) {
+  const studentEmail = session.email;
+  const courseID = request.params.courseId;
+  Student.findOne({ Email: StudentEmail }).exec(function (err, student) {
+    Course.findOne({ _id: courseID }).exec(function (err, course) {
+      course.Students.forEach((s, index) => {
+        if (s._id == student._id) {
+          course.Students.splice(index, 1);
+          course.save();
+        }
+      });
+    });
+    student.Courses.forEach((c, index) => {
+      if (courseID == c._id) {
+        student.Courses.splice(index, 1);
+        student.save();
+      }
+    });
+    response.send(student.Courses);
+  });
 });
+
 router.get("/sessionInfo", function (req, res) {
   let info = { email: session.email, roll: session.roll };
   res.send(info);
