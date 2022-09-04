@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Addcourse from "./components/Addcourse";
 import axios from "axios";
@@ -14,8 +9,8 @@ import TeacherMoodle from "./components/TeacherMoodle";
 import StudentMoodle from "./components/StudentMoodle";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { Navigate } from "react-router-dom";
 import JoinCourse from "./components/joinCourse";
+import Error from "./components/error";
 
 class App extends Component {
   constructor() {
@@ -48,7 +43,6 @@ class App extends Component {
       <div className="App">
         <Router>
           <Routes>
-            <Route path="/" exact element={<Login />} />
             <Route path="/register" exact element={<Register />} />
             <Route
               path="/studenthome"
@@ -78,6 +72,8 @@ class App extends Component {
             </Route>
             <Route path="/teacherMoodle" exact element={<TeacherMoodle />} />
             <Route path="/studentMoodle" exact element={<StudentMoodle />} />
+            <Route path="/" exact element={<Login />} />
+            <Route path="/*" exact element={<Error />} />
           </Routes>
         </Router>
       </div>

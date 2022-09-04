@@ -38,7 +38,7 @@ class StudentHome extends Component {
     this.props.searchCourses(stateSearch);
   };
   async logout() {
-    await axios.get("`http://localhost:5000/logout");
+    await axios.get("http://localhost:5000/logout");
 
     window.location = "/";
   }
@@ -52,7 +52,9 @@ class StudentHome extends Component {
             <button className="joinCourse">join course</button>
           </Link>
           <button className="moodle">moodle</button>
-          <button className="moodle">log out</button>
+          <button onClick={this.logout} className="moodle">
+            log out
+          </button>
         </div>
         <div>
           {this.state.courses.map((t) => (
@@ -71,7 +73,7 @@ class StudentHome extends Component {
                 </div>
               ))
             ) : (
-              <div>no searched</div>
+              <div></div>
             )}
           </div>
         </div>
