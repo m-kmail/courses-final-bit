@@ -15,11 +15,14 @@ import StudentMoodle from "./components/StudentMoodle";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { Navigate } from "react-router-dom";
+import JoinCourse from "./components/joinCourse";
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      searchedCourses: [],
+    };
   }
   async checkSession() {
     await axios.get("http://localhost:5000/logout", {
@@ -82,6 +85,17 @@ class App extends Component {
       alert("this time is already taken");
     }
   }
+  async getSearchCourses(searchCourse) {
+    console.log(searchCourse.search);
+    let x = await axios.get(
+      `http://localhost:5000/searchCourses?${searchCourse.filter}=${searchCourse.search}`
+    );
+    return x;
+  }
+  searchCourses = (searchCourse) => {
+    let x = this.getSearchCourses(searchCourse);
+    x.then((x) => this.setState({ searchedCourses: x.data }));
+  };
 
   render() {
     return (
@@ -101,9 +115,15 @@ class App extends Component {
                 <StudentHome
                   checkSession={this.checkSession}
                   logout={this.logout}
+                  searchedCourses={this.state.searchedCourses}
                 />
               }
-            />
+            >
+              <Route
+                path="joinCourse"
+                element={<JoinCourse searchCourses={this.searchCourses} />}
+              />
+            </Route>
             <Route
               path="/teacherhome"
               exact
