@@ -29,20 +29,18 @@ class Login extends Component {
   async attemptLogin(email, pass, roll) {
     let user = null;
     try {
-      user = await axios.get(`http://localhost:5000/${roll}/${email}`, {
+      user = await axios.get(`http://localhost:5000/${roll}/${email}/${pass}`, {
         credentials: "include",
       });
     } catch (err) {
       return null;
     }
+    console.log(user);
     user = user.data;
 
-    if (user.Password != pass) {
-      console.log("wrong");
+    if (user == null) {
       return null;
     }
-    //do window.location to whatever his roll is
-    // <Navigate to="/studenthome" />;
   }
   login = () => {
     if (!this.empty()) {

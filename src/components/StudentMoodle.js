@@ -3,11 +3,19 @@ import axios from "axios";
 
 class StudentMoodle extends Component {
   async componentDidMount() {
-    let isloggedin = await axios.get("http://localhost:5000/sessionInfo");
-    if (isloggedin.data != "ok") {
+    let userInfo = await axios.get("http://localhost:5000/sessionInfo");
+    userInfo = userInfo.data;
+
+    if (userInfo.email == undefined) {
       window.location = "/";
     } else {
-      //work on the page
+      if (userInfo.roll == "Teacher") window.location = "/teacherhome";
+      else {
+        let courses = await this.getCourses();
+        this.setState({
+          courses: courses.data,
+        });
+      }
     }
   }
   render() {

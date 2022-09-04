@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "../styles/home.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
 class Register extends Component {
   constructor() {
     super();

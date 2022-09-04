@@ -3,6 +3,7 @@ import Course from "./Course";
 import "../styles/teacher.css";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
+
 class StudentHome extends Component {
   constructor() {
     super();
@@ -12,15 +13,18 @@ class StudentHome extends Component {
   }
 
   async componentDidMount() {
-    let isloggedin = await axios.get("http://localhost:5000/sessionInfo");
-    if (isloggedin.data != "ok") {
-      //todo ===> change the returned type from get => to response with status
+    let userInfo = await axios.get("http://localhost:5000/sessionInfo");
+    userInfo = userInfo.data;
+    if (userInfo.email == undefined) {
       window.location = "/";
     } else {
-      let courses = await this.getCourses();
-      this.setState({
-        courses: courses.data,
-      });
+      if (userInfo.roll == "Teacher") window.location = "/teacherhome";
+      else {
+        let courses = await this.getCourses();
+        this.setState({
+          courses: courses.data,
+        });
+      }
     }
   }
 

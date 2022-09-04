@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import axios from "axios";
-
 class TeacherMoodle extends Component {
   async componentDidMount() {
-    let isloggedin = await axios.get("http://localhost:5000/sessionInfo");
-    if (isloggedin.data != "ok") {
+    let userInfo = await axios.get("http://localhost:5000/sessionInfo");
+    userInfo = userInfo.data;
+
+    if (userInfo.email == undefined) {
       window.location = "/";
     } else {
-      //work on the page
+      if (userInfo.roll == "Student") window.location = "/studenthome";
+      else {
+        //work here
+      }
     }
   }
   render() {
