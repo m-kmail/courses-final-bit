@@ -40,6 +40,7 @@ class App extends Component {
       return null;
     }
   }
+
   async login(email, pass, roll) {
     let user = null;
     try {
@@ -51,15 +52,14 @@ class App extends Component {
       return null;
     }
 
-    //if(user.Password!=)
-
     /*   TO DO......
  if user => check the password => if ok redirect to student or teacher home page
  else => show the error div
  */
 
     // Navigate({ to: "/studenthome", replace });
-    <Navigate to="/studenthome" />;
+    // <Navigate to="/studenthome" />;
+    window.location = "/studenthome";
   }
 
   async logout() {
@@ -85,44 +85,41 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Router>
-          <Routes>
-            <Route path="/" exact element={<Login login={this.login} />} />
-            <Route
-              path="/register"
-              exact
-              element={<Register register={this.register} />}
-            />
-            <Route
-              path="/studenthome"
-              exact
-              element={
-                <StudentHome
-                  checkSession={this.checkSession}
-                  logout={this.logout}
-                />
-              }
-            />
-            <Route
-              path="/teacherhome"
-              exact
-              element={<TeacherHome checkSession={this.checkSession} />}
-            >
-              <Route
-                path="createCourse"
-                element={<Addcourse createCourse={this.createCourse} />}
+      <Router>
+        <Routes>
+          <Route path="*" element={<></>} />
+
+          <Route
+            path="/register"
+            exact
+            element={<Register register={this.register} />}
+          />
+          <Route
+            path="/studenthome"
+            exact
+            element={
+              <StudentHome
+                checkSession={this.checkSession}
+                logout={this.logout}
               />
-            </Route>
-            <Route path="/teacherMoodle" exact element={<TeacherMoodle />} />
-            <Route path="/studentMoodle" exact element={<StudentMoodle />} />
-          </Routes>
-        </Router>
-        {/*
-        <button onClick={this.checkSession}>OK</button>
-        <button onClick={this.active}>active</button>
-        */}
-      </div>
+            }
+          />
+          <Route
+            path="/teacherhome"
+            exact
+            element={<TeacherHome checkSession={this.checkSession} />}
+          >
+            <Route
+              path="createCourse"
+              element={<Addcourse createCourse={this.createCourse} />}
+            />
+          </Route>
+          <Route path="/teacherMoodle" exact element={<TeacherMoodle />} />
+          <Route path="/studentMoodle" exact element={<StudentMoodle />} />
+
+          <Route path="/" element={<Login login={this.login} />} />
+        </Routes>
+      </Router>
     );
   }
 }
