@@ -3,6 +3,7 @@ import Course from "./Course";
 import "../styles/teacher.css";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
+
 class TeacherHome extends Component {
   constructor() {
     super();
@@ -11,11 +12,22 @@ class TeacherHome extends Component {
     };
   }
 
+  async logout() {
+    await axios.get("`http://localhost:5000/logout");
+
+    window.location = "/";
+  }
+
   async componentDidMount() {
-    let courses = await this.getCourses();
-    this.setState({
-      courses: courses.data,
-    });
+    let isloggedin = await axios.get("http://localhost:5000/sessionInfo");
+    if (isloggedin.data != "ok") {
+      window.location = "/";
+    } else {
+      let courses = await this.getCourses();
+      this.setState({
+        courses: courses.data,
+      });
+    }
   }
 
   componentDidUpdate() {

@@ -14,62 +14,11 @@ import TeacherMoodle from "./components/TeacherMoodle";
 import StudentMoodle from "./components/StudentMoodle";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { Navigate } from "react-router-dom";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {};
-  }
-  async checkSession() {
-    await axios.get("http://localhost:5000/logout", {
-      credentials: "include",
-    });
-  }
-  async active() {
-    await axios.get("http://localhost:5000/active", {
-      credentials: "include",
-    });
-  }
-
-  async register(userinfo) {
-    let user = null;
-    try {
-      user = await axios.post("http://localhost:5000/user", userinfo);
-    } catch (err) {
-      return null;
-    }
-  }
-  async login(email, pass, roll) {
-    let user = null;
-    try {
-      user = await axios.get(`http://localhost:5000/${roll}/${email}`, {
-        credentials: "include",
-      });
-    } catch (err) {
-      //show the error div
-      return null;
-    }
-
-    /*   TO DO......
- if user => check the password => if ok redirect to student or teacher home page
- else => show the error div
- */
-
-    // Navigate({ to: "/studenthome", replace });
-    <Navigate to="/studenthome" />;
-  }
-
-  async logout() {
-    await axios.get("`http://localhost:5000/logout");
-
-    //=>redirect to login page
-  }
-
-  async checkSession() {
-    await axios.get("http://localhost:5000/testSession", {
-      credentials: "include",
-    });
   }
 
   async createCourse(course) {
@@ -83,38 +32,36 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <Routes>
-          <Route path="/" exact element={<Login login={this.login} />} />
-          <Route
-            path="/register"
-            exact
-            element={<Register register={this.register} />}
-          />
-          <Route
-            path="/studenthome"
-            exact
-            element={
-              <StudentHome
-                checkSession={this.checkSession}
-                logout={this.logout}
-              />
-            }
-          />
-          <Route
-            path="/teacherhome"
-            exact
-            element={<TeacherHome checkSession={this.checkSession} />}
-          >
+      <div className="App">
+        <Router>
+          <Routes>
+            <Route path="/" exact element={<Login />} />
+            <Route path="/register" exact element={<Register />} />
             <Route
-              path="createCourse"
-              element={<Addcourse createCourse={this.createCourse} />}
+              path="/studenthome"
+              exact
+              element={
+                <StudentHome
+                  checkSession={this.checkSession}
+                  logout={this.logout}
+                />
+              }
             />
-          </Route>
-          <Route path="/teacherMoodle" exact element={<TeacherMoodle />} />
-          <Route path="/studentMoodle" exact element={<StudentMoodle />} />
-        </Routes>
-      </Router>
+            <Route
+              path="/teacherhome"
+              exact
+              element={<TeacherHome checkSession={this.checkSession} />}
+            >
+              <Route
+                path="createCourse"
+                element={<Addcourse createCourse={this.createCourse} />}
+              />
+            </Route>
+            <Route path="/teacherMoodle" exact element={<TeacherMoodle />} />
+            <Route path="/studentMoodle" exact element={<StudentMoodle />} />
+          </Routes>
+        </Router>
+      </div>
     );
   }
 }

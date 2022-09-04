@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "../styles/home.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 class Register extends Component {
   constructor() {
     super();
@@ -39,6 +41,22 @@ class Register extends Component {
     return !(email.includes(".") || email.includes("@") || email.includes("$"));
   };
 
+  async attemotRegister(userinfo) {
+    let user = null;
+    try {
+      user = await axios.post("http://localhost:5000/user", userinfo);
+    } catch (err) {
+      return null;
+    }
+    user = user.data;
+
+    if (user.Password != userinfo.Password) {
+      return null;
+    }
+
+    //navigate
+  }
+
   register = () => {
     if (!this.empty()) {
       if (this.isValidEmail()) {
@@ -48,17 +66,18 @@ class Register extends Component {
           Gender: this.state.gender,
           Password: this.state.pass,
         };
-        let attempt = this.props.register(userInfo);
+        let attempt = this.attemotRegister(userInfo);
         attempt.then((x) =>
           x === null
             ? this.setState({
                 errorStyle: { display: "block" },
                 blankStyle: { display: "none" },
               })
-            : this.setState({
+            : (this.setState({
                 errorStyle: { display: "none" },
                 blankStyle: { display: "none" },
-              })
+              }),
+              (window.location = "/studenthome"))
         );
       } else {
         this.setState({
@@ -90,7 +109,7 @@ class Register extends Component {
         </div>
         <div className="main">
           <div className="Error" style={this.state.errorStyle}>
-            Invalid Email or Password
+            Email should be something@gmail.com or it could be already existed
           </div>
           <div className="Error" style={this.state.blankStyle}>
             Please Fill All The Fields

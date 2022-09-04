@@ -20,14 +20,15 @@ router.get("/:roll/:email", async function (req, res) {
     req.session.save();
     session = req.session;
   }
+
   res.send(user);
 });
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
-  Teacher.findOne({ Email: userInfo.Email }).exec(function (err, user) {
+  Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
-      const newStudent = new Teacher({
+      const newStudent = new Student({
         Name: userInfo.Name,
         Email: userInfo.Email,
         Password: userInfo.Password,
@@ -138,5 +139,9 @@ router.get("/coursese", function (request, response) {
     console.log("both");
   }
   response.send(query);
+});
+router.get("/sessionInfo", function (req, res) {
+  if (session.email) res.send("ok");
+  else res.send("no");
 });
 module.exports = router;
