@@ -50,7 +50,7 @@ router.post("/user", function (req, res) {
 });
 
 router.get("/courses", function (req, res) {
-  if (req.session.roll == "Student") {
+  if (session.roll == "Student") {
     Student.findOne({ Email: session.email })
       .populate("Courses")
       .exec(function (err, user) {
@@ -118,10 +118,9 @@ router.delete("/course/:courseid", function (req, res) {
   res.end();
 });
 
-/////////
-router.put("/courses", function (request, response) {
+router.put("/course", function (request, response) {
   const courseToAdd = request.body.courseId;
-  const StudentEmail = request.session.email;
+  const StudentEmail = request.body.email;
   Student.findOne({ Email: StudentEmail }).exec(function (err, student) {
     Course.findOne({ _id: courseToAdd }).exec(function (err, course) {
       course.numOfStudents++;
