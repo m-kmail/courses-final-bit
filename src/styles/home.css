@@ -1,5 +1,6 @@
 
 .container {
+	
 	width: 450px;
 	margin:7% auto;
 	border-radius: 25px;
@@ -10,6 +11,7 @@
     width: 220px;
     height: 37px;
     margin: 19% ;
+	margin-bottom: 7%;
     position: relative;
 	border-bottom: 3px solid;
 	padding-right: 55px;
@@ -90,4 +92,7 @@ padding-left: 130px;
 #radios{
     display: flex;   
 	color: rgb(212, 224, 237);	
+}
+.addToCourseContainer{
+	display: none;
 }
