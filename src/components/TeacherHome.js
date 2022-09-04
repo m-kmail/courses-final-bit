@@ -8,9 +8,42 @@ class TeacherHome extends Component {
     super();
     this.state = {
       courses: [],
+      inputname: "",
+      inputtime: "",
+      inputday: "",
+      inputCreditHour: "",
     };
   }
+  nameChanged = (e) => {
+    this.setState({ inputname: e.target.value });
+  };
+  timeChanged = (e) => {
+    this.setState({ inputtime: e.target.value });
+  };
+  dayChanged = (e) => {
+    this.setState({ inputday: e.target.value });
+  };
+  creditHourChanged = (e) => {
+    this.setState({ inputCreditHour: e.target.value });
+  };
 
+  createCourse = () => {
+    let newCourse = {
+      name: this.state.inputname,
+      creditHours: this.state.inputCreditHour,
+      days: this.state.inputday,
+      time: this.state.inputtime,
+    };
+    this.createNewCourse(newCourse);
+  };
+  async createNewCourse(course) {
+    let x;
+    try {
+      x = await axios.post("http://localhost:5000/courses", course);
+    } catch (err) {
+      alert("this time is already taken");
+    }
+  }
   async logout() {
     await axios.get("`http://localhost:5000/logout");
 
@@ -38,16 +71,6 @@ class TeacherHome extends Component {
     this.componentDidMount();
   }
 
-  createCourse = (e) => {
-    let newCourse = {
-      name: e.name,
-      creditHours: e.creditHours,
-      days: e.days,
-      time: e.time,
-    };
-    axios.post("http://localhost:5000/courses", newCourse);
-  };
-
   async getCourses() {
     return await axios.get("http://localhost:5000/courses");
   }
@@ -71,7 +94,49 @@ class TeacherHome extends Component {
           {this.state.courses.map((t) => (
             <Course key={t._id} data={t} deleteCourse={this.deleteCourse} />
           ))}
-          <Outlet />
+        </div>
+        <div className="addCourse">
+          <div>
+            <h1>Add courses</h1>
+            <div className="inputsDiv">
+              <input
+                placeholder="credit hour "
+                onChange={this.creditHourChanged}
+                value={this.state.inputCreditHour}
+              ></input>
+              <input
+                placeholder="Course Name"
+                onChange={this.nameChanged}
+                value={this.state.inputname}
+              ></input>
+
+              <select
+                className="drop"
+                onChange={this.timeChanged}
+                value={this.state.inputtime}
+              >
+                <option>9:00-10:30</option>
+                <option>12:30-2:00</option>
+              </select>
+
+              <select
+                className="drop"
+                onChange={this.dayChanged}
+                value={this.state.inputday}
+              >
+                <option>Sunday/Tuesday</option>
+                <option>Monday/Wednesday</option>
+              </select>
+            </div>
+
+            <div>
+              <Link to="/teacherhome">
+                <button className="addButton" onClick={this.createCourse}>
+                  add course
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     );

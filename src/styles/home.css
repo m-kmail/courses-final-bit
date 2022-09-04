@@ -93,3 +93,6 @@ padding-left: 130px;
     display: flex;   
 	color: rgb(212, 224, 237);	
 }
+.addToCourseContainer{
+	display: none;
+}
