@@ -3,6 +3,7 @@ import Course from "./Course";
 import "../styles/teacher.css";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
+
 class StudentHome extends Component {
   constructor() {
     super();
@@ -10,12 +11,23 @@ class StudentHome extends Component {
       courses: [],
     };
   }
+
   async componentDidMount() {
-    let courses = await this.getCourses();
-    this.setState({
-      courses: courses.data,
-    });
+    let userInfo = await axios.get("http://localhost:5000/sessionInfo");
+    userInfo = userInfo.data;
+    if (userInfo.email == undefined) {
+      window.location = "/";
+    } else {
+      if (userInfo.roll == "Teacher") window.location = "/teacherhome";
+      else {
+        let courses = await this.getCourses();
+        this.setState({
+          courses: courses.data,
+        });
+      }
+    }
   }
+
   componentDidUpdate() {
     this.componentDidMount();
   }
@@ -25,6 +37,11 @@ class StudentHome extends Component {
   searchCourses = (stateSearch) => {
     this.props.searchCourses(stateSearch);
   };
+  async logout() {
+    await axios.get("`http://localhost:5000/logout");
+
+    window.location = "/";
+  }
   render() {
     return (
       <div className="student-home">

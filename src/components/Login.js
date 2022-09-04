@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "../styles/home.css";
 import { Link, Redirect } from "react-router-dom";
+import axios from "axios";
+
 class Login extends Component {
   constructor() {
     super();
@@ -24,9 +26,25 @@ class Login extends Component {
     );
   };
 
+  async attemptLogin(email, pass, roll) {
+    let user = null;
+    try {
+      user = await axios.get(`http://localhost:5000/${roll}/${email}/${pass}`, {
+        credentials: "include",
+      });
+    } catch (err) {
+      return null;
+    }
+    console.log(user);
+    user = user.data;
+
+    if (user == null) {
+      return null;
+    }
+  }
   login = () => {
     if (!this.empty()) {
-      let attempt = this.props.login(
+      let attempt = this.attemptLogin(
         this.state.email,
         this.state.pass,
         this.state.roll
@@ -37,10 +55,13 @@ class Login extends Component {
               errorStyle: { display: "block" },
               blankStyle: { display: "none" },
             })
-          : this.setState({
+          : (this.setState({
               errorStyle: { display: "none" },
               blankStyle: { display: "none" },
-            })
+            }),
+            this.state.roll == "Student"
+              ? (window.location = "/studenthome")
+              : (window.location = "/teacherhome"))
       );
     } else
       this.setState({

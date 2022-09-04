@@ -20,61 +20,7 @@ import JoinCourse from "./components/joinCourse";
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      searchedCourses: [],
-    };
-  }
-  async checkSession() {
-    await axios.get("http://localhost:5000/logout", {
-      credentials: "include",
-    });
-  }
-  async active() {
-    await axios.get("http://localhost:5000/active", {
-      credentials: "include",
-    });
-  }
-
-  async register(userinfo) {
-    let user = null;
-    try {
-      user = await axios.post("http://localhost:5000/user", userinfo);
-    } catch (err) {
-      return null;
-    }
-  }
-  async login(email, pass, roll) {
-    let user = null;
-    try {
-      user = await axios.get(`http://localhost:5000/${roll}/${email}`, {
-        credentials: "include",
-      });
-    } catch (err) {
-      //show the error div
-      return null;
-    }
-
-    //if(user.Password!=)
-
-    /*   TO DO......
- if user => check the password => if ok redirect to student or teacher home page
- else => show the error div
- */
-
-    // Navigate({ to: "/studenthome", replace });
-    <Navigate to="/studenthome" />;
-  }
-
-  async logout() {
-    await axios.get("`http://localhost:5000/logout");
-
-    //=>redirect to login page
-  }
-
-  async checkSession() {
-    await axios.get("http://localhost:5000/testSession", {
-      credentials: "include",
-    });
+    this.state = {};
   }
 
   async createCourse(course) {
@@ -102,12 +48,8 @@ class App extends Component {
       <div className="App">
         <Router>
           <Routes>
-            <Route path="/" exact element={<Login login={this.login} />} />
-            <Route
-              path="/register"
-              exact
-              element={<Register register={this.register} />}
-            />
+            <Route path="/" exact element={<Login />} />
+            <Route path="/register" exact element={<Register />} />
             <Route
               path="/studenthome"
               exact
@@ -138,10 +80,6 @@ class App extends Component {
             <Route path="/studentMoodle" exact element={<StudentMoodle />} />
           </Routes>
         </Router>
-        {/*
-        <button onClick={this.checkSession}>OK</button>
-        <button onClick={this.active}>active</button>
-        */}
       </div>
     );
   }

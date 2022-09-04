@@ -5,12 +5,19 @@ const Teacher = require("../models/Teacher");
 const Course = require("../models/Course");
 let session = require("express-session");
 
-router.get("/:roll/:email", async function (req, res) {
+router.get("/:roll/:email/:pass", async function (req, res) {
   let user;
 
   if (req.params.roll == "Student")
-    user = await Student.findOne({ Email: req.params.email });
-  else user = await Teacher.findOne({ Email: req.params.email });
+    user = await Student.findOne({
+      Email: req.params.email,
+      Password: req.params.pass,
+    });
+  else
+    user = await Teacher.findOne({
+      Email: req.params.email,
+      Password: req.params.pass,
+    });
 
   if (!user) res.status(404);
   else {
@@ -20,14 +27,15 @@ router.get("/:roll/:email", async function (req, res) {
     req.session.save();
     session = req.session;
   }
-  res.send(user);
+
+  res.send();
 });
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
-  Teacher.findOne({ Email: userInfo.Email }).exec(function (err, user) {
+  Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
-      const newStudent = new Teacher({
+      const newStudent = new Student({
         Name: userInfo.Name,
         Email: userInfo.Email,
         Password: userInfo.Password,
@@ -173,4 +181,8 @@ router.delete("/courseStudent/:courseId", function (request, response) {
   });
 });
 
+router.get("/sessionInfo", function (req, res) {
+  let info = { email: session.email, roll: session.roll };
+  res.send(info);
+});
 module.exports = router;

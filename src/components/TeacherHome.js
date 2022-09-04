@@ -11,11 +11,27 @@ class TeacherHome extends Component {
     };
   }
 
+  async logout() {
+    await axios.get("`http://localhost:5000/logout");
+
+    window.location = "/";
+  }
+
   async componentDidMount() {
-    let courses = await this.getCourses();
-    this.setState({
-      courses: courses.data,
-    });
+    let userInfo = await axios.get("http://localhost:5000/sessionInfo");
+    userInfo = userInfo.data;
+
+    if (userInfo.email == undefined) {
+      window.location = "/";
+    } else {
+      if (userInfo.roll == "Student") window.location = "/studenthome";
+      else {
+        let courses = await this.getCourses();
+        this.setState({
+          courses: courses.data,
+        });
+      }
+    }
   }
 
   componentDidUpdate() {
