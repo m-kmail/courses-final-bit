@@ -2,7 +2,14 @@
   text-align: center;
 }
 
-
+body{
+  font-family: sans-serif;	
+	background-image: url("./bg.jpeg");	
+  width: 95vw;
+  min-height: 90vh;
+  overflow: hidden;
+	background-size:cover;	
+}
 
 .hidden{
   display: none;

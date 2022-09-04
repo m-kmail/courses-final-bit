@@ -1,10 +1,4 @@
-body {
-	font-family: sans-serif;	
-	background-image: url("../bg.jpeg");	
-	background-repeat: no-repeat;
-	overflow: hidden;
-	background-size:cover;	
-}
+
 .container {
 	width: 450px;
 	margin:7% auto;
