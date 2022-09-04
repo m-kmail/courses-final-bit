@@ -132,4 +132,11 @@ router.put("/course", function (request, response) {
     });
   });
 });
+router.get("/coursese", function (request, response) {
+  let query = request.query;
+  if (query.teacherName && query.courseName) {
+    console.log("both");
+  }
+  response.send(query);
+});
 module.exports = router;
