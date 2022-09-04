@@ -12,8 +12,21 @@ class TeacherHome extends Component {
       inputtime: "",
       inputday: "",
       inputCreditHour: "",
+      showCreateCourse: { display: "none" },
     };
   }
+  changeShowCreateCourse = () => {
+    let newDisplay = { ...this.state.showCreateCourse };
+    if (this.state.showCreateCourse.display !== "block") {
+      newDisplay = { display: "block" };
+    } else {
+      newDisplay = { display: "none" };
+    }
+    this.setState({
+      showCreateCourse: newDisplay,
+    });
+  };
+
   nameChanged = (e) => {
     this.setState({ inputname: e.target.value });
   };
@@ -45,9 +58,7 @@ class TeacherHome extends Component {
     }
   }
   async logout() {
-    await axios.get("`http://localhost:5000/logout");
-
-    window.location = "/";
+    await axios.get("http://localhost:5000/logout");
   }
 
   async componentDidMount() {
@@ -82,59 +93,68 @@ class TeacherHome extends Component {
   render() {
     return (
       <div className="teacher">
-        <div className="nav">
-          <button className="myProfile">My Profile</button>
-          <button className="myTable">Office hour</button>
-          <Link to="/teacherhome/createCourse">
-            <button className="addCourse">add course</button>
-          </Link>
-          <button className="moodle">moodle</button>
-        </div>
-        <div>
-          {this.state.courses.map((t) => (
-            <Course key={t._id} data={t} deleteCourse={this.deleteCourse} />
-          ))}
-        </div>
-        <div className="addCourse">
-          <div>
-            <h1>Add courses</h1>
-            <div className="inputsDiv">
-              <input
-                placeholder="credit hour "
-                onChange={this.creditHourChanged}
-                value={this.state.inputCreditHour}
-              ></input>
-              <input
-                placeholder="Course Name"
-                onChange={this.nameChanged}
-                value={this.state.inputname}
-              ></input>
-
-              <select
-                className="drop"
-                onChange={this.timeChanged}
-                value={this.state.inputtime}
-              >
-                <option>9:00-10:30</option>
-                <option>12:30-2:00</option>
-              </select>
-
-              <select
-                className="drop"
-                onChange={this.dayChanged}
-                value={this.state.inputday}
-              >
-                <option>Sunday/Tuesday</option>
-                <option>Monday/Wednesday</option>
-              </select>
+        <div className="backGround"></div>
+        <div className="content">
+          <div className="nav">
+            <button className="myProfile Btn">My Profile</button>
+            <button className="myTable Btn">Office hour</button>
+            <button
+              onClick={this.changeShowCreateCourse}
+              className="addCourse Btn"
+            >
+              New Course
+            </button>
+            <button className="moodle Btn">Moodle</button>
+            <button onClick={this.logout} className="logout Btn">
+              Log out
+            </button>
+          </div>
+          <div className="contentView">
+            <div className="coursesView">
+              {this.state.courses.map((t) => (
+                <Course key={t._id} data={t} deleteCourse={this.deleteCourse} />
+              ))}
             </div>
+            <div className="addNewCourse" style={this.state.showCreateCourse}>
+              <h1>New courses</h1>
+              <div className="inputsDiv">
+                <input
+                  placeholder="Course Name"
+                  onChange={this.nameChanged}
+                  value={this.state.inputname}
+                ></input>
+                <input
+                  placeholder="credit hour "
+                  onChange={this.creditHourChanged}
+                  value={this.state.inputCreditHour}
+                ></input>
 
-            <div>
-              <Link to="/teacherhome">
-                <button className="addButton" onClick={this.createCourse}>
-                  add course
-                </button>
-              </Link>
+                <select
+                  className="drop"
+                  onChange={this.timeChanged}
+                  value={this.state.inputtime}
+                >
+                  <option>8:00-09:30</option>
+                  <option>09:30-11:00</option>
+                  <option>11:00-12:30</option>
+                  <option>12:30-2:00</option>
+                </select>
+
+                <select
+                  className="drop"
+                  onChange={this.dayChanged}
+                  value={this.state.inputday}
+                >
+                  <option>Saturday/Tuesday</option>
+                  <option>Sunday/Wednesday</option>
+                  <option>Monday/Thursday</option>
+                </select>
+                <Link to="/teacherhome">
+                  <button className="addButton" onClick={this.createCourse}>
+                    add course
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

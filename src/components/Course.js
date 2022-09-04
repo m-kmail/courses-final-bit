@@ -11,11 +11,9 @@ class Course extends Component {
         <h2>{this.props.data.Name}</h2>
         <h2>{this.props.data.Time}</h2>
         <h2>{this.props.data.Days}</h2>
-        <h2>{this.props.data.noOfStudent}</h2>
+        <h2>{this.props.data.numOfStudents}</h2>
+        <i onClick={this.deleteCourse} className="fa fa-trash deleteButton"></i>
         <h2 className="hidden">{this.props.data._id}</h2>
-        <button className="deleteButton" onClick={this.deleteCourse}>
-          <i className="fa fa-trash"></i>
-        </button>
       </div>
     );
   }

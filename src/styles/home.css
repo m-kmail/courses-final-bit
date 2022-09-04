@@ -1,6 +1,5 @@
-
 .container {
-	
+	font-family: 'DynaPuff', cursive;
 	width: 450px;
 	margin:7% auto;
 	border-radius: 25px;
@@ -16,8 +15,10 @@
 	border-bottom: 3px solid;
 	padding-right: 55px;
 	color: rgb(212, 224, 237);	
+	
 }
 .toggle-btn{
+	font-family: 'DynaPuff', cursive;
     width: 50px;
     padding: 0px 30px;
     cursor: pointer;
@@ -38,6 +39,7 @@ h1{
 }
 
 .main input, button {
+	font-family: 'DynaPuff', cursive;
 	width: 270px;
 	height: 39px;
 	border:none;

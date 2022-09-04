@@ -1,27 +1,60 @@
+.backGround{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../home.jfif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(2px);
+  filter: brightness(65%);
+
+}
 .nav {
-  background-color: #333;
-  overflow: hidden;
-  height: 70px;
-  position: relative;
-}
-
-.myProfile {
-  width: 200px;
-  height: 40px;
+  
   position: absolute;
-  right: 1%;
   top: 10px;
-  color: #120f0f;
-  text-decoration: none;
-  font-size: 17px;
-  background-color: #256d85;
-  border: none;
-  border-radius: 15px;
-  font-size: larger;
+  height: 85px;
+  width: 100%;
+  display: flex;
+
+}
+.Btn{
+  font-family: 'DynaPuff', cursive;
+  background-color: transparent;
+  font-size: calc(1vw + 1vh + 1vmin);
+  font-weight: bold;
+  color: rgb(51, 50, 52);
+  border-radius: 0px;
 }
 
-.myProfile:hover {
-  background-color: #8fe3cf;
+.Btn:after {
+  margin-top: 5px;
+  content: "";
+  position: absolute;
+  width: 0%;
+  display: block;
+  transition: all 0.6s ease;
+}
+.Btn:hover::after {
+  width: 15%;
+  height: 1.5px;
+  background-color: #fff;
+}
+.contentView{
+  position: relative;
+  display: flex;
+  flex-direction:row;
+  margin-top: 8%;
+}
+.coursesView{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color:rgb(236, 154, 10);
+  font-size: calc(0.7vw + 0.7vh );
 }
 .deleteButton {
   height: 50px;
@@ -31,9 +64,22 @@
   border: none;
   background-color: transparent;
 }
+.addNewCourse{
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 7px;
+  font-family: 'DynaPuff', cursive;
+}
+.addButton{
+  padding:0;
+}
+.inputsDiv{
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 40px;
+}
 .fa-trash:hover {
   color: red;
 }
-hr {
-  border: 4px solid #333;
-} 
