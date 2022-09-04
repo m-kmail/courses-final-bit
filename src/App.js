@@ -40,7 +40,6 @@ class App extends Component {
       return null;
     }
   }
-
   async login(email, pass, roll) {
     let user = null;
     try {
@@ -58,8 +57,7 @@ class App extends Component {
  */
 
     // Navigate({ to: "/studenthome", replace });
-    // <Navigate to="/studenthome" />;
-    window.location = "/studenthome";
+    <Navigate to="/studenthome" />;
   }
 
   async logout() {
@@ -87,8 +85,7 @@ class App extends Component {
     return (
       <Router>
         <Routes>
-          <Route path="*" element={<></>} />
-
+          <Route path="/" exact element={<Login login={this.login} />} />
           <Route
             path="/register"
             exact
@@ -116,8 +113,6 @@ class App extends Component {
           </Route>
           <Route path="/teacherMoodle" exact element={<TeacherMoodle />} />
           <Route path="/studentMoodle" exact element={<StudentMoodle />} />
-
-          <Route path="/" element={<Login login={this.login} />} />
         </Routes>
       </Router>
     );
