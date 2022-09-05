@@ -96,7 +96,7 @@ class Profile extends Component {
                 className="profileImg"
                 src={`http://localhost:5000/uploads/${this.state.user.img.path.substring(
                   8
-                )}.${this.state.user.img.mimetype.substring(6)}`}
+                )}`}
               />
             ) : null}
           </div>

@@ -5,7 +5,15 @@ const Teacher = require("../models/Teacher");
 const Course = require("../models/Course");
 let session = require("express-session");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + ".jpg"); //Appending .jpg
+  },
+});
+var upload = multer({ storage: storage });
 
 router.post("/upload_file", upload.array("myFile"), function (req, res) {
   if (session.roll == "Student") {
