@@ -6,18 +6,18 @@ class SearchedCourse extends Component {
   };
   render() {
     return (
-      <div className="serched">
-        <p>{this.props.info.Name}</p>
-        <p>{this.props.info.Days}</p>
-        <p>{this.props.info.Time}</p>
-        <p>{this.props.info.CreditHours}</p>
-        <p>{this.props.info.Teacher.name}</p>
+      <div className="data">
+        <h2>{this.props.info.Name}</h2>
+        <h2>{this.props.info.Days}</h2>
+        <h2>{this.props.info.Time}</h2>
+        <h2>{this.props.info.CreditHours}</h2>
+        <h2>{this.props.info.Teacher.name}</h2>
         {this.props.existed == false ? (
           <button onClick={this.add} className="notexisted">
-            mybutton
+            Join
           </button>
         ) : (
-          <button className="existed">mybutton</button>
+          <button className="existed">Drop</button>
         )}
       </div>
     );

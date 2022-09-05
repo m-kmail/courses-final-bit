@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Course from "./Course";
-import "../styles/teacher.css";
 import axios from "axios";
 import "../styles/student.css";
 import SearchedCourse from "./SearchedCourse";
@@ -13,6 +12,7 @@ class StudentHome extends Component {
       search: "",
       filter: "",
       custom: {},
+      searchedCourses: { courses: [], display: "" },
     };
   }
   changeSearch = (e) => {
@@ -49,7 +49,12 @@ class StudentHome extends Component {
   }
   searchCourses = () => {
     let x = this.getSearchCourses(this.state);
-    x.then((x) => this.setState({ searchedCourses: x.data }));
+
+    x.then((x) => {
+      let copy = { ...this.state.searchedCourses };
+      copy.courses = x.data;
+      this.setState({ searchedCourses: copy });
+    });
   };
   componentDidUpdate() {
     this.componentDidMount();
@@ -64,19 +69,21 @@ class StudentHome extends Component {
     window.location = "/";
   }
   showAddToCourse = () => {
+    let searchedCopy = { ...this.state.searchedCourses };
     let customCopy = { ...this.state.custom };
     if (customCopy.display !== "block") {
-      customCopy = {
-        display: "block",
-      };
+      customCopy.display = "block";
     } else {
-      customCopy = {
-        display: "none",
-      };
+      customCopy.display = "none";
     }
-
+    if (searchedCopy.display !== "block") {
+      searchedCopy.display = "block";
+    } else {
+      searchedCopy.display = "none";
+    }
     this.setState({
       custom: customCopy,
+      searchedCourses: searchedCopy,
     });
   };
 
@@ -88,74 +95,90 @@ class StudentHome extends Component {
   render() {
     return (
       <div className="student-home">
-        <div className="nav">
-          <button className="myProfile">My Profile</button>
-          <button className="myTable">Office hour</button>
+        <div className="backGround"></div>
+        <div className="content">
+          <div className="nav">
+            <button className="myProfile Btn">My Profile</button>
+            <button className="myTable Btn">Office hour</button>
+            <button onClick={this.showAddToCourse} className="joinCourse Btn">
+              join course
+            </button>
+            <button className="moodle Btn">moodle</button>
+            <button onClick={this.logout} className="logout Btn">
+              log out
+            </button>
+          </div>
+          <div className="contentView">
+            <div className="coursesView">
+              {this.state.custom.display != "none" ? (
+                this.state.searchedCourses.courses.map((el) => {
+                  let existed = false;
+                  this.state.courses.map((c) => {
+                    if (c.Time == el.Time && c.Days == el.Days) {
+                      existed = true;
+                    }
+                  });
+                  return (
+                    <SearchedCourse
+                      existed={existed}
+                      info={el}
+                      addCourse={this.addCourse}
+                    />
+                  );
+                })
+              ) : (
+                <div>
+                  {this.state.courses.map((t) => (
+                    <Course key={t._id} data={t} />
+                  ))}
+                </div>
+              )}
+            </div>
 
-          <button onClick={this.showAddToCourse} className="joinCourse">
-            join course
-          </button>
-
-          <button className="moodle">moodle</button>
-          <button onClick={this.logout} className="logout">
-            log out
-          </button>
-        </div>
-        <div>
-          {this.state.courses.map((t) => (
-            <Course key={t._id} data={t} />
-          ))}
-
-          <div className="addToCourseContainer" style={this.state.custom}>
-            <input
-              type="search"
-              value={this.state.search}
-              onChange={this.changeSearch}
-            />
-            <input
-              type="radio"
-              id="course-name"
-              name="filter"
-              value="courseName"
-              onChange={this.changeFilter}
-            />
-            <label htmlFor="course-name">course name</label> {" "}
-            <input
-              type="radio"
-              id="teacher-name"
-              name="filter"
-              value="teacherName"
-              onChange={this.changeFilter}
-            />
-             <label htmlFor="teacher-name">teacher name</label> 
-            <input
-              type="radio"
-              id="all"
-              name="filter"
-              value="all"
-              onChange={this.changeFilter}
-            />
-             <label htmlFor="all">all</label>
-            <button onClick={this.searchCourses}>search</button>
-            {this.state.searchedCourses ? (
-              this.state.searchedCourses.map((el) => {
-                let existed = false;
-                this.state.courses.map((c) => {
-                  if (c.Time == el.Time && c.Days == el.Days) {
-                    existed = true;
-                  }
-                });
-                return (
-                  <SearchedCourse
-                    existed={existed}
-                    info={el}
-                    addCourse={this.addCourse}
+            <div className="addToCourseContainer" style={this.state.custom}>
+              <h1>Join Course</h1>
+              <div className="inputsDiv">
+                <input
+                  placeholder="type your search"
+                  type="search"
+                  value={this.state.search}
+                  onChange={this.changeSearch}
+                />
+                <div className="courseNameDiv">
+                  <input
+                    type="radio"
+                    id="course-name"
+                    name="filter"
+                    value="courseName"
+                    onChange={this.changeFilter}
                   />
-                );
-              })
-            ) : (
-              <div></div>
-            )}
+                  <label htmlFor="course-name">course name</label> 
+                </div>
+                <div className="teacherNameDiv">
+                  <input
+                    type="radio"
+                    id="teacher-name"
+                    name="filter"
+                    value="teacherName"
+                    onChange={this.changeFilter}
+                  />
+                   <label htmlFor="teacher-name">teacher name</label> 
+                </div>
+                <div className="allDiv">
+                  <input
+                    type="radio"
+                    id="all"
+                    name="filter"
+                    value="all"
+                    onChange={this.changeFilter}
+                  />
+                   <label htmlFor="all">all</label>
+                </div>
+                <button onClick={this.searchCourses} className="searchBtn">
+                  search
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
