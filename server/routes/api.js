@@ -148,22 +148,35 @@ router.get("/active", function (req, res) {
 
 router.delete("/course/:courseid", function (req, res) {
   let courseToDel = req.params.courseid;
-  Course.findOneAndDelete({ _id: courseToDel }).exec(function (err, course) {});
+  if (session.email == "Teacher") {
+    Course.findOneAndDelete({ _id: courseToDel }).exec(function (
+      err,
+      course
+    ) {});
 
-  Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
-    teacher.Courses.map((c, index) => {
-      if (c._id == courseToDel) {
-        teacher.Courses.splice(index, 1);
-        teacher.save();
-      }
+    Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
+      teacher.Courses.map((c, index) => {
+        if (c._id == courseToDel) {
+          teacher.Courses.splice(index, 1);
+          teacher.save();
+        }
+      });
     });
-  });
+  } else {
+    Student.findOne({ Email: session.email }).exec(function (err, student) {
+      student.Courses.map((c, index) => {
+        if (c._id == courseToDel) {
+          student.Courses.splice(index, 1);
+          student.save();
+        }
+      });
+    });
+  }
   res.end();
 });
 
 router.put("/course", function (request, response) {
   const courseToAdd = request.body.courseId;
-  console.log(courseToAdd);
   const StudentEmail = session.email;
   Student.findOne({ Email: StudentEmail }).exec(function (err, student) {
     Course.findOne({ _id: courseToAdd }).exec(function (err, course) {
