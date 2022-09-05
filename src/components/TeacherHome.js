@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Course from "./Course";
 import "../styles/teacher.css";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 class TeacherHome extends Component {
   constructor() {
@@ -97,7 +97,9 @@ class TeacherHome extends Component {
         <div className="backGround"></div>
         <div className="content">
           <div className="nav">
-            <button className="myProfile Btn">My Profile</button>
+            <Link to="/editProfile">
+              <button className="myProfile Btn">Edit Profile</button>
+            </Link>
             <button className="myTable Btn">Office hour</button>
             <button
               onClick={this.changeShowCreateCourse}

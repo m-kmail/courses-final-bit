@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const TeacherSchema = new Schema({
   Name: String,
-  IMG: String,
+  IMG: Object,
   Gender: String,
   Courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
   Email: String,
