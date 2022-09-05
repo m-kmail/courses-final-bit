@@ -1,6 +1,7 @@
 .data {
   display: grid;
-  grid-template-columns: 6fr 6fr 6fr 6fr 1fr;
+  align-items: center;
+  grid-template-columns: 3fr 6fr 6fr 3fr 3fr 1fr;
   background-color: rgba(56, 67, 75, 0.749);
   border-radius: 100px;
   width: 65%;
