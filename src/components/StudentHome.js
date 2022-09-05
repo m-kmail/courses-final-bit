@@ -68,7 +68,9 @@ class StudentHome extends Component {
 
     window.location = "/";
   }
-  deleteCourse = (courseId) => {};
+  async deleteCourse(courseId) {
+    return await axios.delete(`http://localhost:5000/course/${courseId}`);
+  }
   showAddToCourse = () => {
     let searchedCopy = { ...this.state.searchedCourses };
     let customCopy = { ...this.state.custom };
@@ -87,9 +89,7 @@ class StudentHome extends Component {
       searchedCourses: searchedCopy,
     });
   };
-
   async addCourse(courseid) {
-    console.log(courseid);
     await axios.put("http://localhost:5000/course", { courseId: courseid });
     console.log("added");
   }
@@ -130,7 +130,11 @@ class StudentHome extends Component {
               ) : (
                 <div>
                   {this.state.courses.map((t) => (
-                    <Course key={t._id} data={t} />
+                    <Course
+                      key={t._id}
+                      data={t}
+                      deleteCourse={this.deleteCourse}
+                    />
                   ))}
                 </div>
               )}
