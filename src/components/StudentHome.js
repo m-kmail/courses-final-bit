@@ -97,7 +97,7 @@ class StudentHome extends Component {
           </button>
 
           <button className="moodle">moodle</button>
-          <button onClick={this.logout} className="moodle">
+          <button onClick={this.logout} className="logout">
             log out
           </button>
         </div>

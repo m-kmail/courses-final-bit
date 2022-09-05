@@ -117,7 +117,6 @@ class Login extends Component {
             ></input>
           </span>
           <br></br>
-
           <div className="roll" id="radios" onChange={this.valuechanged}>
             <input type="radio" className="roll" value="Student" name="roll" />
             <p className="radiotext">Student</p>
