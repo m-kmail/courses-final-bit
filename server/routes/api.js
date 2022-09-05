@@ -4,7 +4,24 @@ const Student = require("../models/Student");
 const Teacher = require("../models/Teacher");
 const Course = require("../models/Course");
 let session = require("express-session");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
+router.post("/upload_file", upload.array("myFile"), function (req, res) {
+  if (session.roll == "Student") {
+    Student.findOne({ Email: session.email }).exec(function (err, student) {
+      student.IMG = req.files[0];
+      student.save();
+    });
+  } else {
+    Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
+      teacher.IMG = req.files[0];
+      teacher.save();
+    });
+  }
+  res.json({ message: "Successfully uploaded files" });
+  res.end();
+});
 router.get("/:roll/:email/:pass", async function (req, res) {
   let user;
 
@@ -40,7 +57,7 @@ router.post("/user", function (req, res) {
         Name: userInfo.Name,
         Email: userInfo.Email,
         Password: userInfo.Password,
-        IMG: "",
+        IMG: null,
         Gender: userInfo.Gender,
       });
       newStudent.save();
@@ -190,6 +207,31 @@ router.put("/course", function (request, response) {
     });
   });
 });
+
+router.get("/userinfo", function (req, res) {
+  let email = session.email;
+
+  if (session.roll == "Student") {
+    Student.findOne({ Email: email }).exec(function (err, student) {
+      let userInfo = { email: session.email };
+      userInfo.roll = "Student";
+      userInfo.name = student.Name;
+      userInfo.gender = student.Gender;
+      userInfo.img = student.IMG;
+      res.send(userInfo);
+    });
+  } else {
+    Teacher.findOne({ Email: email }).exec(function (err, teacher) {
+      let userInfo = { email: session.email };
+      userInfo.roll = "Teacher";
+      userInfo.name = teacher.Name;
+      userInfo.gender = teacher.Gender;
+      userInfo.img = teacher.IMG;
+      res.send(userInfo);
+    });
+  }
+});
+
 router.delete("/courseStudent/:courseId", function (request, response) {
   const studentEmail = session.email;
   const courseID = request.params.courseId;
