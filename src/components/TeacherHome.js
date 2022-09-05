@@ -59,6 +59,8 @@ class TeacherHome extends Component {
   }
   async logout() {
     await axios.get("http://localhost:5000/logout");
+
+    window.location = "/";
   }
 
   async componentDidMount() {

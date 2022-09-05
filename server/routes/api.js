@@ -149,7 +149,8 @@ router.get("/active", function (req, res) {
 router.delete("/course/:courseid", function (req, res) {
   let courseToDel = req.params.courseid;
   Course.findOneAndDelete({ _id: courseToDel }).exec(function (err, course) {});
-  Teacher.find({ Email: session.email }).exec(function (err, teacher) {
+
+  Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
     teacher.Courses.map((c, index) => {
       if (c._id == courseToDel) {
         teacher.Courses.splice(index, 1);
