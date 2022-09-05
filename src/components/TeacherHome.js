@@ -135,7 +135,7 @@ class TeacherHome extends Component {
                   onChange={this.timeChanged}
                   value={this.state.inputtime}
                 >
-                  <option>8:00-09:30</option>
+                  <option>08:00-09:30</option>
                   <option>09:30-11:00</option>
                   <option>11:00-12:30</option>
                   <option>12:30-2:00</option>

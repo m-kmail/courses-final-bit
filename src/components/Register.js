@@ -58,6 +58,7 @@ class Register extends Component {
 
   register = () => {
     if (!this.empty()) {
+      console.log(this.state);
       if (this.isValidEmail()) {
         const userInfo = {
           Name: this.state.name,

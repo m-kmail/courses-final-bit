@@ -3,6 +3,7 @@ import Course from "./Course";
 import axios from "axios";
 import "../styles/student.css";
 import SearchedCourse from "./SearchedCourse";
+import { Link } from "react-router-dom";
 
 class StudentHome extends Component {
   constructor() {
@@ -13,6 +14,7 @@ class StudentHome extends Component {
       filter: "",
       custom: {},
       searchedCourses: { courses: [], display: "" },
+      sortedCourse: {},
     };
   }
   changeSearch = (e) => {
@@ -93,6 +95,37 @@ class StudentHome extends Component {
     await axios.put("http://localhost:5000/course", { courseId: courseid });
     console.log("added");
   }
+
+  sortCourses = () => {
+    let allCoursrs = this.state.courses;
+
+    let mappedCourses = {
+      Saturday: [],
+      Sunday: [],
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+    };
+    for (let c of allCoursrs) {
+      let days = c.Days;
+      days = days.split("/");
+
+      mappedCourses[days[0]].push({ name: c.Name, time: c.Time });
+      mappedCourses[days[1]].push({ name: c.Name, time: c.Time });
+    }
+
+    Object.keys(mappedCourses).forEach((day) => {
+      mappedCourses[day].sort((a, b) => {
+        let x = a.time[0] + a.time[1];
+        let y = b.time[0] + b.time[1];
+        return x - y;
+      });
+    });
+
+    this.setState({ sortedCourse: mappedCourses });
+  };
+
   render() {
     return (
       <div className="student-home">
@@ -100,7 +133,10 @@ class StudentHome extends Component {
         <div className="content">
           <div className="nav">
             <button className="myProfile Btn">My Profile</button>
-            <button className="myTable Btn">Office hour</button>
+            <button className="myTable Btn" onClick={this.sortCourses}>
+              Office hour
+            </button>
+
             <button onClick={this.showAddToCourse} className="joinCourse Btn">
               join course
             </button>
@@ -109,6 +145,7 @@ class StudentHome extends Component {
               log out
             </button>
           </div>
+
           <div className="contentView">
             <div className="coursesView">
               {this.state.custom.display != "none" ? (
