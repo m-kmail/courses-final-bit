@@ -63,6 +63,7 @@ class StudentHome extends Component {
 
     window.location = "/";
   }
+  deleteCourse = (courseId) => {};
   showAddToCourse = () => {
     let customCopy = { ...this.state.custom };
     if (customCopy.display !== "block") {
