@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Course from "./Course";
 import "../styles/teacher.css";
 import axios from "axios";
+import "../styles/student.css";
+import SearchedCourse from "./SearchedCourse";
 
 class StudentHome extends Component {
   constructor() {
@@ -26,11 +28,11 @@ class StudentHome extends Component {
 
   async componentDidMount() {
     let userInfo = await axios.get("http://localhost:5000/sessionInfo");
-    userInfo = userInfo.data;
-    if (userInfo.email == undefined) {
+
+    if (userInfo == undefined || userInfo.data.email == undefined) {
       window.location = "/";
     } else {
-      if (userInfo.roll == "Teacher") window.location = "/teacherhome";
+      if (userInfo.data.roll == "Teacher") window.location = "/teacherhome";
       else {
         let courses = await this.getCourses();
         this.setState({
@@ -40,7 +42,6 @@ class StudentHome extends Component {
     }
   }
   async getSearchCourses(searchCourse) {
-    console.log(searchCourse.search);
     let x = await axios.get(
       `http://localhost:5000/searchCourses?${searchCourse.filter}=${searchCourse.search}`
     );
@@ -78,6 +79,12 @@ class StudentHome extends Component {
       custom: customCopy,
     });
   };
+
+  async addCourse(courseid) {
+    console.log(courseid);
+    await axios.put("http://localhost:5000/course", { courseId: courseid });
+    console.log("added");
+  }
   render() {
     return (
       <div className="student-home">
@@ -98,6 +105,7 @@ class StudentHome extends Component {
           {this.state.courses.map((t) => (
             <Course key={t._id} data={t} />
           ))}
+
           <div className="addToCourseContainer" style={this.state.custom}>
             <input
               type="search"
@@ -130,14 +138,21 @@ class StudentHome extends Component {
              <label htmlFor="all">all</label>
             <button onClick={this.searchCourses}>search</button>
             {this.state.searchedCourses ? (
-              this.state.searchedCourses.map((el) => (
-                <div>
-                  <p>{el.Name}</p>
-                  <p>{el.Days}</p>
-                  <p>{el.Time}</p>
-                  <p>{el.CreditHours}</p>
-                </div>
-              ))
+              this.state.searchedCourses.map((el) => {
+                let existed = false;
+                this.state.courses.map((c) => {
+                  if (c.Time == el.Time && c.Days == el.Days) {
+                    existed = true;
+                  }
+                });
+                return (
+                  <SearchedCourse
+                    existed={existed}
+                    info={el}
+                    addCourse={this.addCourse}
+                  />
+                );
+              })
             ) : (
               <div></div>
             )}

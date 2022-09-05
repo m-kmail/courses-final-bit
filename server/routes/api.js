@@ -72,9 +72,9 @@ router.get("/courses", function (req, res) {
       });
   }
 });
+
 router.get("/searchCourses", function (request, response) {
   let query = request.query;
-  console.log(query);
   if (query.teacherName) {
     Teacher.find({ Name: query.teacherName })
       .populate("Courses")
@@ -82,13 +82,17 @@ router.get("/searchCourses", function (request, response) {
         response.send(user[0].Courses);
       });
   } else if (query.courseName) {
-    Course.find({ Name: query.courseName }).exec(function (err, courses) {
-      response.send(courses);
-    });
+    Course.find({ Name: query.courseName })
+      .populate("Teacher")
+      .exec(function (err, courses) {
+        response.send(courses);
+      });
   } else {
-    Course.find({}).exec(function (err, courses) {
-      response.send(courses);
-    });
+    Course.find({})
+      .populate("Teacher")
+      .exec(function (err, courses) {
+        response.send(courses);
+      });
   }
 });
 
@@ -131,6 +135,9 @@ router.post("/courses", async function (request, response) {
 });
 router.get("/logout", function (req, res) {
   session = req.session;
+
+  session = undefined;
+
   res.end();
 });
 router.get("/active", function (req, res) {
@@ -147,6 +154,7 @@ router.delete("/course/:courseid", function (req, res) {
 
 router.put("/course", function (request, response) {
   const courseToAdd = request.body.courseId;
+  console.log(courseToAdd);
   const StudentEmail = session.email;
   Student.findOne({ Email: StudentEmail }).exec(function (err, student) {
     Course.findOne({ _id: courseToAdd }).exec(function (err, course) {
@@ -182,7 +190,8 @@ router.delete("/courseStudent/:courseId", function (request, response) {
 });
 
 router.get("/sessionInfo", function (req, res) {
-  let info = { email: session.email, roll: session.roll };
+  let info = undefined;
+  if (session != undefined) info = { email: session.email, roll: session.roll };
   res.send(info);
 });
 module.exports = router;

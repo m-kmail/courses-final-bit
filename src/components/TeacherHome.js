@@ -52,12 +52,11 @@ class TeacherHome extends Component {
 
   async componentDidMount() {
     let userInfo = await axios.get("http://localhost:5000/sessionInfo");
-    userInfo = userInfo.data;
 
-    if (userInfo.email == undefined) {
+    if (userInfo == undefined || userInfo.data.email == undefined) {
       window.location = "/";
     } else {
-      if (userInfo.roll == "Student") window.location = "/studenthome";
+      if (userInfo.data.roll == "Student") window.location = "/studenthome";
       else {
         let courses = await this.getCourses();
         this.setState({
