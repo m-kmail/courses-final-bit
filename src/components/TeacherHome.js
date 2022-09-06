@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useInsertionEffect } from "react";
 import Course from "./Course";
 import "../styles/teacher.css";
 import { Link } from "react-router-dom";
@@ -27,6 +27,7 @@ class TeacherHome extends Component {
   }
 
   changePassword = () => {
+    if(this.state.newPassword.length>0)
     axios.put("http://localhost:5000/user", { pass: this.state.newPassword });
   };
   async getUserInfo() {
@@ -282,7 +283,9 @@ class TeacherHome extends Component {
             <button className="addCourse Btn" onClick={this.toggleAddOptions}>
               New Course
             </button>
+            <Link to="/teachermoodle">
             <button className="moodle Btn">Moodle</button>
+            </Link>
             <button onClick={this.logout} className="logout Btn">
               Log out
             </button>

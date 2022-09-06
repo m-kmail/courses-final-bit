@@ -63,10 +63,11 @@ router.get("/:roll/:email/:pass", async function (req, res) {
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
+  console.log(userInfo)
 
-  Teacher.findOne({ Email: userInfo.Email }).exec(function (err, user) {
+  Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
-      const newStudent = new Teacher({
+      const newStudent = new Student({
         Name: userInfo.Name,
         Email: userInfo.Email,
         Password: userInfo.Password,
@@ -76,7 +77,7 @@ router.post("/user", function (req, res) {
       });
       newStudent.save();
       req.session.email = newStudent.Email;
-      req.session.roll = "Teacher";
+      req.session.roll = "Student";
       req.session.Name = userInfo.Name;
       req.session.save();
 

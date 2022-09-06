@@ -3,6 +3,8 @@ import Course from "./Course";
 import axios from "axios";
 import "../styles/student.css";
 import SearchedCourse from "./SearchedCourse";
+import { Link } from "react-router-dom";
+
 
 class StudentHome extends Component {
   constructor() {
@@ -38,7 +40,6 @@ class StudentHome extends Component {
       profileStyle: { display: "none" },
   erroeMessage: { display: "none" },
         floatBox: { display: "none" },
-
       }
     };
   }
@@ -270,8 +271,10 @@ this.setState({customDisplay:curr})
             <button onClick={this.toggleJoinCourse} className="joinCourse Btn">
               join course
             </button>
-            <button className="moodle Btn">moodle</button>
-            <button onClick={this.logout} className="logout Btn">
+
+<Link to="/studentmoodle">
+            <button className="moodle Btn">Moodle</button>
+            </Link>            <button onClick={this.logout} className="logout Btn">
               log out
             </button>
           </div>
