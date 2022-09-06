@@ -175,6 +175,9 @@ class TeacherHome extends Component {
       <div className="teacher">
         <div className="backGround"></div>
         <div className="content">
+
+
+        
           <div
             className="profile"
             style={this.state.customDisplays.profileStyle}

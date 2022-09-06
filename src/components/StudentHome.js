@@ -12,21 +12,109 @@ class StudentHome extends Component {
       courses: [],
       search: "",
       filter: "",
-      custom: {},
       searchedCourses: { courses: [], display: "" },
       sortedCourse: {},
-      tables: { display: "none" },
-      fee: { display: "none" },
       showItem: false,
       pricehoure: "38",
       fees: "",
       val: "",
+      user: {},
+      inputname: "",
+      inputtime: "",
+      inputday: "",
+      inputCreditHour: "",
+      newPassword: "",
+      confirmPassword: "",
+      imageChanged: null,
+      customDisplay:{
+
+        searchCourses:{display:"none"},
+
+      myCourses:{display:"flex"},
+
+      joinCourse:{display:"none"},
+
+      myTable:{display:"none"},
+
+      profileStyle: { display: "none" },
+  erroeMessage: { display: "none" },
+        floatBox: { display: "none" },
+
+      }
     };
   }
   changeSearch = (e) => {
     this.setState({
       search: e.target.value,
     });
+  };
+    showProfile = () => {
+    let current = this.state.customDisplay;
+    current.joinCourse = { display: "none" };
+    current.searchCourses = { display: "none" };
+        current.myCourses = { display: "none" };
+
+    
+    current.profileStyle = { display: "block" };
+    this.setState({ customDisplay: current });
+  };
+    closeProfile = () => {
+    let current = this.state.customDisplay;
+    current.joinCourse = { display: "none" };
+    current.myCourses = { display: "flex" };
+    current.profileStyle = { display: "none" };
+    this.setState({ customDisplay: current });
+  };
+    showFloatBox = () => {
+    let current = this.state.customDisplay;
+    current.floatBox = { display: "block" };
+    this.setState({ customDisplay: current });
+  };
+    hideFloatBox = () => {
+    let current = this.state.customDisplay;
+    current.floatBox = { display: "none" };
+    this.setState({ customDisplay: current });
+  };
+
+
+    passwordChanged = (e) => {
+    this.setState({ newPassword: e.target.value });
+  };
+  confirmPasswordChanged = (e) => {
+    this.setState({ confirmPassword: e.target.value });
+  };
+  imgChanged = (e) => {
+    let userModified = { ...this.state.imageChanged };
+    userModified = e.target.files[0];
+    this.setState({ imageChanged: userModified });
+  };
+  removeImg = () => {
+    let userModified = { ...this.state.imageChanged };
+    userModified = null;
+    this.setState({ imageChanged: userModified });
+  };
+
+
+    uploadImg = () => {
+    const formData = new FormData();
+    formData.append("myFile", this.state.imageChanged);
+    this.sendImageToServer(formData);
+  };
+    add = (e) => {
+    if (e.currentTarget.className === "addModify") {
+      if (this.state.newPassword != this.state.confirmPassword) {
+        let cur = this.state.customDisplay;
+        cur.erroeMessage = { display: "block" };
+        this.setState({ customDisplay: cur });
+      } else {
+        let y = {
+          password: this.state.newPassword,
+        };
+
+        this.setState({ user: y });
+        window.location = "#";
+      }
+    }
   };
   changeFilter = (e) => {
     this.setState({
@@ -72,6 +160,7 @@ class StudentHome extends Component {
     x.then((x) => {
       let copy = { ...this.state.searchedCourses };
       copy.courses = x.data;
+      this.showSerched();
       this.setState({ searchedCourses: copy });
     });
   };
@@ -85,22 +174,15 @@ class StudentHome extends Component {
   async logout() {
     await axios.get("http://localhost:5000/logout");
 
-    window.location = "/";
+    window.location = "/"
   }
   async deleteCourse(courseId) {
     return await axios.delete(`http://localhost:5000/course/${courseId}`);
   }
-  showStudyFeeAccount = () => {
-    let feeCopy = { ...this.state.fee };
-    if (feeCopy.display !== "block") {
-      feeCopy.display = "block";
-    } else {
-      feeCopy.display = "none";
-    }
-    this.setState({
-      fee: feeCopy,
-    });
-  };
+
+
+
+/*
   showAddToCourse = () => {
     let searchedCopy = { ...this.state.searchedCourses };
     let customCopy = { ...this.state.custom };
@@ -119,6 +201,10 @@ class StudentHome extends Component {
       searchedCourses: searchedCopy,
     });
   };
+  */
+
+
+
   async addCourse(courseid) {
     await axios.put("http://localhost:5000/course", { courseId: courseid });
     console.log("added");
@@ -154,18 +240,35 @@ class StudentHome extends Component {
     this.setState({ sortedCourse: mappedCourses });
   };
 
+  toggleJoinCourse=()=>{
+let curr=this.state.customDisplay;
+curr.joinCourse.display=="flex"?curr.joinCourse={display:"none"}:curr.joinCourse={display:"flex"}
+if(curr.joinCourse.display=="none"){
+curr.searchCourses={display:"none"}
+}
+this.setState({customDisplay:curr})
+
+  }
+
+  showSerched=()=>{
+    let curr=this.state.customDisplay;
+    curr.searchCourses={display:"block"}
+  }
+
   render() {
     return (
       <div className="student-home">
         <div className="backGround"></div>
         <div className="content">
+
+
           <div className="nav">
-            <button className="myProfile Btn">My Profile</button>
+            <button className="myProfile Btn" onClick={this.showProfile}>My Profile</button>
             <button className="myTable Btn">Office hour</button>
-            <button className="myTable Btn" onClick={this.showStudyFeeAccount}>
+            <button className="myTable Btn">
               Study Fee Account
             </button>
-            <button onClick={this.showAddToCourse} className="joinCourse Btn">
+            <button onClick={this.toggleJoinCourse} className="joinCourse Btn">
               join course
             </button>
             <button className="moodle Btn">moodle</button>
@@ -174,9 +277,15 @@ class StudentHome extends Component {
             </button>
           </div>
 
+
+
           <div className="contentView">
+
+
             <div className="coursesView">
-              {this.state.custom.display != "none" ? (
+
+            <div className="serchedCourses" style={this.state.customDisplay.searchCourses}>
+            {
                 this.state.searchedCourses.courses.map((el) => {
                   let existed = false;
                   this.state.courses.map((c) => {
@@ -192,8 +301,13 @@ class StudentHome extends Component {
                     />
                   );
                 })
-              ) : (
-                <div>
+              }
+            
+            </div>
+
+
+           
+                <div className="myCourses" style={this.state.customDisplay.myCourses}>
                   {this.state.courses.map((t) => (
                     <Course
                       key={t._id}
@@ -202,9 +316,20 @@ class StudentHome extends Component {
                     />
                   ))}
                 </div>
-              )}
+              
+
+
+
+
+
+
             </div>
-            <div className="addToCourseContainer">
+
+
+
+
+
+            <div className="addToCourseContainer"style={this.state.customDisplay.joinCourse}>
               <h1>Join Course</h1>
               <div className="inputsDiv">
                 <input
@@ -249,7 +374,99 @@ class StudentHome extends Component {
               </div>
             </div>
 
-            <div className="schedul" style={{ display: "none" }}>
+
+
+
+
+<div
+            className="profile"
+            style={this.state.customDisplay.profileStyle}
+          >
+            <div className="info">
+              <div className="userName">
+                <h2>{this.state.user.name}</h2>
+                {this.state.user.img ? (
+                  <img
+                    className="profileImg"
+                    src={`http://localhost:5000/uploads/${this.state.user.img.path.substring(
+                      8
+                    )}`}
+                  />
+                ) : null}
+              </div>
+              <div className="userInfo">
+                <h3>Informations</h3>
+                <div className="myData">
+                  <h4>Email :</h4>
+                  <p>{this.state.user.email}</p>
+                  <h4>gender :</h4>
+                  <p>{this.state.user.gender}</p>
+                </div>
+
+                <button className="modify" onClick={this.showFloatBox}>
+                  Modify Data
+                </button>
+
+                <button onClick={this.closeProfile}>cancel</button>
+                <div id="blackout" style={this.state.customDisplay.floatBox}>
+                  <div id="box" style={this.state.customDisplay.floatBox}>
+                    <form className="modifyData">
+                      <i
+                        className="far fa-times-circle close"
+                        onClick={this.hideFloatBox}
+                      ></i>
+
+                      <div className="newData">
+                        <div
+                          className="errorMassege"
+                          style={this.state.customDisplay.erroeMessage}
+                        >
+                          password did not match
+                        </div>
+                        <input
+                          value={this.state.newPassword}
+                          onChange={this.passwordChanged}
+                          className="newDataInput"
+                          type="password"
+                          placeholder="New Password"
+                        ></input>
+                        <input
+                          value={this.state.confirmPassword}
+                          onChange={this.confirmPasswordChanged}
+                          className="newDataInput"
+                          type="password"
+                          placeholder="Confirm password"
+                        ></input>
+                        <div className="imagechange">
+                          <input
+                            type="file"
+                            name="myImage"
+                            onChange={this.imgChanged}
+                          />
+                          <button onClick={this.removeImg}>Remove Image</button>
+                          <button onClick={this.uploadImg}>upload Image</button>
+                        </div>
+                      </div>
+                      <div className="modifyContainer">
+                        <div onClick={this.add} className="addModify">
+                          Modify
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+            <div className="schedul" style={this.state.customDisplay.myTable}>
               <table>
                 <thead>
                   <tr>
@@ -337,9 +554,10 @@ class StudentHome extends Component {
                 </tbody>
               </table>
             </div>
-            <div className="feePage" style={this.state.fee}>
-              ss
-            </div>
+
+
+
+
           </div>
         </div>
       </div>

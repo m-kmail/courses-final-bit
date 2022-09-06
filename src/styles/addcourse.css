@@ -1,74 +1,79 @@
-/* .addCourse {
-  display: flex;
-  justify-content: center;
-}
-input {
-  font-family: "Aboreto", cursive;
-  border: 0;
-  background: none;
-  margin-left: 30px;
-  margin: 10px auto;
-  text-align: center;
-  border: 2px solid #256d85;
-  padding: 14px 10px;
-  width: 70%;
-  outline: none;
-  color: black;
-  border-radius: 24px;
-  transition: 0.25s;
-  font-size: large;
-}
-input:focus {
-  width: 99%;
-  border-color: #8fe3cf;
-}
+ .addCourse {
+   display: flex;
+   justify-content: center;
+ }
 
-.addButton {
-  background-color: #256d85;
-  margin-left: 35%;
-  border: none;
+ input {
+   font-family: "Aboreto", cursive;
+   border: 0;
+   background: none;
+   margin-left: 30px;
+   margin: 10px auto;
+   text-align: center;
+   border: 2px solid #256d85;
+   padding: 14px 10px;
+   width: 70%;
+   outline: none;
+   color: black;
+   border-radius: 24px;
+   transition: 0.25s;
+   font-size: large;
+ }
 
-  font-family: "Aboreto", cursive;
-  border-radius: 15px;
-  width: 200px;
-  font-size: larger;
-}
+ input:focus {
+   width: 99%;
+   border-color: #8fe3cf;
+ }
 
-.addButton:hover {
-  background-color: #8fe3cf;
-}
+ .addButton {
+   background-color: #256d85;
+   margin-left: 35%;
+   border: none;
 
-::placeholder {
-  color: black;
-  opacity: 1;
-  font-size: large;
-}
-.inputsDiv {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  margin: 40px auto;
-}
-h1 {
-  font-family: "Aboreto", cursive;
-  margin-left: 35%;
-}
-.drop {
-  font-family: "Aboreto", cursive;
-  border: 0;
-  background: none;
-  margin-left: 30px;
-  margin: 10px auto;
-  text-align: center;
-  border: 2px solid #256d85;
-  padding: 14px 10px;
-  width: 70%;
-  outline: none;
-  color: black;
-  border-radius: 24px;
-  transition: 0.25s;
-  font-size: large;
-}
+   font-family: "Aboreto", cursive;
+   border-radius: 15px;
+   width: 200px;
+   font-size: larger;
+ }
 
-.drop:focus {
-  border-color: #8fe3cf;
-} */
+ .addButton:hover {
+   background-color: #8fe3cf;
+ }
+
+ ::placeholder {
+   color: black;
+   opacity: 1;
+   font-size: large;
+ }
+
+ .inputsDiv {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   margin: 40px auto;
+ }
+
+ h1 {
+   font-family: "Aboreto", cursive;
+   margin-left: 35%;
+ }
+
+ .drop {
+   font-family: "Aboreto", cursive;
+   border: 0;
+   background: none;
+   margin-left: 30px;
+   margin: 10px auto;
+   text-align: center;
+   border: 2px solid #256d85;
+   padding: 14px 10px;
+   width: 70%;
+   outline: none;
+   color: black;
+   border-radius: 24px;
+   transition: 0.25s;
+   font-size: large;
+ }
+
+ .drop:focus {
+   border-color: #8fe3cf;
+ }
