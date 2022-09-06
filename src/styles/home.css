@@ -7,6 +7,7 @@
   box-shadow: rgba(115, 115, 115, 0.25) 0px 50px 100px -20px,
     rgba(255, 255, 255, 0.3) 0px 30px 60px -30px;
 }
+
 .button-box {
   width: 220px;
   height: 37px;
@@ -17,6 +18,7 @@
   padding-right: 55px;
   color: rgb(212, 224, 237);
 }
+
 .toggle-btn {
   font-family: "DynaPuff", cursive;
   width: 50px;
@@ -29,9 +31,11 @@
   color: rgb(212, 224, 237);
   font-weight: bold;
 }
+
 h1 {
   color: rgb(212, 224, 237);
 }
+
 .Error {
   display: none;
   color: red;
@@ -52,10 +56,12 @@ button {
   margin-bottom: 40px;
   border-radius: 20px;
 }
+
 .gender {
   width: 190px;
   padding-left: 130px;
 }
+
 .roll {
   width: 190px;
   padding-left: 130px;
@@ -74,10 +80,12 @@ button {
   box-shadow: 2px 2px 5px #555;
   background-color: #7799d4;
 }
+
 .main input:hover {
   box-shadow: 2px 2px 5px #555;
   background-color: #ddd;
 }
+
 .main span {
   position: relative;
 }
@@ -89,10 +97,12 @@ button {
   font-size: 16px;
   top: 2px;
 }
+
 #radios {
   display: flex;
   color: rgb(212, 224, 237);
 }
+
 .addToCourseContainer {
   display: none;
 }

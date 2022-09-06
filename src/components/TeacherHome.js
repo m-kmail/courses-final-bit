@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useInsertionEffect } from "react";
 import Course from "./Course";
 import "../styles/teacher.css";
 import { Link } from "react-router-dom";
@@ -26,9 +26,10 @@ class TeacherHome extends Component {
     };
   }
 
-  changePassword=()=>{
-    axios.put("http://localhost:5000/user",{pass : this.state.newPassword});
-  }
+  changePassword = () => {
+    if(this.state.newPassword.length>0)
+    axios.put("http://localhost:5000/user", { pass: this.state.newPassword });
+  };
   async getUserInfo() {
     let x = await axios.get("http://localhost:5000/userinfo");
     return x.data;
@@ -282,7 +283,9 @@ class TeacherHome extends Component {
             <button className="addCourse Btn" onClick={this.toggleAddOptions}>
               New Course
             </button>
+            <Link to="/teachermoodle">
             <button className="moodle Btn">Moodle</button>
+            </Link>
             <button onClick={this.logout} className="logout Btn">
               Log out
             </button>
@@ -300,14 +303,16 @@ class TeacherHome extends Component {
               className="addNewCourse"
               style={this.state.customDisplays.addStyle}
             >
-              <h1>New courses</h1>
-              <div className="inputsDiv">
+              <h1 className="newCourseHeader">New courses</h1>
+              <div className="inputsDiv ">
                 <input
+                  className="courseNamein"
                   placeholder="Course Name"
                   onChange={this.nameChanged}
                   value={this.state.inputname}
                 ></input>
                 <input
+                  className="courseCriditin"
                   placeholder="credit hour "
                   onChange={this.creditHourChanged}
                   value={this.state.inputCreditHour}
@@ -318,6 +323,9 @@ class TeacherHome extends Component {
                   onChange={this.timeChanged}
                   value={this.state.inputtime}
                 >
+                  <option value="" disabled selected>
+                    Course Time
+                  </option>
                   <option>08:00-09:30</option>
                   <option>09:30-11:00</option>
                   <option>11:00-12:30</option>
@@ -329,12 +337,18 @@ class TeacherHome extends Component {
                   onChange={this.dayChanged}
                   value={this.state.inputday}
                 >
+                  <option value="" disabled selected>
+                    Course Day
+                  </option>
                   <option>Saturday/Tuesday</option>
                   <option>Sunday/Wednesday</option>
                   <option>Monday/Thursday</option>
                 </select>
                 <Link to="/teacherhome">
-                  <button className="addButton" onClick={this.createCourse}>
+                  <button
+                    className="addButton zeft"
+                    onClick={this.createCourse}
+                  >
                     add course
                   </button>
                 </Link>
