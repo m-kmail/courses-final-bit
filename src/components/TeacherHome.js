@@ -25,6 +25,10 @@ class TeacherHome extends Component {
       },
     };
   }
+
+  changePassword=()=>{
+    axios.put("http://localhost:5000/user",{pass : this.state.newPassword});
+  }
   async getUserInfo() {
     let x = await axios.get("http://localhost:5000/userinfo");
     return x.data;
@@ -67,9 +71,9 @@ class TeacherHome extends Component {
         let y = {
           password: this.state.newPassword,
         };
-
         this.setState({ user: y });
-        window.location = "#";
+        this.hideFloatBox();
+        this.changePassword();
       }
     }
   };
@@ -188,7 +192,7 @@ class TeacherHome extends Component {
           >
             <div className="info">
               <div className="userName">
-                <h2>{this.state.user.name}</h2>
+                <h2 className="userdata">{this.state.user.name}</h2>
                 {this.state.user.img ? (
                   <img
                     className="profileImg"
@@ -199,12 +203,12 @@ class TeacherHome extends Component {
                 ) : null}
               </div>
               <div className="userInfo">
-                <h3>Informations</h3>
+                <h3 className="userdata">Informations</h3>
                 <div className="myData">
-                  <h4>Email :</h4>
-                  <p>{this.state.user.email}</p>
-                  <h4>gender :</h4>
-                  <p>{this.state.user.gender}</p>
+                  <h4 className="userdata">Email :</h4>
+                  <p className="userdata">{this.state.user.email}</p>
+                  <h4 className="userdata">gender :</h4>
+                  <p className="userdata">{this.state.user.gender}</p>
                 </div>
 
                 <button className="modify" onClick={this.showFloatBox}>
@@ -219,7 +223,7 @@ class TeacherHome extends Component {
 
                 <div id="blackout" style={this.state.customDisplays.floatBox}>
                   <div id="box" style={this.state.customDisplays.floatBox}>
-                    <form className="modifyData">
+                    <div className="modifyData">
                       <p
                         className="far fa-times-circle"
                         onClick={this.hideFloatBox}
@@ -270,7 +274,7 @@ class TeacherHome extends Component {
                       <button onClick={this.add} className="addModify">
                         Modify
                       </button>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>

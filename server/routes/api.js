@@ -313,4 +313,14 @@ router.post("/payment", async (req, res) => {
   }
   res.end();
 });
+
+router.put("/user",function(req,res){
+  let pass=req.body.pass;
+  Student.findOne({Email:session.email}).exec(function(err,student){
+    student.Password=pass;
+    student.save();
+  })
+  res.ens();
+})
+
 module.exports = router;

@@ -8,8 +8,9 @@
   background-repeat: no-repeat;
   background-size: cover;
   filter: blur(2px);
-  filter: brightness(65%);
+  filter: brightness(40%);
 }
+
 .nav {
   position: absolute;
   top: 10px;
@@ -17,6 +18,12 @@
   width: 100%;
   display: flex;
 }
+
+.userdata {
+  color: white;
+  font-size: 1.5vw;
+}
+
 .Btn {
   font-family: "DynaPuff", cursive;
   background-color: transparent;
@@ -34,11 +41,13 @@
   display: block;
   transition: all 0.6s ease;
 }
+
 .Btn:hover::after {
   width: 15%;
   height: 1.5px;
   background-color: #fff;
 }
+
 .info {
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -52,29 +61,35 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   height: 60%;
 }
+
 .userName {
   height: 100%;
   width: 70%;
   background-color: rgba(56, 67, 75, 0.749);
 }
+
 .userInfo {
   height: 100%;
   width: 100%;
   background-color: #f3f3f3(112, 116, 116);
   grid-template-columns: 1fr;
 }
+
 h3 {
   text-decoration: underline;
   text-decoration-color: rgb(164, 163, 163);
 }
+
 .mail {
   display: inline;
 }
+
 .myData {
   display: grid;
   grid-template-columns: 0.5fr 1fr;
   margin-left: 10%;
 }
+
 .modify {
   background-color: rgb(236, 154, 10);
   height: 50px;
@@ -97,6 +112,7 @@ h3 {
   display: block;
   margin-left: 35%;
 }
+
 .removeImg {
   background-color: rgb(236, 154, 10);
   height: 50px;
@@ -107,9 +123,11 @@ h3 {
   display: block;
   margin-left: 35%;
 }
+
 .removeImg:hover {
   background-color: rgb(241, 184, 86);
 }
+
 .uploadImg {
   background-color: rgb(236, 154, 10);
   height: 50px;
@@ -120,9 +138,11 @@ h3 {
   display: block;
   margin-left: 35%;
 }
+
 .uploadImg:hover {
   background-color: rgb(241, 184, 86);
 }
+
 .addModify {
   background-color: rgb(236, 154, 10);
   height: 50px;
@@ -139,6 +159,7 @@ h3 {
 
   color: rgb(63, 62, 66);
 }
+
 .addModify:hover {
   background-color: rgb(241, 184, 86);
 }
@@ -146,9 +167,11 @@ h3 {
 .modify:hover {
   background-color: rgb(241, 184, 86);
 }
+
 .back:hover {
   background-color: rgb(241, 184, 86);
 }
+
 #blackout {
   background: rgba(139, 136, 136, 0.5);
   width: 100%;
@@ -158,6 +181,7 @@ h3 {
   left: 0;
   display: none;
 }
+
 #box {
   height: 100%;
   width: 50%;
@@ -173,9 +197,11 @@ h3 {
   margin: auto;
   background-color: rgba(30, 33, 35, 0.749);
 }
+
 #blackout:target {
   display: block;
 }
+
 .close {
   font-size: x-large;
   text-decoration: none;
@@ -183,12 +209,15 @@ h3 {
   top: 0px;
   right: 10px;
 }
+
 .newData {
   grid-template-rows: 1fr;
 }
+
 h4 {
   display: inline;
 }
+
 .modifyButton {
   background: #01dbdf;
   height: 50px;
@@ -200,17 +229,20 @@ h4 {
 .errorMassege {
   color: red;
 }
+
 .profileImg {
   width: 150px;
   height: 200px;
   background-color: violet;
 }
+
 .contentView {
   position: relative;
   display: flex;
   flex-direction: row;
   margin-top: 8%;
 }
+
 .coursesView {
   position: relative;
   display: flex;
@@ -219,6 +251,7 @@ h4 {
   color: rgb(236, 154, 10);
   font-size: calc(0.7vw + 0.7vh);
 }
+
 .deleteButton {
   height: 50px;
   width: 100px;
@@ -227,6 +260,7 @@ h4 {
   border: none;
   background-color: transparent;
 }
+
 .addNewCourse {
   padding: 15px;
   display: flex;
@@ -235,17 +269,21 @@ h4 {
   border-radius: 7px;
   font-family: "DynaPuff", cursive;
 }
+
 .addButton {
   padding: 0;
 }
+
 .inputsDiv {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 40px;
 }
+
 .fa-trash:hover {
   color: red;
 }
+
 .passDataInput {
   border: 0;
   background: none;
@@ -266,9 +304,11 @@ h4 {
   width: 99%;
   border-color: #ec9a0a;
 }
+
 ::placeholder {
   color: black;
 }
+
 .fa-times-circle {
   color: red;
   font-size: x-large;
