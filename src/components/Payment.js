@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
 import StripeContainer from "./StripeContainer";
-
+import axios from "axios";
 function Payment() {
   const [showItem, setShowItem] = useState(false);
   const [pricehoure, setpricehoure] = useState("38");
   const [fees, setfees] = useState("");
   const [val, setval] = useState("");
+
   const calculat = () => {
     try {
       setfees(eval(val * pricehoure + 40));
@@ -14,6 +15,7 @@ function Payment() {
       setval("error");
     }
   };
+
   return (
     <div className="payment">
       <h1>Study fee Acount</h1>
