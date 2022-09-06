@@ -316,6 +316,22 @@ router.post("/payment", async (req, res) => {
   res.end();
 });
 
+router.put("/user", function (req, res) {
+  let pass = req.body.pass;
+  if (session.roll == "Stuent") {
+    Student.findOne({ Email: session.email }).exec(function (err, student) {
+      student.Password = pass;
+      student.save();
+    });
+  } else {
+    Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
+      teacher.Password = pass;
+      teacher.save();
+    });
+  }
+  res.end();
+});
+
 router.get("/exams/:courseID", function (request, respnse) {
   let id = request.params.courseID;
   Course.findOne({ _id: id })

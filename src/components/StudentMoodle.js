@@ -7,15 +7,8 @@ class StudentMoodle extends Component {
     super();
 
     this.state = {
+      courses: [],
       searchStuts: "",
-      courses: [
-        { courseName: "css", status: "In progress" },
-        { courseName: "html", status: "past" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "python", status: "In progress" },
-      ],
-      inprogress: [],
-      past: [],
     };
   }
 
@@ -24,7 +17,7 @@ class StudentMoodle extends Component {
   };
 
   async getCourses() {
-    let courses = await axios.get();
+    let courses = await axios.get("http://localhost:5000/courses");
     return courses;
   }
 
@@ -45,32 +38,26 @@ class StudentMoodle extends Component {
   }
   render() {
     return (
-      <div>
-        <div className="coursesContainer">
-          <select
-            className="typeCourseInput"
-            value={this.state.searchStuts}
-            onChange={this.courseFilter}
-          >
-            <option value="" disabled selected>
-              Courses
-            </option>
-            <option value="in progress">In progress</option>
-            <option value="past">past</option>
-          </select>
-          <div className="courses">
-            {this.state.searchStuts == "in progress"
-              ? this.state.inprogress.map((t) => (
-                  <div className="courseDiv">
-                    <h3> {t.courseName}</h3>
-                  </div>
-                ))
-              : this.state.past.map((t) => (
-                  <div className="courseDiv">
-                    <h3> {t.courseName}</h3>
-                  </div>
-                ))}
-          </div>
+      <div className="coursesContainer">
+        <select
+          className="typeCourseInput"
+          value={this.state.searchStuts}
+          onChange={this.courseFilter}
+        >
+          <option value="" disabled selected>
+            Courses
+          </option>
+          <option value="in progress">In progress</option>
+          <option value="past">past</option>
+        </select>
+        <div className="courses">
+          {this.state.courses
+            .filter((course) => course.Status == this.state.searchStuts)
+            .map((t) => (
+              <div className="courseDiv">
+                <h3> {t.Name}</h3>
+              </div>
+            ))}
         </div>
       </div>
     );

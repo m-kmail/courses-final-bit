@@ -135,6 +135,22 @@ class StudentHome extends Component {
     let x = await axios.get("http://localhost:5000/userinfo");
     return x.data;
   }
+  sendImageToServer(formData) {
+    const h = {};
+    h.Accept = "application/json";
+    axios.post("http://localhost:5000/upload_file", formData, {
+      headers: h,
+    });
+  }
+  uploadImg = () => {
+    const formData = new FormData();
+    formData.append("myFile", this.state.imageChanged);
+    this.sendImageToServer(formData);
+  };
+  async getUserInfo() {
+    let x = await axios.get("http://localhost:5000/userinfo");
+    return x.data;
+  }
 
   async componentDidMount() {
     let userInfo = await axios.get("http://localhost:5000/sessionInfo");
