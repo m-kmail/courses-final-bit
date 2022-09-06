@@ -71,6 +71,7 @@ class Profile extends Component {
   render() {
     return (
       <div className="profile">
+        <h1>ffof</h1>
         <div className="backGround"></div>
         <div className="nav">
           <Link to="/editProfile">

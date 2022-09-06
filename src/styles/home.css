@@ -1,100 +1,98 @@
 .container {
-	font-family: 'DynaPuff', cursive;
-	width: 450px;
-	margin:7% auto;
-	border-radius: 25px;
-	background-color: rgba(0, 0, 0, 0.527);
-	box-shadow: rgba(128, 128, 234, 0.25) 0px 50px 100px -20px, rgba(255, 255, 255, 0.3) 0px 30px 60px -30px;
+  font-family: "DynaPuff", cursive;
+  width: 450px;
+  margin: 7% auto;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.527);
+  box-shadow: rgba(115, 115, 115, 0.25) 0px 50px 100px -20px,
+    rgba(255, 255, 255, 0.3) 0px 30px 60px -30px;
 }
-.button-box{
-    width: 220px;
-    height: 37px;
-    margin: 19% ;
-	margin-bottom: 7%;
-    position: relative;
-	border-bottom: 3px solid;
-	padding-right: 55px;
-	color: rgb(212, 224, 237);	
-	
+.button-box {
+  width: 220px;
+  height: 37px;
+  margin: 19%;
+  margin-bottom: 7%;
+  position: relative;
+  border-bottom: 3px solid;
+  padding-right: 55px;
+  color: rgb(212, 224, 237);
 }
-.toggle-btn{
-	font-family: 'DynaPuff', cursive;
-    width: 50px;
-    padding: 0px 30px;
-    cursor: pointer;
-    background: transparent;
-    position: relative;
-     white-space: nowrap;
-   text-align: center;
-   color: rgb(212, 224, 237);		
-	font-weight: bold;
+.toggle-btn {
+  font-family: "DynaPuff", cursive;
+  width: 50px;
+  padding: 0px 30px;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  white-space: nowrap;
+  text-align: center;
+  color: rgb(212, 224, 237);
+  font-weight: bold;
 }
-h1{
-	color: rgb(212, 224, 237);	
+h1 {
+  color: rgb(212, 224, 237);
 }
-.Error{
-    display: none;
-    color: red;
-    font-size: 20px;
+.Error {
+  display: none;
+  color: red;
+  font-size: 20px;
 }
 
-.main input, button {
-	font-family: 'DynaPuff', cursive;
-	width: 270px;
-	height: 39px;
-	border:none;
-	outline: none;
-	padding-left: 40px;
-	box-sizing: border-box;
-	font-size: 15px;
-	color: rgb(63, 62, 66);
-	margin-bottom: 40px;
-    border-radius: 20px;
+.main input,
+button {
+  font-family: "DynaPuff", cursive;
+  width: 270px;
+  height: 39px;
+  border: none;
+  outline: none;
+  padding-left: 40px;
+  box-sizing: border-box;
+  font-size: 15px;
+  color: rgb(63, 62, 66);
+  margin-bottom: 40px;
+  border-radius: 20px;
 }
-.gender{
-width: 190px;
-padding-left: 130px;
+.gender {
+  width: 190px;
+  padding-left: 130px;
 }
-.roll{
-	width: 190px;
-	padding-left: 130px;	
+.roll {
+  width: 190px;
+  padding-left: 130px;
 }
 
 .main button {
-	padding-left: 0;
-	background-color: #3169cb;
-	letter-spacing: 1px;
-	font-weight:900;
-	margin-bottom: 70px;
-	color: #ddd;
-
+  padding-left: 0;
+  background-color: #3169cb;
+  letter-spacing: 1px;
+  font-weight: 900;
+  margin-bottom: 70px;
+  color: #ddd;
 }
 
 .main button:hover {
-	box-shadow: 2px 2px 5px #555;
-	background-color: #7799d4;
+  box-shadow: 2px 2px 5px #555;
+  background-color: #7799d4;
 }
 .main input:hover {
-	box-shadow: 2px 2px 5px #555;
-	background-color: #ddd;
+  box-shadow: 2px 2px 5px #555;
+  background-color: #ddd;
 }
 .main span {
-	position: relative;
-	
+  position: relative;
 }
 
 .main i {
-	position: absolute;
-	left: 15px;
-	color: #333;
-	font-size: 16px;
-	top: 2px;
-	
+  position: absolute;
+  left: 15px;
+  color: #333;
+  font-size: 16px;
+  top: 2px;
 }
-#radios{
-    display: flex;   
-	color: rgb(212, 224, 237);	
+#radios {
+  display: flex;
+  color: rgb(212, 224, 237);
 }
-.addToCourseContainer{
-	display: none;
+.addToCourseContainer {
+  display: none;
 }
