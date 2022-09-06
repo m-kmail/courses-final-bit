@@ -12,32 +12,7 @@ class StudentMoodle extends Component {
         { courseName: "css", status: "In progress" },
         { courseName: "html", status: "past" },
         { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "past" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "past" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
-        { courseName: "java", status: "In progress" },
+        { courseName: "python", status: "In progress" },
       ],
       inprogress: [],
       past: [],
@@ -46,16 +21,6 @@ class StudentMoodle extends Component {
 
   courseFilter = (e) => {
     this.setState({ searchStuts: e.target.value });
-    let progress = [];
-    let past = [];
-    this.state.courses.map((t) => {
-      if (t.status === "In progress") {
-        progress.push(t);
-      } else {
-        past.push(t);
-      }
-    });
-    this.setState({ inprogress: progress, past: past });
   };
 
   async getCourses() {
@@ -94,7 +59,7 @@ class StudentMoodle extends Component {
             <option value="past">past</option>
           </select>
           <div className="courses">
-            {this.state.searchStuts === "in progress"
+            {this.state.searchStuts == "in progress"
               ? this.state.inprogress.map((t) => (
                   <div className="courseDiv">
                     <h3> {t.courseName}</h3>
