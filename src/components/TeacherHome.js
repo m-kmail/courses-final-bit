@@ -217,9 +217,7 @@ class TeacherHome extends Component {
                 <button className="back" onClick={this.closeProfile}>
                   cancel
                 </button>
-                {/* <button className="back" onClick={this.closeProfile}>
-                  cancel
-                </button> */}
+     
 
                 <div id="blackout" style={this.state.customDisplays.floatBox}>
                   <div id="box" style={this.state.customDisplays.floatBox}>

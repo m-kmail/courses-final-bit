@@ -383,7 +383,7 @@ this.setState({customDisplay:curr})
           >
             <div className="info">
               <div className="userName">
-                <h2>{this.state.user.name}</h2>
+                <h2 className="userdata">{this.state.user.name}</h2>
                 {this.state.user.img ? (
                   <img
                     className="profileImg"
@@ -394,26 +394,28 @@ this.setState({customDisplay:curr})
                 ) : null}
               </div>
               <div className="userInfo">
-                <h3>Informations</h3>
+                <h3 className="userdata">Informations</h3>
                 <div className="myData">
-                  <h4>Email :</h4>
-                  <p>{this.state.user.email}</p>
-                  <h4>gender :</h4>
-                  <p>{this.state.user.gender}</p>
+                  <h4 className="userdata">Email :</h4>
+                  <p className="userdata">{this.state.user.email}</p>
+                  <h4 className="userdata">gender :</h4>
+                  <p className="userdata">{this.state.user.gender}</p>
                 </div>
 
                 <button className="modify" onClick={this.showFloatBox}>
                   Modify Data
                 </button>
 
-                <button onClick={this.closeProfile}>cancel</button>
+                <button className="back" onClick={this.closeProfile}>cancel</button>
+
+
                 <div id="blackout" style={this.state.customDisplay.floatBox}>
                   <div id="box" style={this.state.customDisplay.floatBox}>
-                    <form className="modifyData">
-                      <i
-                        className="far fa-times-circle close"
+                    <div className="modifyData">
+                      <p
+                        className="far fa-times-circle"
                         onClick={this.hideFloatBox}
-                      ></i>
+                      ></p>
 
                       <div className="newData">
                         <div
@@ -425,14 +427,14 @@ this.setState({customDisplay:curr})
                         <input
                           value={this.state.newPassword}
                           onChange={this.passwordChanged}
-                          className="newDataInput"
+                          className="newDataInput passDataInput"
                           type="password"
                           placeholder="New Password"
                         ></input>
                         <input
                           value={this.state.confirmPassword}
                           onChange={this.confirmPasswordChanged}
-                          className="newDataInput"
+                          className="newDataInput passDataInput"
                           type="password"
                           placeholder="Confirm password"
                         ></input>
@@ -442,16 +444,16 @@ this.setState({customDisplay:curr})
                             name="myImage"
                             onChange={this.imgChanged}
                           />
-                          <button onClick={this.removeImg}>Remove Image</button>
-                          <button onClick={this.uploadImg}>upload Image</button>
+                          <button className="removeImg" onClick={this.removeImg}>Remove Image</button>
+                          <button className="uploadImg" onClick={this.uploadImg}>upload Image</button>
                         </div>
                       </div>
-                      <div className="modifyContainer">
-                        <div onClick={this.add} className="addModify">
+                     
+                        <button onClick={this.add} className="addModify">
                           Modify
-                        </div>
+                        </button>
                       </div>
-                    </form>
+               
                   </div>
                 </div>
               </div>
