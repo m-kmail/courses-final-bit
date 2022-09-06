@@ -73,14 +73,14 @@ class Login extends Component {
   render() {
     return (
       <div className="container">
-        <div className="button-box">
+        <div className="button-box homeBtn">
           <Link to="/">
-            <button type="button" className="toggle-btn" id="lgin">
+            <button type="button" className="toggle-btn homeBtn" id="lgin">
               Log In
             </button>
           </Link>
           <Link to="/register">
-            <button type="button" className="toggle-btn" id="rgs">
+            <button type="button" className="toggle-btn homeBtn" id="rgs">
               Register
             </button>
           </Link>
@@ -124,7 +124,7 @@ class Login extends Component {
             <p className="radiotext">Teacher</p>
           </div>
 
-          <button className="loginbtn" onClick={this.login}>
+          <button className="loginbtn homeBtn" onClick={this.login}>
             login
           </button>
         </div>

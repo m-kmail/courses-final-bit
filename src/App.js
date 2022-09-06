@@ -8,7 +8,7 @@ import StudentMoodle from "./components/StudentMoodle";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Error from "./components/error";
-import Profile from "./components/Profile";
+
 import Payment from "./components/Payment";
 class App extends Component {
   constructor() {
@@ -26,7 +26,7 @@ class App extends Component {
             <Route path="/teacherhome" exact element={<TeacherHome />} />
             <Route path="/teacherMoodle" exact element={<TeacherMoodle />} />
             <Route path="/studentMoodle" exact element={<StudentMoodle />} />
-            <Route path="/editProfile" exact element={<Profile />} />
+
             <Route path="/payment" exact element={<Payment />} />
 
             <Route path="/" exact element={<Login />} />

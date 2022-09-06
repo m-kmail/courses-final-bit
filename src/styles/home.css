@@ -40,12 +40,12 @@ h1 {
 
 .main input,
 button {
+  text-align: center;
   font-family: "DynaPuff", cursive;
   width: 270px;
   height: 39px;
   border: none;
   outline: none;
-  padding-left: 40px;
   box-sizing: border-box;
   font-size: 15px;
   color: rgb(63, 62, 66);

@@ -203,15 +203,20 @@ class TeacherHome extends Component {
                 <button className="modify" onClick={this.showFloatBox}>
                   Modify Data
                 </button>
+                <button className="back" onClick={this.closeProfile}>
+                  cancel
+                </button>
+                {/* <button className="back" onClick={this.closeProfile}>
+                  cancel
+                </button> */}
 
-                <button onClick={this.closeProfile}>cancel</button>
                 <div id="blackout" style={this.state.customDisplays.floatBox}>
                   <div id="box" style={this.state.customDisplays.floatBox}>
                     <form className="modifyData">
-                      <i
-                        className="far fa-times-circle close"
+                      <p
+                        className="far fa-times-circle"
                         onClick={this.hideFloatBox}
-                      ></i>
+                      ></p>
 
                       <div className="newData">
                         <div
@@ -223,14 +228,14 @@ class TeacherHome extends Component {
                         <input
                           value={this.state.newPassword}
                           onChange={this.passwordChanged}
-                          className="newDataInput"
+                          className="newDataInput passDataInput"
                           type="password"
                           placeholder="New Password"
                         ></input>
                         <input
                           value={this.state.confirmPassword}
                           onChange={this.confirmPasswordChanged}
-                          className="newDataInput"
+                          className="newDataInput passDataInput"
                           type="password"
                           placeholder="Confirm password"
                         ></input>
@@ -240,15 +245,24 @@ class TeacherHome extends Component {
                             name="myImage"
                             onChange={this.imgChanged}
                           />
-                          <button onClick={this.removeImg}>Remove Image</button>
-                          <button onClick={this.uploadImg}>upload Image</button>
+                          <button
+                            className="removeImg"
+                            onClick={this.removeImg}
+                          >
+                            Remove Image
+                          </button>
+                          <button
+                            className="uploadImg"
+                            onClick={this.uploadImg}
+                          >
+                            upload Image
+                          </button>
                         </div>
                       </div>
-                      <div className="modifyContainer">
-                        <div onClick={this.add} className="addModify">
-                          Modify
-                        </div>
-                      </div>
+
+                      <button onClick={this.add} className="addModify">
+                        Modify
+                      </button>
                     </form>
                   </div>
                 </div>
