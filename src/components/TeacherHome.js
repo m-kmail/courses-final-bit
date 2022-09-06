@@ -163,6 +163,12 @@ class TeacherHome extends Component {
   showFloatBox = () => {
     let current = this.state.customDisplays;
     current.floatBox = { display: "block" };
+    this.setState({ customDisplays: current });
+  };
+  hideFloatBox = () => {
+    let current = this.state.customDisplays;
+    current.floatBox = { display: "none" };
+    this.setState({ customDisplays: current });
   };
   render() {
     return (
@@ -202,9 +208,11 @@ class TeacherHome extends Component {
                 <div id="blackout" style={this.state.customDisplays.floatBox}>
                   <div id="box" style={this.state.customDisplays.floatBox}>
                     <form className="modifyData">
-                      <button className="close" onClick={this.hideFloatBox}>
-                        <i className="far fa-times-circle"></i>
-                      </button>
+                      <i
+                        className="far fa-times-circle close"
+                        onClick={this.hideFloatBox}
+                      ></i>
+
                       <div className="newData">
                         <div
                           className="errorMassege"

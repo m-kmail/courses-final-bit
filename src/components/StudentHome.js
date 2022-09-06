@@ -74,24 +74,7 @@ class StudentHome extends Component {
   async deleteCourse(courseId) {
     return await axios.delete(`http://localhost:5000/course/${courseId}`);
   }
-  showAddToCourse = () => {
-    let searchedCopy = { ...this.state.searchedCourses };
-    let customCopy = { ...this.state.custom };
-    if (customCopy.display !== "block") {
-      customCopy.display = "block";
-    } else {
-      customCopy.display = "none";
-    }
-    if (searchedCopy.display !== "block") {
-      searchedCopy.display = "block";
-    } else {
-      searchedCopy.display = "none";
-    }
-    this.setState({
-      custom: customCopy,
-      searchedCourses: searchedCopy,
-    });
-  };
+
   async addCourse(courseid) {
     await axios.put("http://localhost:5000/course", { courseId: courseid });
     console.log("added");
@@ -177,7 +160,7 @@ class StudentHome extends Component {
                 </div>
               )}
             </div>
-            <div className="addToCourseContainer" style={this.state.custom}>
+            <div className="addToCourseContainer">
               <h1>Join Course</h1>
               <div className="inputsDiv">
                 <input
@@ -222,7 +205,7 @@ class StudentHome extends Component {
               </div>
             </div>
 
-            <div className="schedul" style={this.state.tables}>
+            <div className="schedul" style={{ display: "none" }}>
               <table>
                 <thead>
                   <tr>
