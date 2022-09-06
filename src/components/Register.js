@@ -43,22 +43,16 @@ class Register extends Component {
   async attemotRegister(userinfo) {
     let user = null;
     try {
+      console.log("trying");
       user = await axios.post("http://localhost:5000/user", userinfo);
     } catch (err) {
       return null;
     }
-    user = user.data;
-
-    if (user.Password != userinfo.Password) {
-      return null;
-    }
-
     //navigate
   }
 
   register = () => {
     if (!this.empty()) {
-      console.log(this.state);
       if (this.isValidEmail()) {
         const userInfo = {
           Name: this.state.name,

@@ -16,6 +16,11 @@ class StudentHome extends Component {
       searchedCourses: { courses: [], display: "" },
       sortedCourse: {},
       tables: { display: "none" },
+      fee: { display: "none" },
+      showItem: false,
+      pricehoure: "38",
+      fees: "",
+      val: "",
     };
   }
   changeSearch = (e) => {
@@ -27,6 +32,17 @@ class StudentHome extends Component {
     this.setState({
       filter: e.target.value,
     });
+  };
+  calculat = () => {
+    try {
+      this.setState({
+        fees: this.state.val * this.state.pricehoure + 40,
+      });
+    } catch (error) {
+      this.setState({
+        val: "error",
+      });
+    }
   };
 
   async componentDidMount() {
@@ -74,6 +90,17 @@ class StudentHome extends Component {
   async deleteCourse(courseId) {
     return await axios.delete(`http://localhost:5000/course/${courseId}`);
   }
+  showStudyFeeAccount = () => {
+    let feeCopy = { ...this.state.fee };
+    if (feeCopy.display !== "block") {
+      feeCopy.display = "block";
+    } else {
+      feeCopy.display = "none";
+    }
+    this.setState({
+      fee: feeCopy,
+    });
+  };
   showAddToCourse = () => {
     let searchedCopy = { ...this.state.searchedCourses };
     let customCopy = { ...this.state.custom };
@@ -134,10 +161,10 @@ class StudentHome extends Component {
         <div className="content">
           <div className="nav">
             <button className="myProfile Btn">My Profile</button>
-            <button className="myTable Btn" onClick={this.sortCourses}>
-              Office hour
+            <button className="myTable Btn">Office hour</button>
+            <button className="myTable Btn" onClick={this.showStudyFeeAccount}>
+              Study Fee Account
             </button>
-
             <button onClick={this.showAddToCourse} className="joinCourse Btn">
               join course
             </button>
@@ -177,7 +204,7 @@ class StudentHome extends Component {
                 </div>
               )}
             </div>
-            <div className="addToCourseContainer" style={this.state.custom}>
+            <div className="addToCourseContainer">
               <h1>Join Course</h1>
               <div className="inputsDiv">
                 <input
@@ -222,7 +249,7 @@ class StudentHome extends Component {
               </div>
             </div>
 
-            <div className="schedul" style={this.state.tables}>
+            <div className="schedul" style={{ display: "none" }}>
               <table>
                 <thead>
                   <tr>
@@ -309,6 +336,9 @@ class StudentHome extends Component {
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div className="feePage" style={this.state.fee}>
+              ss
             </div>
           </div>
         </div>

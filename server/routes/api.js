@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + ".jpg"); //Appending .jpg
+    cb(null, Date.now() + ".jpg");
   },
 });
 var upload = multer({ storage: storage });
@@ -67,6 +67,7 @@ router.post("/user", function (req, res) {
         Password: userInfo.Password,
         IMG: null,
         Gender: userInfo.Gender,
+        Wallet: 0,
       });
       newStudent.save();
       req.session.email = newStudent.Email;

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "../styles/profile.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 class Profile extends Component {
