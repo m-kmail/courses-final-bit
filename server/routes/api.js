@@ -5,6 +5,11 @@ const Teacher = require("../models/Teacher");
 const Course = require("../models/Course");
 let session = require("express-session");
 const multer = require("multer");
+require("dotenv").config();
+const stripe = require("stripe")(
+  "sk_test_51LeGicIN52kFR3FiN1OPFopdZskt2nXufaDViHe3FHPFZ4MG2kVX8Ctv9ipnkrXuUJf6lONs1hsorLldRg9crGJ300yLaWEVBY"
+);
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -226,6 +231,7 @@ router.get("/userinfo", function (req, res) {
       userInfo.name = student.Name;
       userInfo.gender = student.Gender;
       userInfo.img = student.IMG;
+      userInfo.wallet = student.Wallet;
       res.send(userInfo);
     });
   } else {
@@ -266,5 +272,42 @@ router.get("/sessionInfo", function (req, res) {
   let info = undefined;
   if (session != undefined) info = { email: session.email, roll: session.roll };
   res.send(info);
+});
+router.post("/payment", async (req, res) => {
+  let { amount, id } = req.body;
+
+  const info = {
+    amount: amount,
+    currency: "USD",
+    description: "American University",
+    payment_method: id,
+    confirm: true,
+  };
+  const payment = await stripe.paymentIntents.create(info);
+  console.log("Payment", payment);
+
+  try {
+    console.log("-------------------------------------------");
+    const payment = await stripe.paymentIntents.create({
+      currency: "USD",
+      description: "American University",
+      payment_method: id,
+      transfer_data: 50,
+      confirm: true,
+    });
+    console.log("Payment", payment.data);
+    res.json({
+      message: "Payment successful",
+      success: true,
+    });
+  } catch (error) {
+    console.log("************************************");
+    console.log("Error", error);
+    res.json({
+      message: "Payment failed",
+      success: false,
+    });
+  }
+  res.end();
 });
 module.exports = router;

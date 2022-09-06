@@ -1,6 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const CARD_OPTIONS = {
   iconStyle: "solid",
@@ -26,7 +26,13 @@ export default function PaymentForm() {
   const [success, setSuccess] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
-
+  const [user, setUser] = useState({});
+  const getUserInfo = () => {
+    return axios.get("http://localhost:5000/userinfo");
+  };
+  useEffect(() => {
+    getUserInfo().then((res) => setUser(res.data));
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -37,7 +43,7 @@ export default function PaymentForm() {
     if (!error) {
       try {
         const { id } = paymentMethod;
-        const response = await axios.post("http://localhost:6002/payment", {
+        const response = await axios.post("http://localhost:5000/payment", {
           amount: 1000,
           id,
         });
@@ -53,7 +59,6 @@ export default function PaymentForm() {
       console.log(error.message);
     }
   };
-
   return (
     <>
       {!success ? (

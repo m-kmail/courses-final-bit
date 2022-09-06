@@ -264,7 +264,7 @@ this.setState({customDisplay:curr})
 
           <div className="nav">
             <button className="myProfile Btn" onClick={this.showProfile}>My Profile</button>
-            <button className="myTable Btn">Office hour</button>
+            <button className="Office Btn">Office hour</button>
             <button className="myTable Btn">
               Study Fee Account
             </button>
