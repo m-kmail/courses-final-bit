@@ -101,6 +101,7 @@ class StudentHome extends Component {
           <div className="nav">
             <button className="myProfile Btn">My Profile</button>
             <button className="myTable Btn">Office hour</button>
+            <button className="myTable Btn">Study Fee Account</button>
             <button onClick={this.showAddToCourse} className="joinCourse Btn">
               join course
             </button>
