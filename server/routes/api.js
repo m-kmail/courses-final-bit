@@ -58,6 +58,7 @@ router.get("/:roll/:email/:pass", async function (req, res) {
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
+
   Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
       const newStudent = new Student({
@@ -122,9 +123,9 @@ router.get("/searchCourses", function (request, response) {
 });
 
 router.post("/courses", async function (request, response) {
-  const teacherEmail = request.session.email;
+  const teacherEmail = session.email;
   const courseBody = request.body;
-  Teacher.findOne({ email: teacherEmail }).exec(async function (err, t) {
+  Teacher.findOne({ Email: teacherEmail }).exec(async function (err, t) {
     let newCourse = new Course({
       Name: courseBody.name,
       Teacher: t._id,
@@ -138,7 +139,7 @@ router.post("/courses", async function (request, response) {
     });
 
     let ok = true;
-    await Teacher.findOne({ email: teacherEmail })
+    await Teacher.findOne({ Email: teacherEmail })
       .populate("Courses")
       .exec(function (error, teacher) {
         teacher.Courses.forEach((course) => {

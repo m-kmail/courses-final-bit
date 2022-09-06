@@ -3,6 +3,7 @@ import Course from "./Course";
 import axios from "axios";
 import "../styles/student.css";
 import SearchedCourse from "./SearchedCourse";
+import { Link } from "react-router-dom";
 
 class StudentHome extends Component {
   constructor() {
@@ -13,6 +14,8 @@ class StudentHome extends Component {
       filter: "",
       custom: {},
       searchedCourses: { courses: [], display: "" },
+      sortedCourse: {},
+      tables: { display: "none" },
     };
   }
   changeSearch = (e) => {
@@ -93,6 +96,37 @@ class StudentHome extends Component {
     await axios.put("http://localhost:5000/course", { courseId: courseid });
     console.log("added");
   }
+
+  sortCourses = () => {
+    let allCoursrs = this.state.courses;
+
+    let mappedCourses = {
+      Saturday: [],
+      Sunday: [],
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+    };
+    for (let c of allCoursrs) {
+      let days = c.Days;
+      days = days.split("/");
+
+      mappedCourses[days[0]].push({ name: c.Name, time: c.Time });
+      mappedCourses[days[1]].push({ name: c.Name, time: c.Time });
+    }
+
+    Object.keys(mappedCourses).forEach((day) => {
+      mappedCourses[day].sort((a, b) => {
+        let x = a.time[0] + a.time[1];
+        let y = b.time[0] + b.time[1];
+        return x - y;
+      });
+    });
+
+    this.setState({ sortedCourse: mappedCourses });
+  };
+
   render() {
     return (
       <div className="student-home">
@@ -110,6 +144,7 @@ class StudentHome extends Component {
               log out
             </button>
           </div>
+
           <div className="contentView">
             <div className="coursesView">
               {this.state.custom.display != "none" ? (
@@ -140,7 +175,6 @@ class StudentHome extends Component {
                 </div>
               )}
             </div>
-
             <div className="addToCourseContainer" style={this.state.custom}>
               <h1>Join Course</h1>
               <div className="inputsDiv">
@@ -184,6 +218,95 @@ class StudentHome extends Component {
                   search
                 </button>
               </div>
+            </div>
+
+            <div className="schedul" style={this.state.tables}>
+              <table>
+                <thead>
+                  <tr>
+                    <td id="sub1"> </td>
+                    <td id="sub">8:00-9:30</td>
+                    <td id="sub">9:30-11:00</td>
+                    <td id="sub">11:00-12:30</td>
+                    <td id="sub">12:30-2:00</td>
+                    <td id="sub">2:00-3:30</td>
+                    <td id="sub">3:30-4:00</td>
+                    <td id="sub">4:00-5:30</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td id="sub">Sunday</td>
+                    <td id="box1"></td>
+                    <td id="box2"></td>
+                    <td id="box3"></td>
+                    <td id="blank"></td>
+                    <td id="box2"></td>
+                    <td id="box2"></td>
+                    <td id="sub2"></td>
+                  </tr>
+                  <tr>
+                    <td id="sub">Monday</td>
+                    <td id="box1"></td>
+                    <td id="box2"></td>
+                    <td id="box3"></td>
+                    <td id="blank"></td>
+                    <td id="box2"></td>
+                    <td id="box2"></td>
+                    <td id="sub2"></td>
+                  </tr>
+                  <tr>
+                    <td id="sub">Tuseday</td>
+                    <td id="box1"></td>
+                    <td id="box2"></td>
+                    <td id="box3"></td>
+                    <td id="blank"></td>
+                    <td id="box2"></td>
+                    <td id="box2"></td>
+                    <td id="sub2"></td>
+                  </tr>
+                  <tr>
+                    <td id="sub">Wednesday</td>
+                    <td id="box1"></td>
+                    <td id="box2"></td>
+                    <td id="box3"></td>
+                    <td id="blank"></td>
+                    <td id="box2"></td>
+                    <td id="box2"></td>
+                    <td id="sub2"></td>
+                  </tr>
+                  <tr>
+                    <td id="sub">Thursday</td>
+                    <td id="box1"></td>
+                    <td id="box2"></td>
+                    <td id="box3"></td>
+                    <td id="blank"></td>
+                    <td id="box2"></td>
+                    <td id="box2"></td>
+                    <td id="sub2"></td>
+                  </tr>
+                  <tr>
+                    <td id="sub">Friday</td>
+                    <td id="box1"></td>
+                    <td id="box2"></td>
+                    <td id="box3"></td>
+                    <td id="blank"></td>
+                    <td id="box2"></td>
+                    <td id="box2"></td>
+                    <td id="sub2"></td>
+                  </tr>
+                  <tr>
+                    <td id="sub">Saturday</td>
+                    <td id="box1"></td>
+                    <td id="box2"></td>
+                    <td id="box3"></td>
+                    <td id="blank"></td>
+                    <td id="box2"></td>
+                    <td id="box2"></td>
+                    <td id="sub2"></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
