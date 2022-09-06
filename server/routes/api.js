@@ -3,6 +3,8 @@ const router = express.Router();
 const Student = require("../models/Student");
 const Teacher = require("../models/Teacher");
 const Course = require("../models/Course");
+const Exam = require("../models/Exam");
+const Question = require("../models/Question");
 let session = require("express-session");
 const multer = require("multer");
 require("dotenv").config();
@@ -63,7 +65,7 @@ router.get("/:roll/:email/:pass", async function (req, res) {
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
-  console.log(userInfo)
+  console.log(userInfo);
 
   Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
@@ -288,7 +290,6 @@ router.post("/payment", async (req, res) => {
   const payment = await stripe.paymentIntents.create(info);
 
   try {
-    console.log("-------------------------------------------");
     Student.findOne({ Email: session.email }).exec(function (err, student) {
       student.Wallet += info.amount;
       student.save();
@@ -315,19 +316,65 @@ router.post("/payment", async (req, res) => {
   res.end();
 });
 
-router.put("/user",function(req,res){
-  let pass=req.body.pass;
-if(session.roll=="Stuent"){
-  Student.findOne({Email:session.email}).exec(function(err,student){
-    student.Password=pass;
-    student.save();
-  })
-}
-else{ Teacher.findOne({Email:session.email}).exec(function(err,teacher){
-    teacher.Password=pass;
-    teacher.save();
-  })}
+router.get("/exams/:courseID", function (request, respnse) {
+  let id = request.params.courseID;
+  Course.findOne({ _id: id })
+    .populate("Exams")
+    .exec(function (err, course) {
+      respnse.send(course);
+    });
+});
+router.post("/exam", function (request, respnse) {
+  let examBody = request.body;
+  let idCourse = examBody.courseId;
+  newExam = new Exam({
+    isClosed: true,
+    isFree: true,
+    Questions: [],
+    Course: examBody.courseId,
+    Name: examBody.Name,
+  });
+  Course.findOne({ _id: idCourse }).exec(function (err, course) {
+    course.Exams.push(newExam);
+    course.save();
+  });
+  newExam.save();
+  respnse.end();
+});
+router.post("/question", function (request, respnse) {
+  let bodyExam = request.body;
+  let idExam = bodyExam.examId;
+  let newQuestion = new Question({
+    question: bodyExam.question,
+    choices: bodyExam.choices,
+    answer: bodyExam.answer,
+    isMultiple: bodyExam.isMultiple,
+    exam: idExam,
+  });
+  newQuestion.save();
+  console.log(newQuestion);
+  console.log(idExam);
+  Exam.findOne({ _id: idExam }).exec(function (err, exam) {
+    exam.Questions.push(newQuestion);
+    exam.save();
+  });
+  respnse.end();
+});
+
+router.put("/user", function (req, res) {
+  let pass = req.body.pass;
+  if (session.roll == "Stuent") {
+    Student.findOne({ Email: session.email }).exec(function (err, student) {
+      student.Password = pass;
+      student.save();
+    });
+  } else {
+    Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
+      teacher.Password = pass;
+      teacher.save();
+    });
+  }
   res.end();
-})
+});
 
 module.exports = router;
