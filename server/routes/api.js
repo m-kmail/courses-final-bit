@@ -284,10 +284,13 @@ router.post("/payment", async (req, res) => {
     confirm: true,
   };
   const payment = await stripe.paymentIntents.create(info);
-  console.log("Payment", payment);
 
   try {
     console.log("-------------------------------------------");
+    Student.findOne({ Email: session.email }).exec(function (err, student) {
+      student.Wallet += info.amount;
+      student.save();
+    });
     const payment = await stripe.paymentIntents.create({
       currency: "USD",
       description: "American University",
@@ -296,13 +299,12 @@ router.post("/payment", async (req, res) => {
       confirm: true,
     });
     console.log("Payment", payment.data);
+
     res.json({
       message: "Payment successful",
       success: true,
     });
   } catch (error) {
-    console.log("************************************");
-    console.log("Error", error);
     res.json({
       message: "Payment failed",
       success: false,
