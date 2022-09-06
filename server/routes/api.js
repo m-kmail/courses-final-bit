@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + ".jpg"); //Appending .jpg
+    cb(null, Date.now() + ".jpg");
   },
 });
 var upload = multer({ storage: storage });
@@ -58,7 +58,6 @@ router.get("/:roll/:email/:pass", async function (req, res) {
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
-
   Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
       const newStudent = new Student({
@@ -67,6 +66,7 @@ router.post("/user", function (req, res) {
         Password: userInfo.Password,
         IMG: null,
         Gender: userInfo.Gender,
+        Wallet: 0,
       });
       newStudent.save();
       req.session.email = newStudent.Email;

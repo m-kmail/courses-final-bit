@@ -9,6 +9,7 @@ const StudentSchema = new Schema({
   NumOfHours: Number,
   Email: String,
   Password: String,
+  Wallet: Number,
 });
 const Student = mongoose.model("Student", StudentSchema);
 module.exports = Student;
