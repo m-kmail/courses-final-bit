@@ -75,7 +75,7 @@ class StudentMoodle extends Component {
               ))}
           </div>
         </div>
-        <div style={this.state.CourseDetail}>courseDetail</div>
+        <div style={this.state.CourseDetail}></div>
       </div>
     );
   }

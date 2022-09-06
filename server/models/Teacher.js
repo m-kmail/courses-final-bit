@@ -8,6 +8,7 @@ const TeacherSchema = new Schema({
   Courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
   Email: String,
   Password: String,
+  File: Object,
 });
 const Teacher = mongoose.model("Teacher", TeacherSchema);
 module.exports = Teacher;

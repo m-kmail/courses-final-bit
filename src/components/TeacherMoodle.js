@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../styles/TeacherMoodle.css";
 import axios from "axios";
 class TeacherMoodle extends Component {
   constructor() {
@@ -9,8 +10,24 @@ class TeacherMoodle extends Component {
       searchStuts: "",
       showModel: { display: "block" },
       CourseDetail: { display: "none" },
+      file: {},
     };
   }
+  sendPDFToServer(formData) {
+    const h = {};
+    h.Accept = "application/json";
+    axios.post("http://localhost:5000/pdf_file", formData, {
+      headers: h,
+    });
+  }
+  uploadPDF = () => {
+    const formData = new FormData();
+    formData.append("PDF_FILE", this.state.file);
+    this.sendPDFToServer(formData);
+  };
+  onInputChange = (e) => {
+    this.setState({ file: e.target.files[0] });
+  };
   changeShowModel = () => {
     let moodleSHow = { ...this.state.showModel };
     let detailShow = { ...this.state.CourseDetail };
@@ -72,7 +89,23 @@ class TeacherMoodle extends Component {
               ))}
           </div>
         </div>
-        <div style={this.state.CourseDetail}>courseDetail</div>
+        <div style={this.state.CourseDetail}>
+          <div>
+            <div className="form-group files">
+              <h1>Upload courses tutorial here </h1>
+              <input
+                type="file"
+                onChange={this.onInputChange}
+                className="form-control"
+                multiple
+              />
+              <button className="upladFileBtn" onClick={this.uploadPDF}>
+                Upload file
+              </button>
+            </div>
+            <button>creat QUIZE</button>
+          </div>
+        </div>
       </div>
     );
   }
