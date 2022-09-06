@@ -12,19 +12,66 @@ class TeacherHome extends Component {
       inputtime: "",
       inputday: "",
       inputCreditHour: "",
-      showCreateCourse: { display: "none" },
+      newPassword: "",
+      confirmPassword: "",
+      imageChanged: null,
+      user: {},
+      customDisplays: {
+        contentViewStyle: { display: "flex" },
+        addStyle: { display: "none" },
+        profileStyle: { display: "none" },
+        erroeMessage: { display: "none" },
+        floatBox: { display: "none" },
+      },
     };
   }
-  changeShowCreateCourse = () => {
-    let newDisplay = { ...this.state.showCreateCourse };
-    if (this.state.showCreateCourse.display !== "block") {
-      newDisplay = { display: "block" };
-    } else {
-      newDisplay = { display: "none" };
-    }
-    this.setState({
-      showCreateCourse: newDisplay,
+  async getUserInfo() {
+    let x = await axios.get("http://localhost:5000/userinfo");
+    return x.data;
+  }
+  passwordChanged = (e) => {
+    this.setState({ newPassword: e.target.value });
+  };
+  confirmPasswordChanged = (e) => {
+    this.setState({ confirmPassword: e.target.value });
+  };
+  imgChanged = (e) => {
+    let userModified = { ...this.state.imageChanged };
+    userModified = e.target.files[0];
+    this.setState({ imageChanged: userModified });
+  };
+  removeImg = () => {
+    let userModified = { ...this.state.imageChanged };
+    userModified = null;
+    this.setState({ imageChanged: userModified });
+  };
+  sendImageToServer(formData) {
+    const h = {};
+    h.Accept = "application/json";
+    axios.post("http://localhost:5000/upload_file", formData, {
+      headers: h,
     });
+  }
+  uploadImg = () => {
+    const formData = new FormData();
+    formData.append("myFile", this.state.imageChanged);
+    this.sendImageToServer(formData);
+  };
+  add = (e) => {
+    if (e.currentTarget.className === "addModify") {
+      if (this.state.newPassword != this.state.confirmPassword) {
+        let cur = this.state.customDisplays;
+        cur.erroeMessage = { display: "block" };
+        this.setState({ customDisplays: cur });
+      } else {
+        let y = {
+          password: this.state.newPassword,
+        };
+
+        this.setState({ user: y });
+        window.location = "#";
+      }
+    }
   };
 
   nameChanged = (e) => {
@@ -72,6 +119,8 @@ class TeacherHome extends Component {
       if (userInfo.data.roll == "Student") window.location = "/studenthome";
       else {
         let courses = await this.getCourses();
+        let x = this.getUserInfo();
+        x.then((e) => this.setState({ user: e }));
         this.setState({
           courses: courses.data,
         });
@@ -90,21 +139,121 @@ class TeacherHome extends Component {
   async deleteCourse(id) {
     return await axios.delete(`http://localhost:5000/course/${id}`);
   }
-
+  toggleAddOptions = () => {
+    let current = this.state.customDisplays;
+    current.addStyle.display == "none"
+      ? (current.addStyle = { display: "flex" })
+      : (current.addStyle = { display: "none" });
+    this.setState({ customDisplays: current });
+  };
+  showProfile = () => {
+    let current = this.state.customDisplays;
+    current.addStyle = { display: "none" };
+    current.contentViewStyle = { display: "none" };
+    current.profileStyle = { display: "block" };
+    this.setState({ customDisplays: current });
+  };
+  closeProfile = () => {
+    let current = this.state.customDisplays;
+    current.addStyle = { display: "none" };
+    current.contentViewStyle = { display: "flex" };
+    current.profileStyle = { display: "none" };
+    this.setState({ customDisplays: current });
+  };
+  showFloatBox = () => {
+    let current = this.state.customDisplays;
+    current.floatBox = { display: "block" };
+  };
   render() {
     return (
       <div className="teacher">
         <div className="backGround"></div>
         <div className="content">
+          <div
+            className="profile"
+            style={this.state.customDisplays.profileStyle}
+          >
+            <div className="info">
+              <div className="userName">
+                <h2>{this.state.user.name}</h2>
+                {this.state.user.img ? (
+                  <img
+                    className="profileImg"
+                    src={`http://localhost:5000/uploads/${this.state.user.img.path.substring(
+                      8
+                    )}`}
+                  />
+                ) : null}
+              </div>
+              <div className="userInfo">
+                <h3>Informations</h3>
+                <div className="myData">
+                  <h4>Email :</h4>
+                  <p>{this.state.user.email}</p>
+                  <h4>gender :</h4>
+                  <p>{this.state.user.gender}</p>
+                </div>
+
+                <button className="modify" onClick={this.showFloatBox}>
+                  Modify Data
+                </button>
+
+                <button onClick={this.closeProfile}>cancel</button>
+                <div id="blackout" style={this.state.customDisplays.floatBox}>
+                  <div id="box" style={this.state.customDisplays.floatBox}>
+                    <form className="modifyData">
+                      <button className="close" onClick={this.hideFloatBox}>
+                        <i className="far fa-times-circle"></i>
+                      </button>
+                      <div className="newData">
+                        <div
+                          className="errorMassege"
+                          style={this.state.customDisplays.erroeMessage}
+                        >
+                          password did not match
+                        </div>
+                        <input
+                          value={this.state.newPassword}
+                          onChange={this.passwordChanged}
+                          className="newDataInput"
+                          type="password"
+                          placeholder="New Password"
+                        ></input>
+                        <input
+                          value={this.state.confirmPassword}
+                          onChange={this.confirmPasswordChanged}
+                          className="newDataInput"
+                          type="password"
+                          placeholder="Confirm password"
+                        ></input>
+                        <div className="imagechange">
+                          <input
+                            type="file"
+                            name="myImage"
+                            onChange={this.imgChanged}
+                          />
+                          <button onClick={this.removeImg}>Remove Image</button>
+                          <button onClick={this.uploadImg}>upload Image</button>
+                        </div>
+                      </div>
+                      <div className="modifyContainer">
+                        <div onClick={this.add} className="addModify">
+                          Modify
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="nav">
-            <Link to="/editProfile">
-              <button className="myProfile Btn">Edit Profile</button>
-            </Link>
+            <button className="myProfile Btn" onClick={this.showProfile}>
+              Edit Profile
+            </button>
+
             <button className="myTable Btn">Office hour</button>
-            <button
-              onClick={this.changeShowCreateCourse}
-              className="addCourse Btn"
-            >
+            <button className="addCourse Btn" onClick={this.toggleAddOptions}>
               New Course
             </button>
             <button className="moodle Btn">Moodle</button>
@@ -112,13 +261,19 @@ class TeacherHome extends Component {
               Log out
             </button>
           </div>
-          <div className="contentView">
+          <div
+            className="contentView"
+            style={this.state.customDisplays.contentViewStyle}
+          >
             <div className="coursesView">
               {this.state.courses.map((t) => (
                 <Course key={t._id} data={t} deleteCourse={this.deleteCourse} />
               ))}
             </div>
-            <div className="addNewCourse" style={this.state.showCreateCourse}>
+            <div
+              className="addNewCourse"
+              style={this.state.customDisplays.addStyle}
+            >
               <h1>New courses</h1>
               <div className="inputsDiv">
                 <input
