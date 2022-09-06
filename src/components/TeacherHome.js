@@ -141,9 +141,13 @@ class TeacherHome extends Component {
   }
   toggleAddOptions = () => {
     let current = this.state.customDisplays;
+     current.profileStyle = { display: "none" };
     current.addStyle.display == "none"
       ? (current.addStyle = { display: "flex" })
       : (current.addStyle = { display: "none" });
+
+
+      
     this.setState({ customDisplays: current });
   };
   showProfile = () => {
@@ -177,7 +181,7 @@ class TeacherHome extends Component {
         <div className="content">
 
 
-        
+
           <div
             className="profile"
             style={this.state.customDisplays.profileStyle}
