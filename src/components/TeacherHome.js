@@ -27,8 +27,8 @@ class TeacherHome extends Component {
   }
 
   changePassword = () => {
-    if(this.state.newPassword.length>0)
-    axios.put("http://localhost:5000/user", { pass: this.state.newPassword });
+    if (this.state.newPassword.length > 0)
+      axios.put("http://localhost:5000/user", { pass: this.state.newPassword });
   };
   async getUserInfo() {
     let x = await axios.get("http://localhost:5000/userinfo");
@@ -213,7 +213,6 @@ class TeacherHome extends Component {
                 <button className="back" onClick={this.closeProfile}>
                   cancel
                 </button>
-     
 
                 <div id="blackout" style={this.state.customDisplays.floatBox}>
                   <div id="box" style={this.state.customDisplays.floatBox}>
@@ -284,7 +283,7 @@ class TeacherHome extends Component {
               New Course
             </button>
             <Link to="/teachermoodle">
-            <button className="moodle Btn">Moodle</button>
+              <button className="moodle Btn">Moodle</button>
             </Link>
             <button onClick={this.logout} className="logout Btn">
               Log out

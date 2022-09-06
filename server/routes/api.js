@@ -363,6 +363,7 @@ router.post("/question", function (request, respnse) {
 
 router.put("/user", function (req, res) {
   let pass = req.body.pass;
+  console.log(pass);
   if (session.roll == "Student") {
     Student.findOne({ Email: session.email }).exec(function (err, student) {
       student.Password = pass;

@@ -89,7 +89,10 @@ class StudentHome extends Component {
     userModified = null;
     this.setState({ imageChanged: userModified });
   };
-
+  changePassword = () => {
+    if (this.state.newPassword.length > 0)
+      axios.put("http://localhost:5000/user", { pass: this.state.newPassword });
+  };
   uploadImg = () => {
     const formData = new FormData();
     formData.append("myFile", this.state.imageChanged);
@@ -107,6 +110,8 @@ class StudentHome extends Component {
         };
 
         this.setState({ user: y });
+        this.hideFloatBox();
+        this.changePassword();
       }
     }
   };
