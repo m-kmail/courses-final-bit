@@ -91,12 +91,12 @@ class Register extends Component {
       <div className="container">
         <div className="button-box">
           <Link to="/">
-            <button type="button" className="toggle-btn" id="lgin">
+            <button type="button" className="toggle-btn homeBtn" id="lgin">
               Log In
             </button>
           </Link>
           <Link to="/register">
-            <button type="button" className="toggle-btn" id="rgs">
+            <button type="button" className="toggle-btn homeBtn" id="rgs">
               Register
             </button>
           </Link>
@@ -156,7 +156,7 @@ class Register extends Component {
             />
             <p className="radiotext">Female</p>
           </div>
-          <button className="regbtn" onClick={this.register}>
+          <button className="regbtn homeBtn" onClick={this.register}>
             Register
           </button>
         </div>

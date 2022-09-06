@@ -65,9 +65,10 @@ router.get("/:roll/:email/:pass", async function (req, res) {
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
-  Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
+
+  Teacher.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
-      const newStudent = new Student({
+      const newStudent = new Teacher({
         Name: userInfo.Name,
         Email: userInfo.Email,
         Password: userInfo.Password,
@@ -77,7 +78,7 @@ router.post("/user", function (req, res) {
       });
       newStudent.save();
       req.session.email = newStudent.Email;
-      req.session.roll = "Student";
+      req.session.roll = "Teacher";
       req.session.Name = userInfo.Name;
       req.session.save();
 
@@ -309,6 +310,22 @@ router.post("/payment", async (req, res) => {
     res.json({
       message: "Payment failed",
       success: false,
+    });
+  }
+  res.end();
+});
+
+router.put("/user", function (req, res) {
+  let pass = req.body.pass;
+  if (session.roll == "Stuent") {
+    Student.findOne({ Email: session.email }).exec(function (err, student) {
+      student.Password = pass;
+      student.save();
+    });
+  } else {
+    Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
+      teacher.Password = pass;
+      teacher.save();
     });
   }
   res.end();
