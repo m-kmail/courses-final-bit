@@ -251,99 +251,6 @@ class StudentHome extends Component {
       <div className="student-home">
         <div className="backGround"></div>
         <div className="content">
-          <div
-            className="profile"
-            style={this.state.customDisplay.profileStyle}
-          >
-            <div className="info">
-              <div className="userName">
-                <h2 className="userdata">{this.state.user.name}</h2>
-                {this.state.user.img ? (
-                  <img
-                    className="profileImg"
-                    src={`http://localhost:5000/uploads/${this.state.user.img.path.substring(
-                      8
-                    )}`}
-                  />
-                ) : null}
-              </div>
-              <div className="userInfo">
-                <h3 className="userdata">Informations</h3>
-                <div className="myData">
-                  <h4 className="userdata">Email :</h4>
-                  <p className="userdata">{this.state.user.email}</p>
-                  <h4 className="userdata">gender :</h4>
-                  <p className="userdata">{this.state.user.gender}</p>
-                </div>
-
-                <button className="modify" onClick={this.showFloatBox}>
-                  Modify Data
-                </button>
-
-                <button className="back" onClick={this.closeProfile}>
-                  cancel
-                </button>
-
-                <div id="blackout" style={this.state.customDisplay.floatBox}>
-                  <div id="box" style={this.state.customDisplay.floatBox}>
-                    <div className="modifyData">
-                      <p
-                        className="far fa-times-circle"
-                        onClick={this.hideFloatBox}
-                      ></p>
-
-                      <div className="newData">
-                        <div
-                          className="errorMassege"
-                          style={this.state.customDisplay.erroeMessage}
-                        >
-                          password did not match
-                        </div>
-                        <input
-                          value={this.state.newPassword}
-                          onChange={this.passwordChanged}
-                          className="newDataInput passDataInput"
-                          type="password"
-                          placeholder="New Password"
-                        ></input>
-                        <input
-                          value={this.state.confirmPassword}
-                          onChange={this.confirmPasswordChanged}
-                          className="newDataInput passDataInput"
-                          type="password"
-                          placeholder="Confirm password"
-                        ></input>
-                        <div className="imagechange">
-                          <input
-                            type="file"
-                            name="myImage"
-                            onChange={this.imgChanged}
-                          />
-                          <button
-                            className="removeImg"
-                            onClick={this.removeImg}
-                          >
-                            Remove Image
-                          </button>
-                          <button
-                            className="uploadImg"
-                            onClick={this.uploadImg}
-                          >
-                            upload Image
-                          </button>
-                        </div>
-                      </div>
-
-                      <button onClick={this.add} className="addModify">
-                        Modify
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className="nav">
             <button className="myProfile Btn" onClick={this.showProfile}>
               My Profile
@@ -445,6 +352,100 @@ class StudentHome extends Component {
                 </button>
               </div>
             </div>
+
+            <div
+              className="profile"
+              style={this.state.customDisplay.profileStyle}
+            >
+              <div className="info">
+                <div className="userName">
+                  <h2 className="userdata">{this.state.user.name}</h2>
+                  {this.state.user.img ? (
+                    <img
+                      className="profileImg"
+                      src={`http://localhost:5000/uploads/${this.state.user.img.path.substring(
+                        8
+                      )}`}
+                    />
+                  ) : null}
+                </div>
+                <div className="userInfo">
+                  <h3 className="userdata">Informations</h3>
+                  <div className="myData">
+                    <h4 className="userdata">Email :</h4>
+                    <p className="userdata">{this.state.user.email}</p>
+                    <h4 className="userdata">gender :</h4>
+                    <p className="userdata">{this.state.user.gender}</p>
+                  </div>
+
+                  <button className="modify" onClick={this.showFloatBox}>
+                    Modify Data
+                  </button>
+
+                  <button className="back" onClick={this.closeProfile}>
+                    cancel
+                  </button>
+
+                  <div id="blackout" style={this.state.customDisplay.floatBox}>
+                    <div id="box" style={this.state.customDisplay.floatBox}>
+                      <div className="modifyData">
+                        <p
+                          className="far fa-times-circle"
+                          onClick={this.hideFloatBox}
+                        ></p>
+
+                        <div className="newData">
+                          <div
+                            className="errorMassege"
+                            style={this.state.customDisplay.erroeMessage}
+                          >
+                            password did not match
+                          </div>
+                          <input
+                            value={this.state.newPassword}
+                            onChange={this.passwordChanged}
+                            className="newDataInput passDataInput"
+                            type="password"
+                            placeholder="New Password"
+                          ></input>
+                          <input
+                            value={this.state.confirmPassword}
+                            onChange={this.confirmPasswordChanged}
+                            className="newDataInput passDataInput"
+                            type="password"
+                            placeholder="Confirm password"
+                          ></input>
+                          <div className="imagechange">
+                            <input
+                              type="file"
+                              name="myImage"
+                              onChange={this.imgChanged}
+                            />
+                            <button
+                              className="removeImg"
+                              onClick={this.removeImg}
+                            >
+                              Remove Image
+                            </button>
+                            <button
+                              className="uploadImg"
+                              onClick={this.uploadImg}
+                            >
+                              upload Image
+                            </button>
+                          </div>
+                        </div>
+
+                        <button onClick={this.add} className="addModify">
+                          Modify
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="schedul" style={this.state.customDisplay.myTable}>
               <table>
                 <thead>
