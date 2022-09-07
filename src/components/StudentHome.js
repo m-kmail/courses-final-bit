@@ -28,7 +28,7 @@ class StudentHome extends Component {
       imageChanged: null,
       customDisplay: {
         searchCourses: { display: "none" },
-        myCourses: { display: "flex" },
+        myCourses: { display: "block" },
         joinCourse: { display: "none" },
         myTable: { display: "none" },
         profileStyle: { display: "none" },

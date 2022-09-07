@@ -22,7 +22,8 @@ class TeacherHome extends Component {
         profileStyle: { display: "none" },
         erroeMessage: { display: "none" },
         floatBox: { display: "none" },
-      },
+        emptyInput: { display: "none" }
+      }
     };
   }
 
@@ -54,7 +55,7 @@ class TeacherHome extends Component {
     const h = {};
     h.Accept = "application/json";
     axios.post("http://localhost:5000/upload_file", formData, {
-      headers: h,
+      headers: h
     });
   }
   uploadImg = () => {
@@ -70,7 +71,7 @@ class TeacherHome extends Component {
         this.setState({ customDisplays: cur });
       } else {
         let y = {
-          password: this.state.newPassword,
+          password: this.state.newPassword
         };
         this.setState({ user: y });
         this.hideFloatBox();
@@ -91,15 +92,32 @@ class TeacherHome extends Component {
   creditHourChanged = (e) => {
     this.setState({ inputCreditHour: e.target.value });
   };
-
+  empty = () => {
+    return (
+      this.state.inputname == "" ||
+      this.state.inputCreditHour == "" ||
+      this.state.inputday == "" ||
+      this.state.inputtime == ""
+    );
+  };
   createCourse = () => {
-    let newCourse = {
-      name: this.state.inputname,
-      creditHours: this.state.inputCreditHour,
-      days: this.state.inputday,
-      time: this.state.inputtime,
-    };
-    this.createNewCourse(newCourse);
+    if (!this.empty()) {
+      let curr = this.state.customDisplays;
+      curr.emptyInput = { display: "none" };
+      this.setState({ customDisplays: curr });
+      let newCourse = {
+        name: this.state.inputname,
+        creditHours: this.state.inputCreditHour,
+        days: this.state.inputday,
+        time: this.state.inputtime
+      };
+      this.createNewCourse(newCourse);
+      return;
+    } else {
+      let curr = this.state.customDisplays;
+      curr.emptyInput = { display: "block" };
+      this.setState({ customDisplays: curr });
+    }
   };
   async createNewCourse(course) {
     let x;
@@ -127,7 +145,7 @@ class TeacherHome extends Component {
         let x = this.getUserInfo();
         x.then((e) => this.setState({ user: e }));
         this.setState({
-          courses: courses.data,
+          courses: courses.data
         });
       }
     }
@@ -305,6 +323,12 @@ class TeacherHome extends Component {
               style={this.state.customDisplays.addStyle}
             >
               <div className="allNewInputs">
+                <h1
+                  className="emptyStuff"
+                  style={this.state.customDisplays.emptyInput}
+                >
+                  All The Fields Are Requierd
+                </h1>
                 <h1 className="newCourseHeader">New courses</h1>
                 <div className="inputsDiv ">
                   <input

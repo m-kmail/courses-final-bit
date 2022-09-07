@@ -12,6 +12,7 @@ class StudentMoodle extends Component {
       searchStuts: "",
       showModel: { display: "block" },
       CourseDetail: { display: "none" },
+      customDisplay: { courses: { display: "block" } }
     };
   }
 
@@ -32,7 +33,7 @@ class StudentMoodle extends Component {
     this.setState({
       showModel: moodleSHow,
       CourseDetail: detailShow,
-      courseSelected: e.currentTarget.getAttribute("data"),
+      courseSelected: e.currentTarget.getAttribute("data")
     });
   };
   courseFilter = (e) => {
@@ -54,7 +55,7 @@ class StudentMoodle extends Component {
       else {
         let courses = await this.getCourses();
         this.setState({
-          courses: courses.data,
+          courses: courses.data
         });
       }
     }
@@ -65,7 +66,11 @@ class StudentMoodle extends Component {
         <div className="moodelNav">
           <div className="nameMood"> Welcome In Moodel</div>
         </div>
-        <div className="coursesContainer">
+
+        <div
+          className="coursesContainer"
+          style={this.state.customDisplay.courses}
+        >
           <select
             className="typeCourseInput"
             value={this.state.searchStuts}
@@ -91,7 +96,8 @@ class StudentMoodle extends Component {
               ))}
           </div>
         </div>
-        <div style={this.state.CourseDetail}>
+
+        <div className="chapters" style={this.state.CourseDetail}>
           <div>CH1</div>
           {this.state.filePath ? (
             <a href={`http://localhost:5000/uploads/${this.state.filePath}`}>

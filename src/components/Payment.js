@@ -9,24 +9,34 @@ function Payment() {
   const [pricehoure, setpricehoure] = useState("38");
   const [fees, setfees] = useState("");
   const [val, setval] = useState("");
+  const [showErr, setShowErr] = useState({ display: "none" });
+
   const navigate = useNavigate();
   const navigateHome = () => {
     navigate("/studenthome");
   };
 
   const calculat = () => {
-    try {
-      setfees(eval(val * pricehoure + 40));
-    } catch (error) {
-      setval("error");
+    if (val == "" || val == 0) {
+      setShowErr({ display: "block" });
+    } else {
+      try {
+        setfees(eval(val * pricehoure + 40));
+      } catch (error) {
+        setval("error");
+      }
     }
   };
 
   const appendAmount = async () => {
-    await axios.put("http://localhost:5000/aboutToMakeATransaction", {
-      amount: fees
-    });
-    setShowItem(true);
+    if (val == "" || val == 0) {
+      setShowErr({ display: "block" });
+    } else {
+      await axios.put("http://localhost:5000/aboutToMakeATransaction", {
+        amount: fees
+      });
+      setShowItem(true);
+    }
   };
   return (
     <div className="payment">
@@ -37,9 +47,12 @@ function Payment() {
       ) : (
         <>
           <div class="box">
+            <h1 className="noHours" style={showErr}>
+              Please Enter The Number Of Hours You'd Like To Pay For
+            </h1>
             <input
               type="number"
-              placeholder=" hours to be recorded"
+              placeholder="number of hours"
               id="houres"
               value={val}
               onChange={(e) => setval(e.target.value)}
