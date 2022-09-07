@@ -254,22 +254,26 @@ router.get("/userinfo", function (req, res) {
 
   if (session.roll == "Student") {
     Student.findOne({ Email: email }).exec(function (err, student) {
-      let userInfo = { email: session.email };
-      userInfo.roll = "Student";
-      userInfo.name = student.Name;
-      userInfo.gender = student.Gender;
-      userInfo.img = student.IMG;
-      userInfo.wallet = student.Wallet;
-      res.send(userInfo);
+      if (student) {
+        let userInfo = { email: session.email };
+        userInfo.roll = "Student";
+        userInfo.name = student.Name;
+        userInfo.gender = student.Gender;
+        userInfo.img = student.IMG;
+        userInfo.wallet = student.Wallet;
+        res.send(userInfo);
+      }
     });
   } else {
     Teacher.findOne({ Email: email }).exec(function (err, teacher) {
-      let userInfo = { email: session.email };
-      userInfo.roll = "Teacher";
-      userInfo.name = teacher.Name;
-      userInfo.gender = teacher.Gender;
-      userInfo.img = teacher.IMG;
-      res.send(userInfo);
+      if (teacher) {
+        let userInfo = { email: session.email };
+        userInfo.roll = "Teacher";
+        userInfo.name = teacher.Name;
+        userInfo.gender = teacher.Gender;
+        userInfo.img = teacher.IMG;
+        res.send(userInfo);
+      }
     });
   }
 });
