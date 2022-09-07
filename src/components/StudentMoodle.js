@@ -13,7 +13,8 @@ class StudentMoodle extends Component {
       searchStuts: "",
       showModel: { display: "block" },
       CourseDetail: { display: "none" },
-      customDisplay: { courses: { display: "block" } }
+      customDisplay: { courses: { display: "block" } },
+      participants: []
     };
   }
 
@@ -47,6 +48,7 @@ class StudentMoodle extends Component {
   };
 
   async getCourses() {
+    //may need to be changed
     let courses = await axios.get("http://localhost:5000/courses");
     return courses;
   }
@@ -71,6 +73,12 @@ class StudentMoodle extends Component {
       }
     }
   }
+
+  loadStudents = () => {
+    axios
+      .get(`http://localhost:5000/courseStudents/${this.state.courseSelected}`)
+      .then((students) => this.setState({ participants: students.data }));
+  };
   render() {
     return (
       <div className="studentMoodleContainer">
@@ -104,6 +112,9 @@ class StudentMoodle extends Component {
           </div>
         </div>
         <div className="courseDetailContainer" style={this.state.CourseDetail}>
+          <div className="extra">
+            <button onClick={this.loadStudents}>participants</button>
+          </div>
           <div className="fileContainer">
             <div className="courseChapters">
               <h2 className="titleCourse">CHAPTER 1</h2>

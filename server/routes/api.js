@@ -481,4 +481,24 @@ router.get("/exam/:courseId", function (req, res) {
       res.send(course.Exams);
     });
 });
+
+router.get("/courseStudents/:courseId", function (req, res) {
+  let allstudents = [];
+  let courseId = req.params.courseId;
+  Course.findOne({ _id: courseId })
+    .populate("Students")
+    .exec(function (err, course) {
+      course.Students.forEach((S) => {
+        let newStudent = {
+          name: S.Name,
+
+          img: S.IMG == null ? S.IMG : S.IMG.path.substring(8),
+
+          email: S.Email
+        };
+        allstudents.push(newStudent);
+      });
+      res.send(allstudents);
+    });
+});
 module.exports = router;
