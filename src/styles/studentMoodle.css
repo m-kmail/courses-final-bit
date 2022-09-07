@@ -4,6 +4,7 @@ body {
   height:100%;
   background-image: none;
   background-color: rgba(0, 0, 0, 0.4);
+  
 }
 .coursesContainer {
   position: absolute;
@@ -84,4 +85,66 @@ h3 {
   left: 0px;
   top: 25px;
   font-family: "Marck Script", cursive;
+}
+.courseDetailContainer{
+  flex-wrap: wrap;
+  overflow-y: auto;
+  flex-direction: column;
+align-items: center;
+overflow-y: auto;
+}
+.titleCourse{
+  text-align:left;
+  margin-left: 1%;
+}
+.pdfFile{
+  display: flex;
+  margin-left: 15%;
+}
+.courseChapters{
+  padding-bottom: 5%;
+}
+.fileContainer{
+  border-bottom:3px solid rgba(255, 255, 255, 0.189);
+  padding-bottom: 3%;
+width: 100%;
+}
+.quizTitle{
+  padding: 10px;
+  text-align: start;
+}
+.quizField{
+  font-size: calc(1rem + 0.8vw );
+width: 30%;
+  margin-top: 3%;
+  padding-top: 0;
+
+}
+.examName{
+  text-align:center
+}
+.examQuestions{
+  margin-top: 7%;
+  text-align: start;
+}
+.examContent{
+padding: 5%;
+  border: 3px solid rgb(67, 65, 65);
+}
+.examQuestion{
+  margin: 5%;
+}
+.choicesContent{
+  margin-left: 5%;
+  padding-top: 3%;
+  padding-bottom: 5%;
+}
+.submitExam{
+  font-family: "DynaPuff", cursive;
+  font-size: calc(1vw + 0.7vh + 0.7vmin);
+  font-weight: bold;;
+  border-radius: 7px;
+  width: 60%;
+  text-align: center;
+  margin-left: 17%;
 }
