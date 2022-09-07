@@ -12,6 +12,7 @@ const CourseSchema = new Schema({
   Exams: [{ type: Schema.Types.ObjectId, ref: "Exam" }],
   FinalGrade: Number,
   numOfStudents: Number,
+  File: Object,
 });
 const Course = mongoose.model("Course", CourseSchema);
 module.exports = Course;

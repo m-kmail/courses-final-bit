@@ -1,17 +1,40 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "../styles/studentMoodle.css";
-
 class StudentMoodle extends Component {
   constructor() {
     super();
 
     this.state = {
+      filePath: null,
+      courseSelected: "",
       courses: [],
       searchStuts: "",
+      showModel: { display: "block" },
+      CourseDetail: { display: "none" },
     };
   }
 
+  changeShowModel = (e) => {
+    this.state.courses.map((course) => {
+      if (course._id == e.currentTarget.getAttribute("data"))
+        this.setState({ filePath: course.File.path.substring(8) });
+    });
+    let moodleSHow = { ...this.state.showModel };
+    let detailShow = { ...this.state.CourseDetail };
+    if (moodleSHow.display == "block") {
+      moodleSHow.display = "none";
+      detailShow.display = "block";
+    } else {
+      moodleSHow.display = "block";
+      detailShow.display = "none";
+    }
+    this.setState({
+      showModel: moodleSHow,
+      CourseDetail: detailShow,
+      courseSelected: e.currentTarget.getAttribute("data"),
+    });
+  };
   courseFilter = (e) => {
     this.setState({ searchStuts: e.target.value });
   };
@@ -39,25 +62,42 @@ class StudentMoodle extends Component {
   render() {
     return (
       <div className="coursesContainer">
-        <select
-          className="typeCourseInput"
-          value={this.state.searchStuts}
-          onChange={this.courseFilter}
-        >
-          <option value="" disabled selected>
-            Courses
-          </option>
-          <option value="in progress">In progress</option>
-          <option value="past">past</option>
-        </select>
-        <div className="courses">
-          {this.state.courses
-            .filter((course) => course.Status == this.state.searchStuts)
-            .map((t) => (
-              <div className="courseDiv">
-                <h3> {t.Name}</h3>
-              </div>
-            ))}
+        <div style={this.state.showModel}>
+          <select
+            className="typeCourseInput"
+            value={this.state.searchStuts}
+            onChange={this.courseFilter}
+          >
+            <option value="" disabled selected>
+              Courses
+            </option>
+            <option value="in progress">In progress</option>
+            <option value="past">past</option>
+          </select>
+          <div className="courses">
+            {this.state.courses
+              .filter((course) => course.Status == this.state.searchStuts)
+              .map((t) => (
+                <div
+                  data={t._id}
+                  className="courseDiv"
+                  onClick={this.changeShowModel}
+                >
+                  <h3> {t.Name}</h3>
+                </div>
+              ))}
+          </div>
+        </div>
+        <div style={this.state.CourseDetail}>
+          <div>CH1</div>
+
+          <a href={`http://localhost:5000/uploads/${this.state.filePath}`}>
+            PDF file
+          </a>
+
+          <div>CH2</div>
+          <div>CH3</div>
+          <div>Quiz</div>
         </div>
       </div>
     );

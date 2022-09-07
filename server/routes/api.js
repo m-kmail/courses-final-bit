@@ -20,6 +20,15 @@ var storage = multer.diskStorage({
     cb(null, Date.now() + ".jpg");
   },
 });
+var storageFile = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + ".pdf");
+  },
+});
+var uploadFile = multer({ storage: storageFile });
 var upload = multer({ storage: storage });
 
 router.post("/upload_file", upload.array("myFile"), function (req, res) {
@@ -37,6 +46,22 @@ router.post("/upload_file", upload.array("myFile"), function (req, res) {
   res.json({ message: "Successfully uploaded files" });
   res.end();
 });
+
+router.post(
+  "/pdf_file/:courseId",
+  uploadFile.array("PDF_FILE"),
+  function (req, res) {
+    let courseID = req.params.courseId;
+    console.log(courseID);
+    Course.findOne({ _id: courseID }).exec(function (err, course) {
+      course.File = req.files[0];
+      course.save();
+    });
+    res.json({ message: "Successfully uploaded a PDF file" });
+    res.end();
+  }
+);
+
 router.get("/:roll/:email/:pass", async function (req, res) {
   let user;
 
@@ -146,6 +171,7 @@ router.post("/courses", async function (request, response) {
       FinalGrade: 0,
       numOfStudents: 0,
       Students: [],
+      File: null,
     });
 
     let ok = true;
