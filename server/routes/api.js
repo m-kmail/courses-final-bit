@@ -123,8 +123,8 @@ router.get("/courses", function (req, res) {
       .populate({
         path: "Courses",
         populate: {
-          path: "Teacher",
-        },
+          path: "Teacher"
+        }
       })
       .exec(function (err, user) {
         res.send(user.Courses);
@@ -254,30 +254,32 @@ router.put("/course", function (request, response) {
   });
 });
 router.get("/userinfo", function (req, res) {
-  let email = session.email;
-  if (session.roll == "Student") {
-    Student.findOne({ Email: email }).exec(function (err, student) {
-      if (student) {
-        let userInfo = { email: session.email };
-        userInfo.roll = "Student";
-        userInfo.name = student.Name;
-        userInfo.gender = student.Gender;
-        userInfo.img = student.IMG;
-        userInfo.wallet = student.Wallet;
-        res.send(userInfo);
-      }
-    });
-  } else {
-    Teacher.findOne({ Email: email }).exec(function (err, teacher) {
-      if (teacher) {
-        let userInfo = { email: session.email };
-        userInfo.roll = "Teacher";
-        userInfo.name = teacher.Name;
-        userInfo.gender = teacher.Gender;
-        userInfo.img = teacher.IMG;
-        res.send(userInfo);
-      }
-    });
+  if (session.email) {
+    let email = session.email;
+    if (session.roll == "Student") {
+      Student.findOne({ Email: email }).exec(function (err, student) {
+        if (student) {
+          let userInfo = { email: session.email };
+          userInfo.roll = "Student";
+          userInfo.name = student.Name;
+          userInfo.gender = student.Gender;
+          userInfo.img = student.IMG;
+          userInfo.wallet = student.Wallet;
+          res.send(userInfo);
+        }
+      });
+    } else {
+      Teacher.findOne({ Email: email }).exec(function (err, teacher) {
+        if (teacher) {
+          let userInfo = { email: session.email };
+          userInfo.roll = "Teacher";
+          userInfo.name = teacher.Name;
+          userInfo.gender = teacher.Gender;
+          userInfo.img = teacher.IMG;
+          res.send(userInfo);
+        }
+      });
+    }
   }
 });
 
