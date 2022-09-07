@@ -7,8 +7,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  filter: blur(2px);
-  filter: brightness(65%);
+  filter: blur(3px);
+  filter: brightness(40%);
 }
 
 .nav {
@@ -65,13 +65,13 @@
 .userName {
   height: 100%;
   width: 70%;
-  background-color: rgba(56, 67, 75, 0.749);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .userInfo {
   height: 100%;
   width: 100%;
-  background-color: #f3f3f3(112, 116, 116);
+  background-color: rgba(56, 67, 75, 0.35);
   grid-template-columns: 1fr;
 }
 
@@ -182,9 +182,12 @@ h3 {
   display: none;
 }
 
-#box {
-  height: 100%;
-  width: 50%;
+.newZeft {
+  display: grid;
+  grid-template-columns: 1fr;
+  color: white;
+  height: 90%;
+  width: 40%;
   text-align: center;
   padding: 50px;
   border: 3px solid #ec9a0a;
@@ -195,10 +198,12 @@ h3 {
   bottom: 10px;
   left: 10px;
   margin: auto;
-  background-color: rgba(30, 33, 35, 0.749);
+  background-color: rgba(56, 67, 75, 0.9);
 }
-
-#blackout:target {
+.newZeft::placeholder {
+  color: white;
+}
+#blackoutZeft:target {
   display: block;
 }
 
@@ -261,7 +266,6 @@ h4 {
   font-family: "DynaPuff", cursive;
 }
 
-
 .contentView {
   position: relative;
   display: flex;
@@ -291,17 +295,35 @@ h4 {
   padding: 0;
 }
 
+.joinCourse {
+  color: #ec9a0a;
+}
+
+.searchBtn {
+  background-color: rgb(236, 154, 10);
+  height: 50px;
+  border: none;
+  border-radius: 25px;
+  width: 140px;
+  text-align: center;
+  display: block;
+  margin-left: 27%;
+}
+.searchBtn:hover {
+  background-color: rgb(241, 184, 86);
+}
 .addToCourseContainer {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 500px;
   padding: 15px;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 7px;
   font-family: "DynaPuff", cursive;
 }
-
-.searchBtn {
-  padding: 0;
-}
-
 .inputsDiv {
   display: grid;
   grid-template-columns: 1fr;
@@ -309,13 +331,15 @@ h4 {
 }
 
 .existed {
-  background-color: firebrick;
+  background-color: transparent;
   padding: 0;
   width: 150px;
 }
 
 .notexisted {
-  width: 150px;
+  width: 100px;
+  margin-right: 20px;
+  margin-top: 30px;
   background-color: green;
   padding: 0;
 }
@@ -332,10 +356,11 @@ h4 {
 .passDataInput:focus {
   width: 99%;
   border-color: #ec9a0a;
+  color: white;
 }
 
-::placeholder {
-  color: black;
+.passDataInput::placeholder {
+  color: white;
 }
 
 .passDataInput {
@@ -348,12 +373,39 @@ h4 {
   padding: 14px 10px;
   width: 70%;
   outline: none;
-  color: black;
+
   border-radius: 24px;
   transition: 0.25s;
   font-size: large;
 }
+.allButtons {
+  margin-top: 10%;
+}
 
 .fa-trash:hover {
   color: red;
+}
+.radioButton {
+  color: #ec9a0a;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.searchCourse {
+  border: 0;
+  background: none;
+  margin-left: 30px;
+  text-align: center;
+  border: 2px solid rgb(241, 184, 86);
+  padding: 14px 10px;
+  width: 80%;
+  height: 15px;
+  outline: none;
+  color: black;
+  border-radius: 24px;
+  transition: 0.25s;
+  font-size: large;
+  color: #ec9a0a;
+}
+.searchCourse::placeholder {
+  color: #ec9a0a;
 }

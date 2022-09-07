@@ -6,10 +6,10 @@ class SearchedCourse extends Component {
   };
   render() {
     return (
-      <div className="data">
+      <div className="data ">
         <h2>{this.props.info.Name}</h2>
-        <h2>{this.props.info.Days}</h2>
         <h2>{this.props.info.Time}</h2>
+        <h2>{this.props.info.Days}</h2>
         <h2>{this.props.info.CreditHours}</h2>
         <h2>{this.props.info.Teacher.name}</h2>
         {this.props.existed == false ? (
@@ -17,7 +17,7 @@ class SearchedCourse extends Component {
             Join
           </button>
         ) : (
-          <button className="existed">Drop</button>
+          <button className="existed"></button>
         )}
       </div>
     );
