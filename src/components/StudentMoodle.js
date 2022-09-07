@@ -6,6 +6,7 @@ class StudentMoodle extends Component {
     super();
 
     this.state = {
+      examCourse: null,
       filePath: null,
       courseSelected: "",
       courses: [],
@@ -29,11 +30,16 @@ class StudentMoodle extends Component {
       moodleSHow.display = "block";
       detailShow.display = "none";
     }
-    this.setState({
-      showModel: moodleSHow,
-      CourseDetail: detailShow,
-      courseSelected: e.currentTarget.getAttribute("data"),
-    });
+    this.setState(
+      {
+        showModel: moodleSHow,
+        CourseDetail: detailShow,
+        courseSelected: e.currentTarget.getAttribute("data"),
+      },
+      function () {
+        this.getQuiz();
+      }
+    );
   };
   courseFilter = (e) => {
     this.setState({ searchStuts: e.target.value });
@@ -43,7 +49,12 @@ class StudentMoodle extends Component {
     let courses = await axios.get("http://localhost:5000/courses");
     return courses;
   }
-
+  async getQuiz() {
+    let courses = await axios.get(
+      `http://localhost:5000/exam/${this.state.courseSelected}`
+    );
+    this.setState({ examCourse: courses.data });
+  }
   async componentDidMount() {
     let userInfo = await axios.get("http://localhost:5000/sessionInfo");
 
@@ -65,7 +76,7 @@ class StudentMoodle extends Component {
         <div className="moodelNav">
           <div className="nameMood"> Welcome In Moodel</div>
         </div>
-        <div className="coursesContainer">
+        <div className="coursesContainer" style={this.state.showModel}>
           <select
             className="typeCourseInput"
             value={this.state.searchStuts}
@@ -92,7 +103,7 @@ class StudentMoodle extends Component {
           </div>
         </div>
         <div style={this.state.CourseDetail}>
-          <div>CH1</div>
+          <div>file</div>
           {this.state.filePath ? (
             <a href={`http://localhost:5000/uploads/${this.state.filePath}`}>
               <i class="fa fa-file-pdf-o" aria-hidden="true">
@@ -102,10 +113,41 @@ class StudentMoodle extends Component {
           ) : (
             <div>No files to display</div>
           )}
-
-          <div>CH2</div>
-          <div>CH3</div>
-          <div>Quiz</div>
+          <div className="quizField">
+            <h1>Exam</h1>
+            {this.state.examCourse ? (
+              <div className="examContent">
+                <h4 className="examName">{this.state.examCourse.Name}</h4>
+                <div className="examQuestions">
+                  {this.state.examCourse.Questions.map((element, index1) => {
+                    return (
+                      <div className="examQuestion">
+                        <div className="questionTitle">{element.question}</div>
+                        <div className="questionChoice">
+                          {Object.keys(element.choices[0]).map(
+                            (choice, index2) => {
+                              return (
+                                <div className="choicesContent">
+                                  <input type="radio" name={index1} />
+                                  <span className="header">{choice}:</span>
+                                  <span className="toAnswer">
+                                    {element.choices[0][choice]}
+                                  </span>
+                                </div>
+                              );
+                            }
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                  <button>submit Exam</button>
+                </div>
+              </div>
+            ) : (
+              <div>no exam</div>
+            )}
+          </div>
         </div>
       </div>
     );
