@@ -33,14 +33,14 @@ class StudentHome extends Component {
         myTable: { display: "none" },
         profileStyle: { display: "none" },
         erroeMessage: { display: "none" },
-        floatBox: { display: "none" },
+        floatBox: { display: "none" }
       },
-      userInfo: {},
+      userInfo: {}
     };
   }
   changeSearch = (e) => {
     this.setState({
-      search: e.target.value,
+      search: e.target.value
     });
   };
   showProfile = () => {
@@ -103,7 +103,7 @@ class StudentHome extends Component {
         this.setState({ customDisplay: cur });
       } else {
         let y = {
-          password: this.state.newPassword,
+          password: this.state.newPassword
         };
 
         this.setState({ user: y });
@@ -114,17 +114,17 @@ class StudentHome extends Component {
   };
   changeFilter = (e) => {
     this.setState({
-      filter: e.target.value,
+      filter: e.target.value
     });
   };
   calculat = () => {
     try {
       this.setState({
-        fees: this.state.val * this.state.pricehoure + 40,
+        fees: this.state.val * this.state.pricehoure + 40
       });
     } catch (error) {
       this.setState({
-        val: "error",
+        val: "error"
       });
     }
   };
@@ -136,7 +136,7 @@ class StudentHome extends Component {
     const h = {};
     h.Accept = "application/json";
     axios.post("http://localhost:5000/upload_file", formData, {
-      headers: h,
+      headers: h
     });
   }
   uploadImg = () => {
@@ -149,23 +149,25 @@ class StudentHome extends Component {
     return x.data;
   }
 
-  async componentDidMount() {
-    let userInfo = await axios.get("http://localhost:5000/sessionInfo");
-    if (userInfo == undefined || userInfo.data.email == undefined) {
-      window.location = "/";
-    } else {
-      if (userInfo.data.roll == "Teacher") window.location = "/teacherhome";
-      else {
-        let courses = await this.getCourses();
-        let x = this.getUserInfo();
-        x.then((e) => this.setState({ user: e }));
-        this.setState({
-          courses: courses.data,
-          userInfo: userInfo.data,
-        });
+  componentDidMount = () => {
+    (async () => {
+      let userInfo = await axios.get("http://localhost:5000/sessionInfo");
+      if (userInfo == undefined || userInfo.data.email == undefined) {
+        window.location = "/";
+      } else {
+        if (userInfo.data.roll == "Teacher") window.location = "/teacherhome";
+        else {
+          let courses = await this.getCourses();
+          let x = this.getUserInfo();
+          x.then((e) => this.setState({ user: e }));
+          this.setState({
+            courses: courses.data,
+            userInfo: userInfo.data
+          });
+        }
       }
-    }
-  }
+    })();
+  };
   async getSearchCourses(searchCourse) {
     let x = await axios.get(
       `http://localhost:5000/searchCourses?${searchCourse.filter}=${searchCourse.search}`
@@ -183,10 +185,18 @@ class StudentHome extends Component {
     });
   };
   componentDidUpdate() {
-    this.componentDidMount();
+    (async () => {
+      let courses = await this.getCourses();
+      let x = this.getUserInfo();
+      x.then((e) => this.setState({ user: e }));
+      this.setState({
+        courses: courses.data
+      });
+    })();
   }
   async getCourses() {
-    return await axios.get("http://localhost:5000/courses");
+    let c = await axios.get("http://localhost:5000/courses");
+    return c;
   }
 
   async logout() {
@@ -194,22 +204,30 @@ class StudentHome extends Component {
 
     window.location = "/";
   }
-  async deleteCourse(courseId) {
-    return await axios.delete(`http://localhost:5000/course/${courseId}`);
+
+  deleteCourse(courseId) {
+    return axios.delete(`http://localhost:5000/course/${courseId}`);
   }
 
-  async addCourse(courseid) {
-    return await axios.put("http://localhost:5000/course", {
-      courseId: courseid,
+  addCourse(courseid) {
+    return axios.put("http://localhost:5000/course", {
+      courseId: courseid
     });
   }
 
-  async changeBalance(amount) {
-    let Balance = await axios.put("http://localhost:5000/changeBalance", {
-      amount: amount,
+  changeBalance = async (amount) => {
+    const balance = (
+      await axios.put("http://localhost:5000/changeBalance", {
+        amount
+      })
+    ).data.balance;
+
+    this.setState({
+      userInfo: { ...this.state.userInfo, wallet: balance }
     });
-    return Balance.data.balance;
-  }
+
+    return balance;
+  };
   drop = (courseid, amount) => {
     let userData = this.state.userInfo;
     this.deleteCourse(courseid);
@@ -222,17 +240,10 @@ class StudentHome extends Component {
   };
   inroll = (courseid, amount) => {
     let userData = this.state.userInfo;
-    console.log(userData);
-    if (userData.wallet < amount) alert("ff");
-    else {
-      this.addCourse(courseid);
-      this.changeBalance(amount * -1).then((balance) => {
-        userData.wallet = balance;
-        this.setState({ userInfo: userData }, () =>
-          console.log(this.state.userInfo)
-        );
-      });
-    }
+    if (userData.wallet < amount) return alert("Your Balance Is Not Enought");
+
+    this.addCourse(courseid);
+    this.changeBalance(amount * -1);
   };
 
   sortCourses = () => {
@@ -244,7 +255,7 @@ class StudentHome extends Component {
       Monday: [],
       Tuesday: [],
       Wednesday: [],
-      Thursday: [],
+      Thursday: []
     };
     for (let c of allCoursrs) {
       let days = c.Days;

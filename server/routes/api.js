@@ -18,7 +18,7 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + ".jpg");
-  },
+  }
 });
 var storageFile = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -26,7 +26,7 @@ var storageFile = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + ".pdf");
-  },
+  }
 });
 var uploadFile = multer({ storage: storageFile });
 var upload = multer({ storage: storage });
@@ -52,7 +52,6 @@ router.post(
   uploadFile.array("PDF_FILE"),
   function (req, res) {
     let courseID = req.params.courseId;
-    console.log(courseID);
     Course.findOne({ _id: courseID }).exec(function (err, course) {
       course.File = req.files[0];
       course.save();
@@ -68,12 +67,12 @@ router.get("/:roll/:email/:pass", async function (req, res) {
   if (req.params.roll == "Student")
     user = await Student.findOne({
       Email: req.params.email,
-      Password: req.params.pass,
+      Password: req.params.pass
     });
   else
     user = await Teacher.findOne({
       Email: req.params.email,
-      Password: req.params.pass,
+      Password: req.params.pass
     });
 
   if (!user) res.status(404);
@@ -100,7 +99,7 @@ router.post("/user", function (req, res) {
         Password: userInfo.Password,
         IMG: null,
         Gender: userInfo.Gender,
-        Wallet: 0,
+        Wallet: 0
       });
       newStudent.save();
       req.session.email = newStudent.Email;
@@ -112,7 +111,7 @@ router.post("/user", function (req, res) {
       res.send();
     } else {
       res.status(409).send({
-        Error: "The email address you entered is already existed",
+        Error: "The email address you entered is already existed"
       });
     }
   });
@@ -171,7 +170,7 @@ router.post("/courses", async function (request, response) {
       FinalGrade: 0,
       numOfStudents: 0,
       Students: [],
-      File: null,
+      File: null
     });
 
     let ok = true;
@@ -203,8 +202,6 @@ router.get("/logout", function (req, res) {
   res.end();
 });
 router.get("/active", function (req, res) {
-  if (session.email) console.log("logged in");
-  else console.log("not logged in");
   res.end();
 });
 
@@ -313,7 +310,7 @@ router.post("/payment", async (req, res) => {
     currency: "USD",
     description: "American University",
     payment_method: id,
-    confirm: true,
+    confirm: true
   };
   const payment = await stripe.paymentIntents.create(info);
 
@@ -327,18 +324,17 @@ router.post("/payment", async (req, res) => {
       description: "American University",
       payment_method: id,
       transfer_data: 50,
-      confirm: true,
+      confirm: true
     });
-    console.log("Payment", payment.data);
 
     res.json({
       message: "Payment successful",
-      success: true,
+      success: true
     });
   } catch (error) {
     res.json({
       message: "Payment failed",
-      success: false,
+      success: false
     });
   }
   res.end();
@@ -376,7 +372,7 @@ router.post("/exam", function (request, respnse) {
     isFree: true,
     Questions: [],
     Course: examBody.courseId,
-    Name: examBody.Name,
+    Name: examBody.Name
   });
   Course.findOne({ _id: idCourse }).exec(function (err, course) {
     course.Exams.push(newExam);
@@ -393,11 +389,9 @@ router.post("/question", function (request, respnse) {
     choices: bodyExam.choices,
     answer: bodyExam.answer,
     isMultiple: bodyExam.isMultiple,
-    exam: idExam,
+    exam: idExam
   });
   newQuestion.save();
-  console.log(newQuestion);
-  console.log(idExam);
   Exam.findOne({ _id: idExam }).exec(function (err, exam) {
     exam.Questions.push(newQuestion);
     exam.save();
@@ -407,7 +401,6 @@ router.post("/question", function (request, respnse) {
 
 router.put("/user", function (req, res) {
   let pass = req.body.pass;
-  console.log(pass);
   if (session.roll == "Student") {
     Student.findOne({ Email: session.email }).exec(function (err, student) {
       student.Password = pass;
@@ -429,7 +422,6 @@ router.put("/changeBalance", function (req, res) {
     student.Wallet += amount;
     balance = student.Wallet;
     await student.save();
-    console.log(student);
     res.send({ balance: balance });
   });
 });
