@@ -215,7 +215,9 @@ class StudentHome extends Component {
     this.deleteCourse(courseid);
     this.changeBalance(amount).then((balance) => {
       userData.wallet = balance;
-      this.setState({ userInfo: userData });
+      this.setState({ userInfo: userData }, () =>
+        console.log(this.state.userInfo)
+      );
     });
   };
   inroll = (courseid, amount) => {
