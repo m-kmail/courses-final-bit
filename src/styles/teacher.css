@@ -149,14 +149,11 @@ h3 {
   border: none;
   border-radius: 25px;
   width: 140px;
-
   display: block;
   margin-left: 35%;
-
   font-family: "DynaPuff", cursive;
   border: none;
   outline: none;
-
   color: rgb(63, 62, 66);
 }
 
@@ -262,18 +259,37 @@ h4 {
 }
 
 .addNewCourse {
-  padding: 15px;
-  display: flex;
+  text-decoration: none;
+  display: grid;
+  width: 1000px;
+  grid-template-columns: 1fr;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 7px;
   font-family: "DynaPuff", cursive;
 }
-
-.addButton {
-  padding: 0;
+a {
+  text-decoration: none;
 }
 
+.zeft {
+  text-decoration: none;
+  background-color: rgb(236, 154, 10);
+  height: 50px;
+  border: none;
+  border-radius: 25px;
+  width: 140px;
+  text-align: center;
+  display: block;
+  margin-left: 35%;
+  text-align: center;
+}
+.newCourseHeader {
+  color: rgb(236, 154, 10);
+}
+.zeft:hover {
+  background-color: rgb(241, 184, 86);
+}
 .inputsDiv {
   display: grid;
   grid-template-columns: 1fr;
@@ -316,4 +332,84 @@ h4 {
   position: absolute;
   top: 0px;
   right: 10px;
+}
+.addCourseInput {
+  border: 0;
+  background: none;
+  margin-left: 30px;
+  margin: 10px auto;
+  text-align: center;
+  border: 2px solid rgb(241, 184, 86);
+  padding: 14px 10px;
+  width: 70%;
+  height: 10px;
+  outline: none;
+  color: black;
+  border-radius: 24px;
+  transition: 0.25s;
+  font-size: large;
+}
+
+.drop {
+  border: 0;
+  border: 2px solid rgb(241, 184, 86);
+  text-align: center;
+  background: none;
+  height: 50px;
+  width: 70%;
+  border-radius: 24px;
+  transition: 0.25s;
+  padding: 14px 10px;
+  margin-left: 50px;
+  color: #ec9a0a;
+}
+
+.drop:focus {
+  border-color: #ec9a0a;
+}
+.courseNamein {
+  border: 0;
+  background: none;
+  margin-left: 50px;
+
+  text-align: center;
+  border: 2px solid rgb(241, 184, 86);
+  padding: 14px 10px;
+  width: 60%;
+  height: 15px;
+  outline: none;
+  color: black;
+  border-radius: 24px;
+  transition: 0.25s;
+  font-size: large;
+  color: #ec9a0a;
+}
+.courseNamein::placeholder {
+  color: #ec9a0a;
+}
+.courseNamein:focus {
+  border-color: #ec9a0a;
+}
+.courseCriditin {
+  border: 0;
+  background: none;
+  margin-left: 50px;
+
+  text-align: center;
+  border: 2px solid rgb(241, 184, 86);
+  padding: 14px 10px;
+  width: 60%;
+  height: 15px;
+  outline: none;
+  color: black;
+  border-radius: 24px;
+  transition: 0.25s;
+  font-size: large;
+  color: #ec9a0a;
+}
+.courseCriditin::placeholder {
+  color: #ec9a0a;
+}
+.courseCriditin:focus {
+  border-color: #ec9a0a;
 }
