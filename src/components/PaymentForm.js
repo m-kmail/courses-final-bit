@@ -80,7 +80,10 @@ export default function PaymentForm() {
             Pay
           </button>
           <div className="validPayment" style={showDiv}>
-            <h2>you payed successfully you can Now Register courses</h2>
+            <h2>
+              you payed successfully you can Now Register courses,Log in again
+              to see the finantial changes for your account
+            </h2>
           </div>
         </form>
       ) : (

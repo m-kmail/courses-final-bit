@@ -33,7 +33,8 @@ class StudentHome extends Component {
         myTable: { display: "none" },
         profileStyle: { display: "none" },
         erroeMessage: { display: "none" },
-        floatBox: { display: "none" }
+        floatBox: { display: "none" },
+        wallet: { display: "block" }
       },
       userInfo: {}
     };
@@ -42,32 +43,6 @@ class StudentHome extends Component {
     this.setState({
       search: e.target.value
     });
-  };
-  showProfile = () => {
-    let current = this.state.customDisplay;
-    current.joinCourse = { display: "none" };
-    current.searchCourses = { display: "none" };
-    current.myCourses = { display: "none" };
-
-    current.profileStyle = { display: "block" };
-    this.setState({ customDisplay: current });
-  };
-  closeProfile = () => {
-    let current = this.state.customDisplay;
-    current.joinCourse = { display: "none" };
-
-    current.profileStyle = { display: "none" };
-    this.setState({ customDisplay: current });
-  };
-  showFloatBox = () => {
-    let current = this.state.customDisplay;
-    current.floatBox = { display: "block" };
-    this.setState({ customDisplay: current });
-  };
-  hideFloatBox = () => {
-    let current = this.state.customDisplay;
-    current.floatBox = { display: "none" };
-    this.setState({ customDisplay: current });
   };
 
   passwordChanged = (e) => {
@@ -164,6 +139,7 @@ class StudentHome extends Component {
             courses: courses.data,
             userInfo: userInfo.data
           });
+          console.log(this.state.userInfo);
         }
       }
     })();
@@ -234,9 +210,7 @@ class StudentHome extends Component {
     this.deleteCourse(courseid);
     this.changeBalance(amount).then((balance) => {
       userData.wallet = balance;
-      this.setState({ userInfo: userData }, () =>
-        console.log(this.state.userInfo)
-      );
+      this.setState({ userInfo: userData });
     });
   };
   inroll = (courseid, amount) => {
@@ -246,6 +220,16 @@ class StudentHome extends Component {
 
     this.addCourse(courseid);
     this.changeBalance(amount * -1);
+  };
+
+  grtbalance = () => {
+    let userData = this.state.userInfo;
+    this.changeBalance(0).then((balance) => {
+      userData.wallet = balance;
+      this.setState({ userInfo: userData }, () => {
+        return <h1>{this.state.userInfo.wallet}</h1>;
+      });
+    });
   };
 
   sortCourses = () => {
@@ -285,13 +269,45 @@ class StudentHome extends Component {
       : (curr.joinCourse = { display: "flex" });
     if (curr.joinCourse.display == "none") {
       curr.searchCourses = { display: "none" };
+      curr.myCourses = { display: "block" };
     }
     this.setState({ customDisplay: curr });
+
+    console.log(this.state.userInfo);
   };
 
   showSerched = () => {
     let curr = this.state.customDisplay;
     curr.searchCourses = { display: "block" };
+    curr.myCourses = { display: "none" };
+    curr.wallet = { display: "block" };
+    this.setState({ customDisplay: curr });
+  };
+  showProfile = () => {
+    let current = this.state.customDisplay;
+    current.joinCourse = { display: "none" };
+    current.searchCourses = { display: "none" };
+    current.myCourses = { display: "none" };
+
+    current.profileStyle = { display: "block" };
+    this.setState({ customDisplay: current });
+  };
+  closeProfile = () => {
+    let current = this.state.customDisplay;
+    current.joinCourse = { display: "none" };
+
+    current.profileStyle = { display: "none" };
+    this.setState({ customDisplay: current });
+  };
+  showFloatBox = () => {
+    let current = this.state.customDisplay;
+    current.floatBox = { display: "block" };
+    this.setState({ customDisplay: current });
+  };
+  hideFloatBox = () => {
+    let current = this.state.customDisplay;
+    current.floatBox = { display: "none" };
+    this.setState({ customDisplay: current });
   };
 
   render() {
@@ -319,7 +335,7 @@ class StudentHome extends Component {
             </button>
           </div>
 
-          <div className="wallet">
+          <div className="wallet" style={this.state.customDisplay.wallet}>
             Your Balance Is {this.state.userInfo.wallet}$
           </div>
 

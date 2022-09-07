@@ -18,7 +18,7 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + ".jpg");
-  },
+  }
 });
 var storageFile = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -26,7 +26,7 @@ var storageFile = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + ".pdf");
-  },
+  }
 });
 var uploadFile = multer({ storage: storageFile });
 var upload = multer({ storage: storage });
@@ -67,12 +67,12 @@ router.get("/:roll/:email/:pass", async function (req, res) {
   if (req.params.roll == "Student")
     user = await Student.findOne({
       Email: req.params.email,
-      Password: req.params.pass,
+      Password: req.params.pass
     });
   else
     user = await Teacher.findOne({
       Email: req.params.email,
-      Password: req.params.pass,
+      Password: req.params.pass
     });
 
   if (!user) res.status(404);
@@ -99,7 +99,7 @@ router.post("/user", function (req, res) {
         Password: userInfo.Password,
         IMG: null,
         Gender: userInfo.Gender,
-        Wallet: 0,
+        Wallet: 0
       });
       newStudent.save();
       req.session.email = newStudent.Email;
@@ -111,7 +111,7 @@ router.post("/user", function (req, res) {
       res.send();
     } else {
       res.status(409).send({
-        Error: "The email address you entered is already existed",
+        Error: "The email address you entered is already existed"
       });
     }
   });
@@ -123,8 +123,8 @@ router.get("/courses", function (req, res) {
       .populate({
         path: "Courses",
         populate: {
-          path: "Teacher",
-        },
+          path: "Teacher"
+        }
       })
       .exec(function (err, user) {
         res.send(user.Courses);
@@ -175,7 +175,7 @@ router.post("/courses", async function (request, response) {
       FinalGrade: 0,
       numOfStudents: 0,
       Students: [],
-      File: null,
+      File: null
     });
 
     let ok = true;
@@ -204,9 +204,6 @@ router.get("/logout", function (req, res) {
 
   session = undefined;
 
-  res.end();
-});
-router.get("/active", function (req, res) {
   res.end();
 });
 
@@ -245,8 +242,6 @@ router.put("/course", function (request, response) {
   Student.findOne({ Email: StudentEmail }).exec(function (err, student) {
     Course.findOne({ _id: courseToAdd }).exec(function (err, course) {
       if (student && course) {
-        console.log(course);
-        console.log(student);
         course.numOfStudents++;
         student.Courses.push(course);
         course.Students.push(student);
@@ -257,6 +252,7 @@ router.put("/course", function (request, response) {
     });
   });
 });
+
 router.get("/userinfo", function (req, res) {
   if (session.email) {
     let email = session.email;
@@ -323,7 +319,7 @@ router.post("/payment", async (req, res) => {
     currency: "USD",
     description: "American University",
     payment_method: id,
-    confirm: true,
+    confirm: true
   };
   const payment = await stripe.paymentIntents.create(info);
 
@@ -339,17 +335,17 @@ router.post("/payment", async (req, res) => {
       description: "American University",
       payment_method: id,
       transfer_data: 50,
-      confirm: true,
+      confirm: true
     });
 
     res.json({
       message: "Payment successful",
-      success: true,
+      success: true
     });
   } catch (error) {
     res.json({
       message: "Payment failed",
-      success: false,
+      success: false
     });
   }
   res.end();
@@ -387,7 +383,7 @@ router.post("/exam", function (request, respnse) {
     isFree: true,
     Questions: [],
     Course: examBody.courseId,
-    Name: examBody.Name,
+    Name: examBody.Name
   });
 
   Course.findOne({ _id: idCourse }).exec(function (err, course) {
@@ -425,7 +421,7 @@ router.post("/question", function (request, respnse) {
         choices: bodyExam.choices,
         answer: bodyExam.answer,
         isMultiple: bodyExam.isMultiple,
-        exam: examId,
+        exam: examId
       });
 
       Exam.findOne({ _id: examId }).exec(function (err, exam) {
@@ -461,12 +457,12 @@ router.put("/changeBalance", function (req, res) {
     student.Wallet += amount;
     balance = student.Wallet;
     await student.save();
+
     res.send({ balance: balance });
   });
 });
 
 router.put("/aboutToMakeATransaction", function (req, res) {
-  console.log(req.body.amount);
   session.valueToBeAded = req.body.amount;
   res.end();
 });
