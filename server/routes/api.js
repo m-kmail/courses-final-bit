@@ -95,7 +95,12 @@ router.post("/user", function (req, res) {
 router.get("/courses", function (req, res) {
   if (session.roll == "Student") {
     Student.findOne({ Email: session.email })
-      .populate("Courses")
+      .populate({
+        path: "Courses",
+        populate: {
+          path: "Teacher",
+        },
+      })
       .exec(function (err, user) {
         res.send(user.Courses);
       });
@@ -224,28 +229,30 @@ router.put("/course", function (request, response) {
     });
   });
 });
-
 router.get("/userinfo", function (req, res) {
   let email = session.email;
-
   if (session.roll == "Student") {
     Student.findOne({ Email: email }).exec(function (err, student) {
-      let userInfo = { email: session.email };
-      userInfo.roll = "Student";
-      userInfo.name = student.Name;
-      userInfo.gender = student.Gender;
-      userInfo.img = student.IMG;
-      userInfo.wallet = student.Wallet;
-      res.send(userInfo);
+      if (student) {
+        let userInfo = { email: session.email };
+        userInfo.roll = "Student";
+        userInfo.name = student.Name;
+        userInfo.gender = student.Gender;
+        userInfo.img = student.IMG;
+        userInfo.wallet = student.Wallet;
+        res.send(userInfo);
+      }
     });
   } else {
     Teacher.findOne({ Email: email }).exec(function (err, teacher) {
-      let userInfo = { email: session.email };
-      userInfo.roll = "Teacher";
-      userInfo.name = teacher.Name;
-      userInfo.gender = teacher.Gender;
-      userInfo.img = teacher.IMG;
-      res.send(userInfo);
+      if (teacher) {
+        let userInfo = { email: session.email };
+        userInfo.roll = "Teacher";
+        userInfo.name = teacher.Name;
+        userInfo.gender = teacher.Gender;
+        userInfo.img = teacher.IMG;
+        res.send(userInfo);
+      }
     });
   }
 });

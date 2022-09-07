@@ -29,8 +29,6 @@ class StudentHome extends Component {
       customDisplay: {
         searchCourses: { display: "none" },
 
-        myCourses: { display: "flex" },
-
         joinCourse: { display: "none" },
 
         myTable: { display: "none" },
@@ -58,7 +56,7 @@ class StudentHome extends Component {
   closeProfile = () => {
     let current = this.state.customDisplay;
     current.joinCourse = { display: "none" };
-    current.myCourses = { display: "flex" };
+
     current.profileStyle = { display: "none" };
     this.setState({ customDisplay: current });
   };
@@ -179,27 +177,6 @@ class StudentHome extends Component {
   async deleteCourse(courseId) {
     return await axios.delete(`http://localhost:5000/course/${courseId}`);
   }
-
-  /*
-  showAddToCourse = () => {
-    let searchedCopy = { ...this.state.searchedCourses };
-    let customCopy = { ...this.state.custom };
-    if (customCopy.display !== "block") {
-      customCopy.display = "block";
-    } else {
-      customCopy.display = "none";
-    }
-    if (searchedCopy.display !== "block") {
-      searchedCopy.display = "block";
-    } else {
-      searchedCopy.display = "none";
-    }
-    this.setState({
-      custom: customCopy,
-      searchedCourses: searchedCopy,
-    });
-  };
-  */
 
   async addCourse(courseid) {
     await axios.put("http://localhost:5000/course", { courseId: courseid });
