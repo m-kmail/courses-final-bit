@@ -476,5 +476,14 @@ router.put("/confirmTransaction", function (req, res) {
     }
   });
 });
+router.get("exam/:courseId", function (req, res) {
+  let idCourse = req.params.courseId;
+  Course.findOne({ _id: idCourse })
+    .populate("Exams")
+    .exec(function (err, course) {
+      console.log(course);
+      res.send(course);
+    });
+});
 
 module.exports = router;
