@@ -11,7 +11,7 @@ class StudentMoodle extends Component {
       courses: [],
       searchStuts: "",
       showModel: { display: "block" },
-      CourseDetail: { display: "none" },
+      CourseDetail: { display: "none" }
     };
   }
 
@@ -32,7 +32,7 @@ class StudentMoodle extends Component {
     this.setState({
       showModel: moodleSHow,
       CourseDetail: detailShow,
-      courseSelected: e.currentTarget.getAttribute("data"),
+      courseSelected: e.currentTarget.getAttribute("data")
     });
   };
   courseFilter = (e) => {
@@ -54,15 +54,18 @@ class StudentMoodle extends Component {
       else {
         let courses = await this.getCourses();
         this.setState({
-          courses: courses.data,
+          courses: courses.data
         });
       }
     }
   }
   render() {
     return (
-      <div className="coursesContainer">
-        <div style={this.state.showModel}>
+      <div>
+        <div className="moodelNav">
+          <div className="nameMood"> Welcome In Moodel</div>
+        </div>
+        <div className="coursesContainer">
           <select
             className="typeCourseInput"
             value={this.state.searchStuts}
