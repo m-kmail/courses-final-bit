@@ -55,7 +55,7 @@ class StudentHome extends Component {
   closeProfile = () => {
     let current = this.state.customDisplay;
     current.joinCourse = { display: "none" };
-    current.myCourses = { display: "flex" };
+
     current.profileStyle = { display: "none" };
     this.setState({ customDisplay: current });
   };

@@ -120,7 +120,12 @@ router.post("/user", function (req, res) {
 router.get("/courses", function (req, res) {
   if (session.roll == "Student") {
     Student.findOne({ Email: session.email })
-      .populate("Courses")
+      .populate({
+        path: "Courses",
+        populate: {
+          path: "Teacher",
+        },
+      })
       .exec(function (err, user) {
         res.send(user.Courses);
       });
@@ -248,10 +253,8 @@ router.put("/course", function (request, response) {
     });
   });
 });
-
 router.get("/userinfo", function (req, res) {
   let email = session.email;
-
   if (session.roll == "Student") {
     Student.findOne({ Email: email }).exec(function (err, student) {
       if (student) {
