@@ -6,6 +6,7 @@ class TeacherMoodle extends Component {
     super();
 
     this.state = {
+      examName: "",
       showTF: { display: "none" },
       showMultiple: { display: "none" },
       courseSelected: "",
@@ -29,8 +30,65 @@ class TeacherMoodle extends Component {
         choices: {},
         isMultiple: null,
       },
+      showBuildQuiz: { display: "block" },
+      showClearQuiz: { display: "none" },
+      showSaveQuiz: { display: "none" },
     };
   }
+  changeExamName = (e) => {
+    this.setState({
+      examName: e.target.value,
+    });
+  };
+  saveQuiz = () => {
+    console.log(this.state.courseSelected);
+    //call api to save questions in an exist exam
+  };
+  insertNewQuestion = () => {
+    let copyQuestions = [...this.state.questions];
+    copyQuestions.push(this.state.newQuestion);
+    this.setState({
+      questions: copyQuestions,
+    });
+    //call api to save question in exam
+  };
+  buildQuiz = () => {
+    let showFormQuizCopy = { ...this.state.showFormQuiz };
+    showFormQuizCopy.display = "block";
+    this.setState({ showFormQuiz: showFormQuizCopy });
+    this.changeShowBuildQuiz();
+    let bodyExam = {
+      Name: this.state.examName,
+      courseId: this.state.courseSelected,
+    };
+    axios.post("http://localhost:5000/exam", bodyExam);
+  };
+  cancelBuildQuiz = () => {
+    let showFormQuizCopy = { ...this.state.showFormQuiz };
+    showFormQuizCopy.display = "none";
+    this.setState({ showFormQuiz: showFormQuizCopy });
+    this.changeShowBuildQuiz();
+    //call api to delete an exam
+  };
+  changeShowBuildQuiz = () => {
+    let showSaveQuizCopy = { ...this.state.showSaveQuiz };
+    let showClearQuizCopy = { ...this.state.showClearQuiz };
+    let showBuildQuizCopy = { ...this.state.showBuildQuiz };
+    if (showBuildQuizCopy.display == "none") {
+      showBuildQuizCopy.display = "block";
+      showClearQuizCopy.display = "none";
+      showSaveQuizCopy.display = "none";
+    } else {
+      showBuildQuizCopy.display = "none";
+      showClearQuizCopy.display = "block";
+      showSaveQuizCopy.display = "block";
+    }
+    this.setState({
+      showBuildQuiz: showBuildQuizCopy,
+      showClearQuiz: showClearQuizCopy,
+      showSaveQuiz: showSaveQuizCopy,
+    });
+  };
   handleTF = (e) => {
     let inputClass = e.target.className;
     let input = e.target.value;
@@ -58,16 +116,7 @@ class TeacherMoodle extends Component {
       newQuestion: inputs,
     });
   };
-  buildQuiz = () => {
-    let showFormQuizCopy = { ...this.state.showFormQuiz };
-    showFormQuizCopy.display = "block";
-    this.setState({ showFormQuiz: showFormQuizCopy });
-  };
-  cancelBuildQuiz = () => {
-    let showFormQuizCopy = { ...this.state.showFormQuiz };
-    showFormQuizCopy.display = "none";
-    this.setState({ showFormQuiz: showFormQuizCopy });
-  };
+
   sendPDFToServer(formData) {
     const h = {};
     h.Accept = "application/json";
@@ -293,9 +342,25 @@ class TeacherMoodle extends Component {
                 <label for="MULTIPLE">Multiple</label>
               </div>
             </div>
-
-            <button onClick={this.buildQuiz}>Build</button>
-            <button onClick={this.cancelBuildQuiz}>Clear</button>
+            <div className="displayBtn">
+              <input
+                type="text"
+                value={this.state.examName}
+                onChange={this.changeExamName}
+              />
+              <button onClick={this.saveQuiz} style={this.state.showSaveQuiz}>
+                Save Quiz
+              </button>
+              <button onClick={this.buildQuiz} style={this.state.showBuildQuiz}>
+                Build Quiz
+              </button>
+              <button
+                onClick={this.cancelBuildQuiz}
+                style={this.state.showClearQuiz}
+              >
+                Clear Quiz
+              </button>
+            </div>
           </div>
         </div>
       </div>

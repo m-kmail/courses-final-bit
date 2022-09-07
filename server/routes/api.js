@@ -90,7 +90,6 @@ router.get("/:roll/:email/:pass", async function (req, res) {
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
-  console.log(userInfo);
 
   Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
@@ -376,8 +375,9 @@ router.post("/exam", function (request, respnse) {
     Course: examBody.courseId,
     Name: examBody.Name,
   });
+
   Course.findOne({ _id: idCourse }).exec(function (err, course) {
-    course.Exams.push(newExam);
+    course.Exams = newExam;
     course.save();
   });
   newExam.save();
@@ -405,7 +405,7 @@ router.post("/question", function (request, respnse) {
 
 router.put("/user", function (req, res) {
   let pass = req.body.pass;
-  if (session.roll == "Stuent") {
+  if (session.roll == "Student") {
     Student.findOne({ Email: session.email }).exec(function (err, student) {
       student.Password = pass;
       student.save();

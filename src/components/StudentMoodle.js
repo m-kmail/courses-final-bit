@@ -17,7 +17,7 @@ class StudentMoodle extends Component {
 
   changeShowModel = (e) => {
     this.state.courses.map((course) => {
-      if (course._id == e.currentTarget.getAttribute("data"))
+      if (course._id == e.currentTarget.getAttribute("data") && course.File)
         this.setState({ filePath: course.File.path.substring(8) });
     });
     let moodleSHow = { ...this.state.showModel };
@@ -92,7 +92,9 @@ class StudentMoodle extends Component {
           <div>CH1</div>
 
           <a href={`http://localhost:5000/uploads/${this.state.filePath}`}>
-            PDF file
+            <i class="fa fa-file-pdf-o" aria-hidden="true">
+              PDF file
+            </i>
           </a>
 
           <div>CH2</div>
