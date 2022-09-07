@@ -9,7 +9,7 @@ const CourseSchema = new Schema({
   Time: String,
   Days: String,
   Status: String,
-  Exams: [{ type: Schema.Types.ObjectId, ref: "Exam" }],
+  Exams: { type: Schema.Types.ObjectId, ref: "Exam" },
   FinalGrade: Number,
   numOfStudents: Number,
   File: Object,

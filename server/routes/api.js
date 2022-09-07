@@ -378,8 +378,9 @@ router.post("/exam", function (request, respnse) {
     Course: examBody.courseId,
     Name: examBody.Name
   });
+
   Course.findOne({ _id: idCourse }).exec(function (err, course) {
-    course.Exams.push(newExam);
+    course.Exams = newExam;
     course.save();
   });
   newExam.save();
