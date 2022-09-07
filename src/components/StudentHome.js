@@ -210,6 +210,7 @@ class StudentHome extends Component {
   }
 
   addCourse(courseid) {
+    console.log("adding");
     return axios.put("http://localhost:5000/course", {
       courseId: courseid
     });
@@ -240,6 +241,7 @@ class StudentHome extends Component {
   };
   inroll = (courseid, amount) => {
     let userData = this.state.userInfo;
+    console.log(userData);
     if (userData.wallet < amount) return alert("Your Balance Is Not Enought");
 
     this.addCourse(courseid);

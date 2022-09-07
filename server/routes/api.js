@@ -244,12 +244,16 @@ router.put("/course", function (request, response) {
   const StudentEmail = session.email;
   Student.findOne({ Email: StudentEmail }).exec(function (err, student) {
     Course.findOne({ _id: courseToAdd }).exec(function (err, course) {
-      course.numOfStudents++;
-      student.Courses.push(course);
-      course.Students.push(student);
-      course.save();
-      student.save();
-      response.end();
+      if (student && course) {
+        console.log(course);
+        console.log(student);
+        course.numOfStudents++;
+        student.Courses.push(course);
+        course.Students.push(student);
+        course.save();
+        student.save();
+        response.end();
+      }
     });
   });
 });
@@ -325,8 +329,10 @@ router.post("/payment", async (req, res) => {
 
   try {
     Student.findOne({ Email: session.email }).exec(function (err, student) {
-      student.Wallet += info.amount;
-      student.save();
+      if (student) {
+        student.Wallet += info.amount;
+        student.save();
+      }
     });
     const payment = await stripe.paymentIntents.create({
       currency: "USD",
@@ -433,6 +439,22 @@ router.put("/changeBalance", function (req, res) {
     balance = student.Wallet;
     await student.save();
     res.send({ balance: balance });
+  });
+});
+
+router.put("/aboutToMakeATransaction", function (req, res) {
+  console.log(req.body.amount);
+  session.valueToBeAded = req.body.amount;
+  res.end();
+});
+
+router.put("/confirmTransaction", function (req, res) {
+  Student.findOne({ Email: session.email }).exec(async function (err, student) {
+    if (student) {
+      student.Wallet += session.valueToBeAded;
+      await student.save();
+      res.end();
+    }
   });
 });
 

@@ -22,6 +22,12 @@ function Payment() {
     }
   };
 
+  const appendAmount = async () => {
+    await axios.put("http://localhost:5000/aboutToMakeATransaction", {
+      amount: fees
+    });
+    setShowItem(true);
+  };
   return (
     <div className="payment">
       <h1 className="paymHeader">Study fee Acount</h1>
@@ -38,18 +44,18 @@ function Payment() {
               value={val}
               onChange={(e) => setval(e.target.value)}
             />
-            <div className="details">Houre Price:38ILS</div>
-            <div className="details">Internet and insurance fees:40ILS</div>
+            <div className="details">Houre Price : 38 ILS</div>
+            <div className="details">Internet and insurance fees : 40 ILS</div>
             <hr></hr>
             <button id="Calculate" value="1" onClick={() => calculat()}>
               Calculate
             </button>
             <h3 className="header3">
-              study fee account=....(Houres*38)+40={fees}
+              study fee account = ....(Houres * 38) + 40 = {fees}
               <hr></hr>
             </h3>
 
-            <button id="Calculate" onClick={() => setShowItem(true)}>
+            <button id="Calculate" onClick={() => appendAmount()}>
               pay using card
             </button>
 
