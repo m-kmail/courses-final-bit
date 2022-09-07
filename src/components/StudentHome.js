@@ -344,7 +344,11 @@ class StudentHome extends Component {
                 </button>
 
                 <div id="blackout" style={this.state.customDisplay.floatBox}>
-                  <div id="box" style={this.state.customDisplay.floatBox}>
+                  <div
+                    id="box99"
+                    className="newZeft"
+                    style={this.state.customDisplay.floatBox}
+                  >
                     <div className="modifyData">
                       <p
                         className="far fa-times-circle"
@@ -378,24 +382,26 @@ class StudentHome extends Component {
                             name="myImage"
                             onChange={this.imgChanged}
                           />
-                          <button
-                            className="removeImg"
-                            onClick={this.removeImg}
-                          >
-                            Remove Image
-                          </button>
-                          <button
-                            className="uploadImg"
-                            onClick={this.uploadImg}
-                          >
-                            upload Image
-                          </button>
+                          <div className="allButtons">
+                            <button
+                              className="removeImg"
+                              onClick={this.removeImg}
+                            >
+                              Remove Image
+                            </button>
+                            <button
+                              className="uploadImg"
+                              onClick={this.uploadImg}
+                            >
+                              upload Image
+                            </button>
+                          </div>
                         </div>
-                      </div>
 
-                      <button onClick={this.add} className="addModify">
-                        Modify
-                      </button>
+                        <button onClick={this.add} className="addModify">
+                          Modify
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -436,48 +442,50 @@ class StudentHome extends Component {
                 ))}
               </div>
             </div>
-
             <div
               className="addToCourseContainer"
               style={this.state.customDisplay.joinCourse}
             >
-              <h1>Join Course</h1>
               <div className="inputsDiv">
+                <h2 className="joinCourse">Join Course</h2>
                 <input
+                  className="searchCourse"
                   placeholder="type your search"
                   type="search"
                   value={this.state.search}
                   onChange={this.changeSearch}
                 />
-                <div className="courseNameDiv">
-                  <input
-                    type="radio"
-                    id="course-name"
-                    name="filter"
-                    value="courseName"
-                    onChange={this.changeFilter}
-                  />
-                  <label htmlFor="course-name">course name</label> 
-                </div>
-                <div className="teacherNameDiv">
-                  <input
-                    type="radio"
-                    id="teacher-name"
-                    name="filter"
-                    value="teacherName"
-                    onChange={this.changeFilter}
-                  />
-                   <label htmlFor="teacher-name">teacher name</label> 
-                </div>
-                <div className="allDiv">
-                  <input
-                    type="radio"
-                    id="all"
-                    name="filter"
-                    value="all"
-                    onChange={this.changeFilter}
-                  />
-                   <label htmlFor="all">all</label>
+                <div className="radioButton">
+                  <div className="courseNameDiv">
+                    <input
+                      type="radio"
+                      id="course-name"
+                      name="filter"
+                      value="courseName"
+                      onChange={this.changeFilter}
+                    />
+                    <label htmlFor="course-name">course name</label> 
+                  </div>
+                  <div className="teacherNameDiv">
+                    <input
+                      type="radio"
+                      id="teacher-name"
+                      name="filter"
+                      value="teacherName"
+                      onChange={this.changeFilter}
+                    />
+                     <label htmlFor="teacher-name">teacher name</label> 
+                  </div>
+                  <div className="allDiv">
+                    <input
+                      type="radio"
+                      id="all"
+                      name="filter"
+                      value="all"
+                      onChange={this.changeFilter}
+                    />
+                     <label htmlFor="all">all</label>
+                  </div>
                 </div>
                 <button onClick={this.searchCourses} className="searchBtn">
                   search

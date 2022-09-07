@@ -7,8 +7,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  filter: blur(2px);
-  filter: brightness(40%);
+  filter: blur(15px);
+  filter: brightness(80%);
 }
 
 .nav {
@@ -65,13 +65,13 @@
 .userName {
   height: 100%;
   width: 70%;
-  background-color: rgba(56, 67, 75, 0.749);
+  background-color: rgba(56, 67, 75, 0.9);
 }
 
 .userInfo {
   height: 100%;
   width: 100%;
-  background-color: #f3f3f3(112, 116, 116);
+  background-color: rgba(56, 67, 75, 0.35);
   grid-template-columns: 1fr;
 }
 
@@ -180,8 +180,11 @@ h3 {
 }
 
 #box {
-  height: 100%;
-  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr;
+  color: white;
+  height: 90%;
+  width: 40%;
   text-align: center;
   padding: 50px;
   border: 3px solid #ec9a0a;
@@ -192,9 +195,11 @@ h3 {
   bottom: 10px;
   left: 10px;
   margin: auto;
-  background-color: rgba(30, 33, 35, 0.749);
+  background-color: rgba(56, 67, 75, 0.9);
 }
-
+.allButtonsTecher {
+  margin-top: 10%;
+}
 #blackout:target {
   display: block;
 }
@@ -260,9 +265,11 @@ h4 {
 
 .addNewCourse {
   text-decoration: none;
-  display: grid;
-  width: 1000px;
-  grid-template-columns: 1fr;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 7px;
@@ -281,7 +288,7 @@ a {
   width: 140px;
   text-align: center;
   display: block;
-  margin-left: 35%;
+  margin-left: 28%;
   text-align: center;
 }
 .newCourseHeader {

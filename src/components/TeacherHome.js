@@ -249,18 +249,20 @@ class TeacherHome extends Component {
                             name="myImage"
                             onChange={this.imgChanged}
                           />
-                          <button
-                            className="removeImg"
-                            onClick={this.removeImg}
-                          >
-                            Remove Image
-                          </button>
-                          <button
-                            className="uploadImg"
-                            onClick={this.uploadImg}
-                          >
-                            upload Image
-                          </button>
+                          <div className="allButtonsTecher">
+                            <button
+                              className="removeImg"
+                              onClick={this.removeImg}
+                            >
+                              Remove Image
+                            </button>
+                            <button
+                              className="uploadImg"
+                              onClick={this.uploadImg}
+                            >
+                              upload Image
+                            </button>
+                          </div>
                         </div>
                       </div>
 
@@ -302,55 +304,57 @@ class TeacherHome extends Component {
               className="addNewCourse"
               style={this.state.customDisplays.addStyle}
             >
-              <h1 className="newCourseHeader">New courses</h1>
-              <div className="inputsDiv ">
-                <input
-                  className="courseNamein"
-                  placeholder="Course Name"
-                  onChange={this.nameChanged}
-                  value={this.state.inputname}
-                ></input>
-                <input
-                  className="courseCriditin"
-                  placeholder="credit hour "
-                  onChange={this.creditHourChanged}
-                  value={this.state.inputCreditHour}
-                ></input>
+              <div className="allNewInputs">
+                <h1 className="newCourseHeader">New courses</h1>
+                <div className="inputsDiv ">
+                  <input
+                    className="courseNamein"
+                    placeholder="Course Name"
+                    onChange={this.nameChanged}
+                    value={this.state.inputname}
+                  ></input>
+                  <input
+                    className="courseCriditin"
+                    placeholder="credit hour "
+                    onChange={this.creditHourChanged}
+                    value={this.state.inputCreditHour}
+                  ></input>
 
-                <select
-                  className="drop"
-                  onChange={this.timeChanged}
-                  value={this.state.inputtime}
-                >
-                  <option value="" disabled selected>
-                    Course Time
-                  </option>
-                  <option>08:00-09:30</option>
-                  <option>09:30-11:00</option>
-                  <option>11:00-12:30</option>
-                  <option>12:30-2:00</option>
-                </select>
-
-                <select
-                  className="drop"
-                  onChange={this.dayChanged}
-                  value={this.state.inputday}
-                >
-                  <option value="" disabled selected>
-                    Course Day
-                  </option>
-                  <option>Saturday/Tuesday</option>
-                  <option>Sunday/Wednesday</option>
-                  <option>Monday/Thursday</option>
-                </select>
-                <Link to="/teacherhome">
-                  <button
-                    className="addButton zeft"
-                    onClick={this.createCourse}
+                  <select
+                    className="drop"
+                    onChange={this.timeChanged}
+                    value={this.state.inputtime}
                   >
-                    add course
-                  </button>
-                </Link>
+                    <option value="" disabled selected>
+                      Course Time
+                    </option>
+                    <option>08:00-09:30</option>
+                    <option>09:30-11:00</option>
+                    <option>11:00-12:30</option>
+                    <option>12:30-2:00</option>
+                  </select>
+
+                  <select
+                    className="drop"
+                    onChange={this.dayChanged}
+                    value={this.state.inputday}
+                  >
+                    <option value="" disabled selected>
+                      Course Day
+                    </option>
+                    <option>Saturday/Tuesday</option>
+                    <option>Sunday/Wednesday</option>
+                    <option>Monday/Thursday</option>
+                  </select>
+                  <Link to="/teacherhome">
+                    <button
+                      className="addButton zeft"
+                      onClick={this.createCourse}
+                    >
+                      add course
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
