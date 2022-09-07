@@ -1,0 +1,106 @@
+.payment {
+  width: 110%;
+  height: 100%;
+  position: absolute;
+  left: -5%;
+  background-color: aliceblue;
+}
+.FormGroup {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin: 40 40px 40px 40px;
+  padding: 20 auto;
+  border-style: none;
+  background-color: rgba(56, 67, 75, 0.9);
+  will-change: opacity, transform;
+  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 #ec9a0a;
+  border-radius: 4px;
+}
+.FormRow {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-left: 15px;
+  border-top: 1px solid #ec9a0a;
+}
+.StripeElement {
+  width: 100%;
+  padding: 11px 15px 11px 0;
+}
+#Calculate {
+  width: 150px;
+  height: 40px;
+  padding: 14px 10px;
+  margin-top: 3%;
+  border-radius: 24px;
+  transition: 0.25px;
+  background-color: #ec9a0a;
+}
+#Calculate:hover {
+  background-color: rgb(241, 184, 86);
+}
+.box {
+  position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+  width: 70%;
+  height: 500px;
+  padding: 50px;
+}
+.box input[type="number"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 3px solid #ec9a0a;
+  padding: 14px 10px;
+  width: 220px;
+  outline: none;
+  color: rgb(16, 15, 15);
+  border-radius: 24px;
+  transition: 0.25px;
+  font-size: larger;
+}
+.box input[type="number"]:focus {
+  border-color: rgb(241, 184, 86);
+}
+.box input::placeholder {
+  color: black;
+}
+.paymHeader {
+  color: black;
+}
+#info {
+  text-align: left;
+  color: #795046;
+  font-weight: 200px;
+}
+#pay {
+  width: 400px;
+  height: 40px;
+
+  padding: 14px 10px;
+  margin: 10px auto;
+  border-radius: 24px;
+  transition: 0.25px;
+  background-color: #ec9a0a;
+}
+#pay:hover {
+  background-color: rgb(241, 184, 86);
+  transform: scale(0.99);
+}
+.payment {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.details {
+  font-size: large;
+  color: black;
+}
