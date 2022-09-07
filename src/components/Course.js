@@ -3,7 +3,9 @@ import "../styles/course.css";
 
 class Course extends Component {
   deleteCourse = () => {
-    this.props.deleteCourse(this.props.data._id);
+    const hourPrice = 38;
+    const coast = hourPrice * this.props.data.CreditHours;
+    this.props.deleteCourse(this.props.data._id, coast);
   };
   render() {
     return (

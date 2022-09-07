@@ -28,17 +28,14 @@ class StudentHome extends Component {
       imageChanged: null,
       customDisplay: {
         searchCourses: { display: "none" },
-
         myCourses: { display: "flex" },
-
         joinCourse: { display: "none" },
-
         myTable: { display: "none" },
-
         profileStyle: { display: "none" },
         erroeMessage: { display: "none" },
         floatBox: { display: "none" },
       },
+      userInfo: {},
     };
   }
   changeSearch = (e) => {
@@ -154,7 +151,6 @@ class StudentHome extends Component {
 
   async componentDidMount() {
     let userInfo = await axios.get("http://localhost:5000/sessionInfo");
-
     if (userInfo == undefined || userInfo.data.email == undefined) {
       window.location = "/";
     } else {
@@ -165,6 +161,7 @@ class StudentHome extends Component {
         x.then((e) => this.setState({ user: e }));
         this.setState({
           courses: courses.data,
+          userInfo: userInfo.data,
         });
       }
     }
@@ -201,31 +198,40 @@ class StudentHome extends Component {
     return await axios.delete(`http://localhost:5000/course/${courseId}`);
   }
 
-  /*
-  showAddToCourse = () => {
-    let searchedCopy = { ...this.state.searchedCourses };
-    let customCopy = { ...this.state.custom };
-    if (customCopy.display !== "block") {
-      customCopy.display = "block";
-    } else {
-      customCopy.display = "none";
-    }
-    if (searchedCopy.display !== "block") {
-      searchedCopy.display = "block";
-    } else {
-      searchedCopy.display = "none";
-    }
-    this.setState({
-      custom: customCopy,
-      searchedCourses: searchedCopy,
+  async addCourse(courseid) {
+    return await axios.put("http://localhost:5000/course", {
+      courseId: courseid,
+    });
+  }
+
+  async changeBalance(amount) {
+    let Balance = await axios.put("http://localhost:5000/changeBalance", {
+      amount: amount,
+    });
+    return Balance.data.balance;
+  }
+  drop = (courseid, amount) => {
+    let userData = this.state.userInfo;
+    this.deleteCourse(courseid);
+    this.changeBalance(amount).then((balance) => {
+      userData.wallet = balance;
+      this.setState({ userInfo: userData });
     });
   };
-  */
-
-  async addCourse(courseid) {
-    await axios.put("http://localhost:5000/course", { courseId: courseid });
-    console.log("added");
-  }
+  inroll = (courseid, amount) => {
+    let userData = this.state.userInfo;
+    console.log(userData);
+    if (userData.wallet < amount) alert("ff");
+    else {
+      this.addCourse(courseid);
+      this.changeBalance(amount * -1).then((balance) => {
+        userData.wallet = balance;
+        this.setState({ userInfo: userData }, () =>
+          console.log(this.state.userInfo)
+        );
+      });
+    }
+  };
 
   sortCourses = () => {
     let allCoursrs = this.state.courses;
@@ -274,10 +280,34 @@ class StudentHome extends Component {
   };
 
   render() {
+    //console.log(this.state.userInfo);
     return (
       <div className="student-home">
         <div className="backGround"></div>
         <div className="content">
+          <div className="nav">
+            <button className="myProfile Btn" onClick={this.showProfile}>
+              My Profile
+            </button>
+            <button className="Office Btn">Office hour</button>
+            <Link to="/payment">
+              <button className="Fee Btn">Study Fee Account</button>
+            </Link>
+            <button onClick={this.toggleJoinCourse} className="joinCourse Btn">
+              join course
+            </button>
+            <Link to="/studentmoodle">
+              <button className="moodle Btn">Moodle</button>
+            </Link>{" "}
+            <button onClick={this.logout} className="logout Btn">
+              log out
+            </button>
+          </div>
+
+          <div className="wallet">
+            Your Balance Is {this.state.userInfo.wallet}$
+          </div>
+
           <div
             className="profile"
             style={this.state.customDisplay.profileStyle}
@@ -371,25 +401,6 @@ class StudentHome extends Component {
             </div>
           </div>
 
-          <div className="nav">
-            <button className="myProfile Btn" onClick={this.showProfile}>
-              My Profile
-            </button>
-            <button className="Office Btn">Office hour</button>
-            <Link to="/payment">
-              <button className="Fee Btn">Study Fee Account</button>
-            </Link>
-            <button onClick={this.toggleJoinCourse} className="joinCourse Btn">
-              join course
-            </button>
-            <Link to="/studentmoodle">
-              <button className="moodle Btn">Moodle</button>
-            </Link>{" "}
-            <button onClick={this.logout} className="logout Btn">
-              log out
-            </button>
-          </div>
-
           <div className="contentView">
             <div className="coursesView">
               <div
@@ -407,7 +418,8 @@ class StudentHome extends Component {
                     <SearchedCourse
                       existed={existed}
                       info={el}
-                      addCourse={this.addCourse}
+                      addCourse={this.inroll}
+                      wallet={this.state.userInfo.wallet}
                     />
                   );
                 })}
@@ -418,11 +430,7 @@ class StudentHome extends Component {
                 style={this.state.customDisplay.myCourses}
               >
                 {this.state.courses.map((t) => (
-                  <Course
-                    key={t._id}
-                    data={t}
-                    deleteCourse={this.deleteCourse}
-                  />
+                  <Course key={t._id} data={t} deleteCourse={this.drop} />
                 ))}
               </div>
             </div>

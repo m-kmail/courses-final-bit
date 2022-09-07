@@ -2,7 +2,9 @@ import React, { Component } from "react";
 
 class SearchedCourse extends Component {
   add = () => {
-    this.props.addCourse(this.props.info._id);
+    const hourPrice = 38;
+    const coast = hourPrice * this.props.info.CreditHours;
+    this.props.addCourse(this.props.info._id, coast);
   };
   render() {
     return (
@@ -17,7 +19,7 @@ class SearchedCourse extends Component {
             Join
           </button>
         ) : (
-          <button className="existed">Drop</button>
+          <button className="existed">UnAvailable</button>
         )}
       </div>
     );

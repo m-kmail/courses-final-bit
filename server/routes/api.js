@@ -56,6 +56,7 @@ router.get("/:roll/:email/:pass", async function (req, res) {
     req.session.email = user.Email;
     req.session.roll = req.params.roll;
     req.session.Name = user.Name;
+    req.session.wallet = user.Wallet;
     req.session.save();
     session = req.session;
   }
@@ -65,7 +66,6 @@ router.get("/:roll/:email/:pass", async function (req, res) {
 
 router.post("/user", function (req, res) {
   const userInfo = req.body;
-  console.log(userInfo);
 
   Student.findOne({ Email: userInfo.Email }).exec(function (err, user) {
     if (user == null) {
@@ -81,6 +81,7 @@ router.post("/user", function (req, res) {
       req.session.email = newStudent.Email;
       req.session.roll = "Student";
       req.session.Name = userInfo.Name;
+      req.session.wallet = 0;
       req.session.save();
 
       res.send();
@@ -274,7 +275,8 @@ router.delete("/courseStudent/:courseId", function (request, response) {
 
 router.get("/sessionInfo", function (req, res) {
   let info = undefined;
-  if (session != undefined) info = { email: session.email, roll: session.roll };
+  if (session != undefined)
+    info = { email: session.email, roll: session.roll, wallet: session.wallet };
   res.send(info);
 });
 router.post("/payment", async (req, res) => {
@@ -392,6 +394,18 @@ router.put("/user", function (req, res) {
     });
   }
   res.end();
+});
+
+router.put("/changeBalance", function (req, res) {
+  let amount = req.body.amount;
+  let balance;
+  Student.findOne({ Email: session.email }).exec(async function (err, student) {
+    student.Wallet += amount;
+    balance = student.Wallet;
+    await student.save();
+    console.log(student);
+    res.send({ balance: balance });
+  });
 });
 
 module.exports = router;

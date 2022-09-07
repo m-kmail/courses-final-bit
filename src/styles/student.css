@@ -302,6 +302,12 @@ h4 {
   padding: 0;
 }
 
+.wallet{
+  position: absolute;
+  left: 10px;
+  top:50px;
+}
+
 .inputsDiv {
   display: grid;
   grid-template-columns: 1fr;
