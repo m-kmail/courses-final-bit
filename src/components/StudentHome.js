@@ -34,14 +34,14 @@ class StudentHome extends Component {
         profileStyle: { display: "none" },
         erroeMessage: { display: "none" },
         floatBox: { display: "none" },
-        wallet: { display: "block" },
+        wallet: { display: "block" }
       },
-      userInfo: {},
+      userInfo: {}
     };
   }
   changeSearch = (e) => {
     this.setState({
-      search: e.target.value,
+      search: e.target.value
     });
   };
 
@@ -78,7 +78,7 @@ class StudentHome extends Component {
         this.setState({ customDisplay: cur });
       } else {
         let y = {
-          password: this.state.newPassword,
+          password: this.state.newPassword
         };
 
         this.setState({ user: y });
@@ -89,17 +89,17 @@ class StudentHome extends Component {
   };
   changeFilter = (e) => {
     this.setState({
-      filter: e.target.value,
+      filter: e.target.value
     });
   };
   calculat = () => {
     try {
       this.setState({
-        fees: this.state.val * this.state.pricehoure + 40,
+        fees: this.state.val * this.state.pricehoure + 40
       });
     } catch (error) {
       this.setState({
-        val: "error",
+        val: "error"
       });
     }
   };
@@ -111,7 +111,7 @@ class StudentHome extends Component {
     const h = {};
     h.Accept = "application/json";
     axios.post("http://localhost:5000/upload_file", formData, {
-      headers: h,
+      headers: h
     });
   }
   uploadImg = () => {
@@ -137,9 +137,8 @@ class StudentHome extends Component {
           x.then((e) => this.setState({ user: e }));
           this.setState({
             courses: courses.data,
-            userInfo: userInfo.data,
+            userInfo: userInfo.data
           });
-          console.log(this.state.userInfo);
         }
       }
     })();
@@ -166,7 +165,7 @@ class StudentHome extends Component {
       let x = this.getUserInfo();
       x.then((e) => this.setState({ user: e }));
       this.setState({
-        courses: courses.data,
+        courses: courses.data
       });
     })();
   }
@@ -188,19 +187,19 @@ class StudentHome extends Component {
   addCourse(courseid) {
     console.log("adding");
     return axios.put("http://localhost:5000/course", {
-      courseId: courseid,
+      courseId: courseid
     });
   }
 
   changeBalance = async (amount) => {
     const balance = (
       await axios.put("http://localhost:5000/changeBalance", {
-        amount,
+        amount
       })
     ).data.balance;
 
     this.setState({
-      userInfo: { ...this.state.userInfo, wallet: balance },
+      userInfo: { ...this.state.userInfo, wallet: balance }
     });
 
     return balance;
@@ -241,7 +240,7 @@ class StudentHome extends Component {
       Monday: [],
       Tuesday: [],
       Wednesday: [],
-      Thursday: [],
+      Thursday: []
     };
     for (let c of allCoursrs) {
       let days = c.Days;
@@ -305,13 +304,14 @@ class StudentHome extends Component {
     this.setState({ customDisplay: current });
   };
   hideFloatBox = () => {
+    console.log("a");
     let current = this.state.customDisplay;
     current.floatBox = { display: "none" };
     this.setState({ customDisplay: current });
+    console.log(this.state);
   };
 
   render() {
-    //console.log(this.state.userInfo);
     return (
       <div className="student-home">
         <div className="backGround"></div>

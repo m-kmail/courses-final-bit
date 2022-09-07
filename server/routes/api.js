@@ -259,7 +259,9 @@ router.get("/userinfo", function (req, res) {
     if (session.roll == "Student") {
       Student.findOne({ Email: email }).exec(function (err, student) {
         if (student) {
-          let userInfo = { email: session.email };
+          let userInfo = {
+            email: session != undefined ? session.email : undefined
+          };
           userInfo.roll = "Student";
           userInfo.name = student.Name;
           userInfo.gender = student.Gender;
