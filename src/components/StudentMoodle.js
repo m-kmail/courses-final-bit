@@ -11,7 +11,7 @@ class StudentMoodle extends Component {
       courses: [],
       searchStuts: "",
       showModel: { display: "block" },
-      CourseDetail: { display: "none" }
+      CourseDetail: { display: "none" },
     };
   }
 
@@ -32,7 +32,7 @@ class StudentMoodle extends Component {
     this.setState({
       showModel: moodleSHow,
       CourseDetail: detailShow,
-      courseSelected: e.currentTarget.getAttribute("data")
+      courseSelected: e.currentTarget.getAttribute("data"),
     });
   };
   courseFilter = (e) => {
@@ -54,14 +54,14 @@ class StudentMoodle extends Component {
       else {
         let courses = await this.getCourses();
         this.setState({
-          courses: courses.data
+          courses: courses.data,
         });
       }
     }
   }
   render() {
     return (
-      <div>
+      <div className="studentMoodleContainer">
         <div className="moodelNav">
           <div className="nameMood"> Welcome In Moodel</div>
         </div>
@@ -93,12 +93,15 @@ class StudentMoodle extends Component {
         </div>
         <div style={this.state.CourseDetail}>
           <div>CH1</div>
-
-          <a href={`http://localhost:5000/uploads/${this.state.filePath}`}>
-            <i class="fa fa-file-pdf-o" aria-hidden="true">
-              PDF file
-            </i>
-          </a>
+          {this.state.filePath ? (
+            <a href={`http://localhost:5000/uploads/${this.state.filePath}`}>
+              <i class="fa fa-file-pdf-o" aria-hidden="true">
+                PDF file
+              </i>
+            </a>
+          ) : (
+            <div>No files to display</div>
+          )}
 
           <div>CH2</div>
           <div>CH3</div>
