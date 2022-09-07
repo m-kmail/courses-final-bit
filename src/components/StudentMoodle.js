@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "../styles/studentMoodle.css";
-
 class StudentMoodle extends Component {
   constructor() {
     super();
 
     this.state = {
+      filePath: null,
+      courseSelected: "",
       courses: [],
       searchStuts: "",
       showModel: { display: "block" },
@@ -14,7 +15,11 @@ class StudentMoodle extends Component {
     };
   }
 
-  changeShowModel = () => {
+  changeShowModel = (e) => {
+    this.state.courses.map((course) => {
+      if (course._id == e.currentTarget.getAttribute("data"))
+        this.setState({ filePath: course.File.path.substring(8) });
+    });
     let moodleSHow = { ...this.state.showModel };
     let detailShow = { ...this.state.CourseDetail };
     if (moodleSHow.display == "block") {
@@ -24,7 +29,11 @@ class StudentMoodle extends Component {
       moodleSHow.display = "block";
       detailShow.display = "none";
     }
-    this.setState({ showModel: moodleSHow, CourseDetail: detailShow });
+    this.setState({
+      showModel: moodleSHow,
+      CourseDetail: detailShow,
+      courseSelected: e.currentTarget.getAttribute("data"),
+    });
   };
   courseFilter = (e) => {
     this.setState({ searchStuts: e.target.value });
@@ -69,13 +78,27 @@ class StudentMoodle extends Component {
             {this.state.courses
               .filter((course) => course.Status == this.state.searchStuts)
               .map((t) => (
-                <div className="courseDiv" onClick={this.changeShowModel}>
+                <div
+                  data={t._id}
+                  className="courseDiv"
+                  onClick={this.changeShowModel}
+                >
                   <h3> {t.Name}</h3>
                 </div>
               ))}
           </div>
         </div>
-        <div style={this.state.CourseDetail}></div>
+        <div style={this.state.CourseDetail}>
+          <div>CH1</div>
+
+          <a href={`http://localhost:5000/uploads/${this.state.filePath}`}>
+            PDF file
+          </a>
+
+          <div>CH2</div>
+          <div>CH3</div>
+          <div>Quiz</div>
+        </div>
       </div>
     );
   }

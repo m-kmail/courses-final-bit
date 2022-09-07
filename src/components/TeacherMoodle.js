@@ -6,6 +6,7 @@ class TeacherMoodle extends Component {
     super();
 
     this.state = {
+      courseSelected: "",
       courses: [],
       searchStuts: "",
       showModel: { display: "block" },
@@ -16,9 +17,13 @@ class TeacherMoodle extends Component {
   sendPDFToServer(formData) {
     const h = {};
     h.Accept = "application/json";
-    axios.post("http://localhost:5000/pdf_file", formData, {
-      headers: h,
-    });
+    axios.post(
+      `http://localhost:5000/pdf_file/${this.state.courseSelected}`,
+      formData,
+      {
+        headers: h,
+      }
+    );
   }
   uploadPDF = () => {
     const formData = new FormData();
@@ -28,7 +33,7 @@ class TeacherMoodle extends Component {
   onInputChange = (e) => {
     this.setState({ file: e.target.files[0] });
   };
-  changeShowModel = () => {
+  changeShowModel = (e) => {
     let moodleSHow = { ...this.state.showModel };
     let detailShow = { ...this.state.CourseDetail };
     if (moodleSHow.display == "block") {
@@ -38,7 +43,11 @@ class TeacherMoodle extends Component {
       moodleSHow.display = "block";
       detailShow.display = "none";
     }
-    this.setState({ showModel: moodleSHow, CourseDetail: detailShow });
+    this.setState({
+      showModel: moodleSHow,
+      CourseDetail: detailShow,
+      courseSelected: e.currentTarget.getAttribute("data"),
+    });
   };
   courseFilter = (e) => {
     this.setState({ searchStuts: e.target.value });
@@ -83,7 +92,11 @@ class TeacherMoodle extends Component {
             {this.state.courses
               .filter((course) => course.Status == this.state.searchStuts)
               .map((t) => (
-                <div className="courseDiv" onClick={this.changeShowModel}>
+                <div
+                  data={t._id}
+                  className="courseDiv"
+                  onClick={this.changeShowModel}
+                >
                   <h3> {t.Name}</h3>
                 </div>
               ))}

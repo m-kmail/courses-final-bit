@@ -47,14 +47,20 @@ router.post("/upload_file", upload.array("myFile"), function (req, res) {
   res.end();
 });
 
-router.post("/pdf_file", uploadFile.array("PDF_FILE"), function (req, res) {
-  Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
-    teacher.File = req.files[0];
-    teacher.save();
-  });
-  res.json({ message: "Successfully uploaded a PDF file" });
-  res.end();
-});
+router.post(
+  "/pdf_file/:courseId",
+  uploadFile.array("PDF_FILE"),
+  function (req, res) {
+    let courseID = req.params.courseId;
+    console.log(courseID);
+    Course.findOne({ _id: courseID }).exec(function (err, course) {
+      course.File = req.files[0];
+      course.save();
+    });
+    res.json({ message: "Successfully uploaded a PDF file" });
+    res.end();
+  }
+);
 
 router.get("/:roll/:email/:pass", async function (req, res) {
   let user;
@@ -95,7 +101,6 @@ router.post("/user", function (req, res) {
         IMG: null,
         Gender: userInfo.Gender,
         Wallet: 0,
-        File: null,
       });
       newStudent.save();
       req.session.email = newStudent.Email;
@@ -165,6 +170,7 @@ router.post("/courses", async function (request, response) {
       FinalGrade: 0,
       numOfStudents: 0,
       Students: [],
+      File: null,
     });
 
     let ok = true;
