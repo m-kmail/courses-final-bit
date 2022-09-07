@@ -16,14 +16,7 @@ class TeacherMoodle extends Component {
       CourseDetail: { display: "none" },
       file: {},
       showFormQuiz: { display: "none" },
-      questions: [
-        {
-          question: "what is npm",
-          choices: { A: "aaa", B: "bbb", C: "ccc", D: "ddd" },
-          answer: "A",
-          isMultiple: "true",
-        },
-      ],
+      questions: [],
       newQuestion: {
         question: null,
         answer: null,
@@ -40,17 +33,20 @@ class TeacherMoodle extends Component {
       examName: e.target.value,
     });
   };
-  saveQuiz = () => {
-    console.log(this.state.courseSelected);
-    //call api to save questions in an exist exam
-  };
   insertNewQuestion = () => {
     let copyQuestions = [...this.state.questions];
     copyQuestions.push(this.state.newQuestion);
-    this.setState({
-      questions: copyQuestions,
-    });
-    //call api to save question in exam
+    let copyNewQuestion = { ...this.state.newQuestion };
+    copyNewQuestion.courseId = this.state.courseSelected;
+    this.setState(
+      {
+        questions: copyQuestions,
+        newQuestion: copyNewQuestion,
+      },
+      function () {
+        axios.post("http://localhost:5000/question", this.state.newQuestion);
+      }
+    );
   };
   buildQuiz = () => {
     let showFormQuizCopy = { ...this.state.showFormQuiz };
@@ -68,7 +64,8 @@ class TeacherMoodle extends Component {
     showFormQuizCopy.display = "none";
     this.setState({ showFormQuiz: showFormQuizCopy });
     this.changeShowBuildQuiz();
-    //call api to delete an exam
+
+    axios.delete(`http://localhost:5000/exam/${this.state.courseSelected}`);
   };
   changeShowBuildQuiz = () => {
     let showSaveQuizCopy = { ...this.state.showSaveQuiz };
@@ -348,9 +345,7 @@ class TeacherMoodle extends Component {
                 value={this.state.examName}
                 onChange={this.changeExamName}
               />
-              <button onClick={this.saveQuiz} style={this.state.showSaveQuiz}>
-                Save Quiz
-              </button>
+
               <button onClick={this.buildQuiz} style={this.state.showBuildQuiz}>
                 Build Quiz
               </button>

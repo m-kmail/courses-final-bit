@@ -18,7 +18,7 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + ".jpg");
-  }
+  },
 });
 var storageFile = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -26,7 +26,7 @@ var storageFile = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + ".pdf");
-  }
+  },
 });
 var uploadFile = multer({ storage: storageFile });
 var upload = multer({ storage: storage });
@@ -67,12 +67,12 @@ router.get("/:roll/:email/:pass", async function (req, res) {
   if (req.params.roll == "Student")
     user = await Student.findOne({
       Email: req.params.email,
-      Password: req.params.pass
+      Password: req.params.pass,
     });
   else
     user = await Teacher.findOne({
       Email: req.params.email,
-      Password: req.params.pass
+      Password: req.params.pass,
     });
 
   if (!user) res.status(404);
@@ -99,7 +99,7 @@ router.post("/user", function (req, res) {
         Password: userInfo.Password,
         IMG: null,
         Gender: userInfo.Gender,
-        Wallet: 0
+        Wallet: 0,
       });
       newStudent.save();
       req.session.email = newStudent.Email;
@@ -111,7 +111,7 @@ router.post("/user", function (req, res) {
       res.send();
     } else {
       res.status(409).send({
-        Error: "The email address you entered is already existed"
+        Error: "The email address you entered is already existed",
       });
     }
   });
@@ -123,8 +123,8 @@ router.get("/courses", function (req, res) {
       .populate({
         path: "Courses",
         populate: {
-          path: "Teacher"
-        }
+          path: "Teacher",
+        },
       })
       .exec(function (err, user) {
         res.send(user.Courses);
@@ -175,7 +175,7 @@ router.post("/courses", async function (request, response) {
       FinalGrade: 0,
       numOfStudents: 0,
       Students: [],
-      File: null
+      File: null,
     });
 
     let ok = true;
@@ -319,7 +319,7 @@ router.post("/payment", async (req, res) => {
     currency: "USD",
     description: "American University",
     payment_method: id,
-    confirm: true
+    confirm: true,
   };
   const payment = await stripe.paymentIntents.create(info);
 
@@ -333,17 +333,17 @@ router.post("/payment", async (req, res) => {
       description: "American University",
       payment_method: id,
       transfer_data: 50,
-      confirm: true
+      confirm: true,
     });
 
     res.json({
       message: "Payment successful",
-      success: true
+      success: true,
     });
   } catch (error) {
     res.json({
       message: "Payment failed",
-      success: false
+      success: false,
     });
   }
   res.end();
@@ -381,7 +381,7 @@ router.post("/exam", function (request, respnse) {
     isFree: true,
     Questions: [],
     Course: examBody.courseId,
-    Name: examBody.Name
+    Name: examBody.Name,
   });
 
   Course.findOne({ _id: idCourse }).exec(function (err, course) {
@@ -391,21 +391,44 @@ router.post("/exam", function (request, respnse) {
   newExam.save();
   respnse.end();
 });
+router.delete("/exam/:courseId", function (req, res) {
+  let idCourse = req.params.courseId;
+
+  Course.findOne({ _id: idCourse })
+    .populate("Exams")
+    .exec(function (err, course) {
+      Exam.findOne({ _id: course.Exams._id }).exec(function (err, exam) {
+        exam.remove();
+        exam.save();
+      });
+      course.Exams = null;
+      course.save();
+
+      res.end();
+    });
+});
 router.post("/question", function (request, respnse) {
   let bodyExam = request.body;
-  let idExam = bodyExam.examId;
-  let newQuestion = new Question({
-    question: bodyExam.question,
-    choices: bodyExam.choices,
-    answer: bodyExam.answer,
-    isMultiple: bodyExam.isMultiple,
-    exam: idExam
-  });
-  newQuestion.save();
-  Exam.findOne({ _id: idExam }).exec(function (err, exam) {
-    exam.Questions.push(newQuestion);
-    exam.save();
-  });
+  let courseId = bodyExam.courseId;
+  Course.findOne({ _id: courseId })
+    .populate("Exams")
+    .exec(function (err, course) {
+      let examId = course.Exams._id;
+      let newQuestion = new Question({
+        question: bodyExam.question,
+        choices: bodyExam.choices,
+        answer: bodyExam.answer,
+        isMultiple: bodyExam.isMultiple,
+        exam: examId,
+      });
+
+      Exam.findOne({ _id: examId }).exec(function (err, exam) {
+        exam.Questions.push(newQuestion);
+        exam.save();
+      });
+      newQuestion.save();
+    });
+
   respnse.end();
 });
 
