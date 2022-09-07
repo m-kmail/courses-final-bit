@@ -27,7 +27,6 @@ class App extends Component {
             <Route path="/teacherMoodle" exact element={<TeacherMoodle />} />
             <Route path="/studentMoodle" exact element={<StudentMoodle />} />
             <Route path="/payment" exact element={<Payment />} />
-
             <Route path="/" exact element={<Login />} />
             <Route path="/*" exact element={<Error />} />
           </Routes>
