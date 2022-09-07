@@ -253,7 +253,7 @@ h4 {
 .coursesView {
   position: relative;
   display: grid;
-
+height: 150px;
   grid-template-columns: 1fr;
   flex-direction: column;
   align-items: center;

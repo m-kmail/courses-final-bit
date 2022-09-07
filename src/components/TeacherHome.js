@@ -166,7 +166,7 @@ class TeacherHome extends Component {
     let current = this.state.customDisplays;
     current.profileStyle = { display: "none" };
     current.addStyle.display == "none"
-      ? (current.addStyle = { display: "flex" })
+      ? (current.addStyle = { display: "block" })
       : (current.addStyle = { display: "none" });
 
     this.setState({ customDisplays: current });
