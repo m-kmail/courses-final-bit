@@ -25,7 +25,7 @@ class StudentMoodle extends Component {
     let detailShow = { ...this.state.CourseDetail };
     if (moodleSHow.display == "block") {
       moodleSHow.display = "none";
-      detailShow.display = "block";
+      detailShow.display = "flex";
     } else {
       moodleSHow.display = "block";
       detailShow.display = "none";
@@ -102,19 +102,36 @@ class StudentMoodle extends Component {
               ))}
           </div>
         </div>
-        <div style={this.state.CourseDetail}>
-          <div>file</div>
-          {this.state.filePath ? (
-            <a href={`http://localhost:5000/uploads/${this.state.filePath}`}>
-              <i class="fa fa-file-pdf-o" aria-hidden="true">
-                PDF file
-              </i>
-            </a>
-          ) : (
-            <div>No files to display</div>
-          )}
+        <div className="courseDetailContainer" style={this.state.CourseDetail}>
+          <div className="fileContainer">
+            <div className="courseChapters">
+              <h2 className="titleCourse">CHAPTER 1</h2>
+              {this.state.filePath ? (
+                <a
+                  className="pdfFile"
+                  href={`http://localhost:5000/uploads/${this.state.filePath}`}
+                >
+                  <i class="fa fa-file-pdf-o" aria-hidden="true">
+                    PDF file
+                  </i>
+                </a>
+              ) : (
+                <div>No files to display</div>
+              )}
+            </div>
+            <div className="courseChapters">
+              <h2 className="titleCourse">CHAPTER 2</h2>
+
+              <div className="pdfFile">No files to display</div>
+            </div>
+            <div className="courseChapters">
+              <h2 className="titleCourse">CHAPTER 3</h2>
+
+              <div className="pdfFile">No files to display</div>
+            </div>
+          </div>
           <div className="quizField">
-            <h1>Exam</h1>
+            <div className="quizTitle">Exam</div>
             {this.state.examCourse ? (
               <div className="examContent">
                 <h4 className="examName">{this.state.examCourse.Name}</h4>
@@ -141,7 +158,7 @@ class StudentMoodle extends Component {
                       </div>
                     );
                   })}
-                  <button>submit Exam</button>
+                  <button className="submitExam">submit Exam</button>
                 </div>
               </div>
             ) : (
