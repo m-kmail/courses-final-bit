@@ -16,6 +16,7 @@ class StudentMoodle extends Component {
       showModel: { display: "block" },
       CourseDetail: { display: "none" },
       customDisplay: { courses: { display: "block" } },
+      QuizDetail: { display: "none" },,
       participants: [],
       quiez: { display: "block" },
       backToCourse: { display: "none" },
@@ -23,7 +24,16 @@ class StudentMoodle extends Component {
       allStudents: { display: "none" }
     };
   }
-
+  quizData = () => {
+    let x = this.state.QuizDetail;
+    x = { display: "block" };
+    this.setState({ QuizDetail: x });
+  };
+  closeQuiz = () => {
+    let x = this.state.QuizDetail;
+    x = { display: "none" };
+    this.setState({ QuizDetail: x });
+  };
   changeShowModel = (e) => {
     axios
       .get(
@@ -50,7 +60,7 @@ class StudentMoodle extends Component {
       {
         showModel: moodleSHow,
         CourseDetail: detailShow,
-        courseSelected: e.currentTarget.getAttribute("data")
+        courseSelected: e.currentTarget.getAttribute("data"),
       },
       function () {
         this.getQuiz();
@@ -82,7 +92,7 @@ class StudentMoodle extends Component {
       else {
         let courses = await this.getCourses();
         this.setState({
-          courses: courses.data
+          courses: courses.data,
         });
       }
     }
@@ -133,39 +143,43 @@ class StudentMoodle extends Component {
   goBack = () => {};
   render() {
     return (
-      <div className="studentMoodleContainer">
-        <div className="moodelNav">
-          <div className="nameMood"> Welcome In Moodel</div>
-        </div>
-        <div className="coursesContainer" style={this.state.showModel}>
-          <select
-            className="typeCourseInput"
-            value={this.state.searchStuts}
-            onChange={this.courseFilter}
-          >
-            <option value="" disabled selected>
-              Courses
-            </option>
-            <option value="in progress">In progress</option>
-            <option value="past">past</option>
-          </select>
-          <div className="courses">
-            {this.state.courses
-              .filter((course) => course.Status == this.state.searchStuts)
-              .map((t) => (
-                <div
-                  data={t._id}
-                  className="courseDiv"
-                  onClick={this.changeShowModel}
-                >
-                  <h3> {t.Name}</h3>
-                </div>
-              ))}
+      <div className="hi">
+        <div className="studentMoodleContainer">
+          <div className="moodelNav">
+            <div className="nameMood"> Welcome In Moodel</div>
           </div>
-        </div>
-
-        <div className="courseDetailContainer" style={this.state.CourseDetail}>
-          <div className="extra">
+          <div className="coursesContainer" style={this.state.showModel}>
+            <select
+              className="typeCourseInput"
+              value={this.state.searchStuts}
+              onChange={this.courseFilter}
+            >
+              <option value="" disabled selected>
+                Courses
+              </option>
+              <option value="in progress">In progress</option>
+              <option value="past">past</option>
+            </select>
+            <div className="courses">
+              {this.state.courses
+                .filter((course) => course.Status == this.state.searchStuts)
+                .map((t) => (
+                  <div
+                    data={t._id}
+                    className="courseDiv"
+                    onClick={this.changeShowModel}
+                  >
+                    <h3> {t.Name}</h3>
+                  </div>
+                ))}
+            </div>
+          </div>
+  
+        <div
+            className="courseDetailContainer"
+            style={this.state.CourseDetail}
+          >
+            <div className="extra">
             <button onClick={this.loadStudents}>participants</button>
             <button style={this.state.backToCourse} onClick={this.goBack}>
               Go Back
@@ -192,72 +206,77 @@ class StudentMoodle extends Component {
           </div>
 
           <div className="fileContainer" style={this.state.chapters}>
-            <div className="courseChapters">
-              <h2 className="titleCourse">CHAPTER 1</h2>
-              {this.state.filePath ? (
-                <a
-                  className="pdfFile"
-                  href={`http://localhost:5000/uploads/${this.state.filePath}`}
-                >
-                  <i class="fa fa-file-pdf-o" aria-hidden="true">
-                    PDF file
-                  </i>
-                </a>
-              ) : (
-                <div>No files to display</div>
-              )}
-            </div>
-            <div className="courseChapters">
-              <h2 className="titleCourse">CHAPTER 2</h2>
-
-              <div className="pdfFile">No files to display</div>
-            </div>
-            <div className="courseChapters">
-              <h2 className="titleCourse">CHAPTER 3</h2>
-
-              <div className="pdfFile">No files to display</div>
-            </div>
-          </div>
-
-          <div className="quizField" style={this.state.quiez}>
-            <div className="quizTitle">Exam</div>
-            {this.state.examCourse ? (
-              <div className="examContent">
-                <h4 className="examName">{this.state.examCourse.Name}</h4>
-                <div className="examQuestions">
-                  {this.state.examCourse.Questions.map((element, index1) => {
-                    return (
-                      <div className="examQuestion">
-                        <div className="questionTitle">{element.question}</div>
-                        <div className="questionChoice">
-                          {Object.keys(element.choices[0]).map((choice) => {
-                            return (
-                              <div className="choicesContent">
-                                <input
-                                  onChange={this.changeRadioAnswer}
-                                  type="radio"
-                                  name={index1}
-                                  data={choice + index1}
-                                />
-                                <span className="header">{choice}:</span>
-                                <span className="toAnswer">
-                                  {element.choices[0][choice]}
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })}
-                  <button className="submitExam" onClick={this.FinalsubmitQuiz}>
-                    submit Exam
-                  </button>
-                </div>
+              <div className="courseChapters">
+                <h2 className="titleCourse">CHAPTER 1</h2>
+                {this.state.filePath ? (
+                  <a
+                    className="pdfFile"
+                    href={`http://localhost:5000/uploads/${this.state.filePath}`}
+                  >
+                    <i class="fa fa-file-pdf-o" aria-hidden="true">
+                      PDF file
+                    </i>
+                  </a>
+                ) : (
+                  <div>No files to display</div>
+                )}
               </div>
-            ) : (
-              <div>no exam</div>
-            )}
+              <div className="courseChapters">
+                <h2 className="titleCourse">CHAPTER 2</h2>
+
+                <div className="pdfFile">No files to display</div>
+              </div>
+              <div className="courseChapters">
+                <h2 className="titleCourse">CHAPTER 3</h2>
+
+                <div className="pdfFile">No files to display</div>
+                <button onClick={this.quizData}>Quiz</button>
+              </div>
+              <div className="quizField" style={this.state.QuizDetail}>
+                <button className="closeExam" onClick={this.closeQuiz}>
+                  x
+                </button>
+                <div className="quizTitle">Exam</div>
+                {this.state.examCourse ? (
+                  <div className="examContent">
+                    <h4 className="examName">{this.state.examCourse.Name}</h4>
+                    <div className="examQuestions">
+                      {this.state.examCourse.Questions.map(
+                        (element, index1) => {
+                          return (
+                            <div className="examQuestion">
+                              <div className="questionTitle">
+                                {element.question}
+                              </div>
+                              <div className="questionChoice">
+                                {Object.keys(element.choices[0]).map(
+                                  (choice, index2) => {
+                                    return (
+                                      <div className="choicesContent">
+                                        <input type="radio" name={index1} />
+                                        <span className="header">
+                                          {choice}:
+                                        </span>
+                                        <span className="toAnswer">
+                                          {element.choices[0][choice]}
+                                        </span>
+                                      </div>
+                                    );
+                                  }
+                                )}
+                              </div>
+                            </div>
+                          );
+                        }
+                      )}
+                      <button className="submitExam">submit Exam</button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>no exam</div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
