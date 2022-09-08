@@ -330,9 +330,11 @@ h4 {
 }
 
 .wallet{
-  position: absolute;
-  left: 10px;
-  top:50px;
+    position: absolute;
+    left: 40px;
+    top: 50px;
+    color: green;
+    font-size: 30px;
 }
 
 .inputsDiv {
