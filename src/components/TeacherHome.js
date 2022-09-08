@@ -169,6 +169,9 @@ class TeacherHome extends Component {
       ? (current.addStyle = { display: "block" })
       : (current.addStyle = { display: "none" });
 
+    if (current.addStyle.display == "block")
+      current.contentViewStyle = { display: "flex" };
+
     this.setState({ customDisplays: current });
   };
   showProfile = () => {

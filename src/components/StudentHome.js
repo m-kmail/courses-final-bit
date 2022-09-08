@@ -266,9 +266,13 @@ class StudentHome extends Component {
     curr.joinCourse.display == "flex"
       ? (curr.joinCourse = { display: "none" })
       : (curr.joinCourse = { display: "flex" });
+
     if (curr.joinCourse.display == "none") {
       curr.searchCourses = { display: "none" };
       curr.myCourses = { display: "block" };
+    } else {
+      curr.floatBox = { display: "none" };
+      curr.profileStyle = { display: "none" };
     }
     this.setState({ customDisplay: curr });
 
