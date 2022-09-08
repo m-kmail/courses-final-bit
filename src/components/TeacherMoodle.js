@@ -21,17 +21,17 @@ class TeacherMoodle extends Component {
         question: null,
         answer: null,
         choices: {},
-        isMultiple: null
+        isMultiple: null,
       },
       showBuildQuiz: { display: "block" },
       showClearQuiz: { display: "none" },
       showSaveQuiz: { display: "none" },
-      emptyName: { display: "none" }
+      emptyName: { display: "none" },
     };
   }
   changeExamName = (e) => {
     this.setState({
-      examName: e.target.value
+      examName: e.target.value,
     });
   };
   insertNewQuestion = () => {
@@ -44,7 +44,7 @@ class TeacherMoodle extends Component {
     this.setState(
       {
         questions: copyQuestions,
-        newQuestion: copyNewQuestion
+        newQuestion: copyNewQuestion,
       },
       function () {
         axios.post("http://localhost:5000/question", this.state.newQuestion);
@@ -66,7 +66,7 @@ class TeacherMoodle extends Component {
       this.changeShowBuildQuiz();
       let bodyExam = {
         Name: this.state.examName,
-        courseId: this.state.courseSelected
+        courseId: this.state.courseSelected,
       };
       axios.post("http://localhost:5000/exam", bodyExam);
     } else {
@@ -105,7 +105,7 @@ class TeacherMoodle extends Component {
     this.setState({
       showBuildQuiz: showBuildQuizCopy,
       showClearQuiz: showClearQuizCopy,
-      showSaveQuiz: showSaveQuizCopy
+      showSaveQuiz: showSaveQuizCopy,
     });
   };
   handleTF = (e) => {
@@ -118,7 +118,7 @@ class TeacherMoodle extends Component {
     inputs["isMultiple"] = false;
     inputs["choices"] = { A: "True", B: "False" };
     this.setState({
-      newQuestion: inputs
+      newQuestion: inputs,
     });
   };
   handleMultiple = (e) => {
@@ -133,7 +133,7 @@ class TeacherMoodle extends Component {
     }
     inputs["isMultiple"] = true;
     this.setState({
-      newQuestion: inputs
+      newQuestion: inputs,
     });
   };
 
@@ -144,7 +144,7 @@ class TeacherMoodle extends Component {
       `http://localhost:5000/pdf_file/${this.state.courseSelected}`,
       formData,
       {
-        headers: h
+        headers: h,
       }
     );
   }
@@ -169,7 +169,7 @@ class TeacherMoodle extends Component {
     this.setState({
       showModel: moodleSHow,
       CourseDetail: detailShow,
-      courseSelected: e.currentTarget.getAttribute("data")
+      courseSelected: e.currentTarget.getAttribute("data"),
     });
   };
   courseFilter = (e) => {
@@ -187,7 +187,7 @@ class TeacherMoodle extends Component {
     showTf.display = "none";
     this.setState({
       showMultiple: showMultiple,
-      showTF: showTf
+      showTF: showTf,
     });
   };
   showTF = () => {
@@ -197,7 +197,7 @@ class TeacherMoodle extends Component {
     showTf.display = "block";
     this.setState({
       showMultiple: showMultiple,
-      showTF: showTf
+      showTF: showTf,
     });
   };
 
@@ -211,11 +211,18 @@ class TeacherMoodle extends Component {
       else {
         let courses = await this.getCourses();
         this.setState({
-          courses: courses.data
+          courses: courses.data,
         });
       }
     }
   }
+  openExam = (e) => {
+    let examStatus = {
+      status: e.target.checked,
+      courseId: this.state.courseSelected,
+    };
+    axios.put("http://localhost:5000/openExam", examStatus);
+  };
   render() {
     return (
       <div>
@@ -389,7 +396,6 @@ class TeacherMoodle extends Component {
                 <h1 className="emptyERR" style={this.state.emptyName}>
                   Please Enter The Name Of This Exam
                 </h1>
-
                 <input
                   className="quzeName"
                   type="text"
@@ -405,6 +411,8 @@ class TeacherMoodle extends Component {
                 >
                   Build Quiz
                 </button>
+                <input type="checkbox" onChange={this.openExam} />
+                <label> Open Exam</label>
               </div>
             </div>
           </div>

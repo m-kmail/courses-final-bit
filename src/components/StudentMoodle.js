@@ -21,13 +21,17 @@ class StudentMoodle extends Component {
       quiez: { display: "block" },
       backToCourse: { display: "none" },
       chapters: { display: "block" },
-      allStudents: { display: "none" }
+      allStudents: { display: "none" },
     };
   }
   quizData = () => {
-    let x = this.state.QuizDetail;
-    x = { display: "block" };
-    this.setState({ QuizDetail: x });
+    if (this.state.examCourse.isClosed == true) {
+      alert("this exam is not available yet");
+    } else {
+      let x = this.state.QuizDetail;
+      x = { display: "block" };
+      this.setState({ QuizDetail: x });
+    }
   };
   closeQuiz = () => {
     let x = this.state.QuizDetail;
@@ -60,7 +64,7 @@ class StudentMoodle extends Component {
       {
         showModel: moodleSHow,
         CourseDetail: detailShow,
-        courseSelected: e.currentTarget.getAttribute("data")
+        courseSelected: e.currentTarget.getAttribute("data"),
       },
       function () {
         this.getQuiz();
@@ -92,7 +96,7 @@ class StudentMoodle extends Component {
       else {
         let courses = await this.getCourses();
         this.setState({
-          courses: courses.data
+          courses: courses.data,
         });
       }
     }
@@ -113,7 +117,7 @@ class StudentMoodle extends Component {
     }
     let gradeStatus = {
       courseId: this.state.courseSelected,
-      status: finalGrade
+      status: finalGrade,
     };
     axios.put("http://localhost:5000/grade", gradeStatus);
   };
@@ -124,7 +128,7 @@ class StudentMoodle extends Component {
     let asnwersCopy = { ...this.state.radioAnswers };
     asnwersCopy[questionNumber] = userAnswer;
     this.setState({
-      radioAnswers: asnwersCopy
+      radioAnswers: asnwersCopy,
     });
   };
 
@@ -230,6 +234,7 @@ class StudentMoodle extends Component {
                 <div className="pdfFile">No files to display</div>
                 <button onClick={this.quizData}>Quiz</button>
               </div>
+
               <div className="quizField" style={this.state.QuizDetail}>
                 <button className="closeExam" onClick={this.closeQuiz}>
                   x
