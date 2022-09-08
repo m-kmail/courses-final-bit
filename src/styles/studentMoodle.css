@@ -114,30 +114,22 @@ width: 100%;
   text-align: start;
 }
 .quizField{
-  font-size: calc(1rem + 0.8vw );
-width: 30%;
-  margin-top: 3%;
-  padding-top: 0;
+
 
 }
 .examName{
   text-align:center
 }
 .examQuestions{
-  margin-top: 7%;
-  text-align: start;
+
 }
 .examContent{
-padding: 5%;
-  border: 3px solid rgb(67, 65, 65);
+
 }
 .examQuestion{
   margin: 5%;
 }
 .choicesContent{
-  margin-left: 5%;
-  padding-top: 3%;
-  padding-bottom: 5%;
 }
 .submitExam{
   font-family: "DynaPuff", cursive;

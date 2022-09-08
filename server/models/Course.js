@@ -10,9 +10,9 @@ const CourseSchema = new Schema({
   Days: String,
   Status: String,
   Exams: { type: Schema.Types.ObjectId, ref: "Exam" },
-  FinalGrade: Number,
   numOfStudents: Number,
   File: Object,
+  FinalGrade: String,
 });
 const Course = mongoose.model("Course", CourseSchema);
 module.exports = Course;

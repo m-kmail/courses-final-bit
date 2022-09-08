@@ -503,4 +503,19 @@ router.get("/courseStudents/:courseId", function (req, res) {
       res.send(allstudents);
     });
 });
+router.put("/grade", function (req, res) {
+  let gradeStatus = req.body.status;
+  let courseId = req.body.courseId;
+  Student.findOne({ Email: session.email })
+    .populate("Courses")
+    .exec(function (err, student) {
+      student.Courses.map((course) => {
+        if (course._id == courseId) {
+          course.FinalGrade = gradeStatus;
+          course.Status = "past";
+          course.save();
+        }
+      });
+    });
+});
 module.exports = router;

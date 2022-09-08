@@ -90,7 +90,8 @@ class TeacherMoodle extends Component {
     let inputClass = e.target.className;
     let input = e.target.value;
     let inputs = { ...this.state.newQuestion };
-
+    if (input == "False") input = "B";
+    else if (input == "True") input = "A";
     inputs[inputClass] = input;
     inputs["isMultiple"] = false;
     inputs["choices"] = { A: "True", B: "False" };
