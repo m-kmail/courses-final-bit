@@ -81,6 +81,9 @@ class StudentMoodle extends Component {
   render() {
     return (
       <div>
+        <div className="moodelNav">
+          <div className="nameMood"> Welcome In Moodel</div>
+        </div>
         <div className="coursesContainer">
           <select
             className="typeCourseInput"
