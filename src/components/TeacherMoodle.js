@@ -195,166 +195,188 @@ class TeacherMoodle extends Component {
   }
   render() {
     return (
-      <div className="coursesContainer">
-        <div style={this.state.showModel}>
-          <select
-            className="typeCourseInput"
-            value={this.state.searchStuts}
-            onChange={this.courseFilter}
-          >
-            <option value="" disabled selected>
-              Courses
-            </option>
-            <option value="in progress">In progress</option>
-            <option value="past">past</option>
-          </select>
-          <div className="courses">
-            {this.state.courses
-              .filter((course) => course.Status == this.state.searchStuts)
-              .map((t) => (
-                <div
-                  data={t._id}
-                  className="courseDiv"
-                  onClick={this.changeShowModel}
-                >
-                  <h3> {t.Name}</h3>
-                </div>
-              ))}
-          </div>
+      <div>
+        {" "}
+        <div className="moodelNav">
+          <div className="nameMood"> Welcome In Moodel</div>
         </div>
-        <div style={this.state.CourseDetail}>
-          <div className="form-group files">
-            <h1>Upload courses tutorial here </h1>
-            <input
-              type="file"
-              onChange={this.onInputChange}
-              className="form-control"
-              multiple
-            />
-            <button className="upladFileBtn" onClick={this.uploadPDF}>
-              Upload file
-            </button>
-          </div>
-          <div className="quizForm">
-            <div className="createQuiz" style={this.state.showFormQuiz}>
-              {this.state.questions.map((element) => {
-                return (
-                  <div>
-                    <p>{element.question}</p>
-                    {Object.keys(element.choices).map((choice) => (
-                      <div>
-                        <span>
-                          {choice}:{element.choices[choice]}
-                        </span>
-                      </div>
-                    ))}
+        <div className="coursesContainerT">
+          <div style={this.state.showModel}>
+            <select
+              className="typeCourseInput"
+              value={this.state.searchStuts}
+              onChange={this.courseFilter}
+            >
+              <option value="" disabled selected>
+                Courses
+              </option>
+              <option value="in progress">In progress</option>
+              <option value="past">past</option>
+            </select>
+            <div className="coursesT">
+              {this.state.courses
+                .filter((course) => course.Status == this.state.searchStuts)
+                .map((t) => (
+                  <div
+                    data={t._id}
+                    className="courseDiv"
+                    onClick={this.changeShowModel}
+                  >
+                    <h3> {t.Name}</h3>
                   </div>
-                );
-              })}
-              <div className="NewTF" style={this.state.showTF}>
+                ))}
+            </div>
+          </div>
+          <div style={this.state.CourseDetail}>
+            <div>
+              <div className="form-group files">
+                <h1>Upload courses tutorial here </h1>
                 <input
-                  className="question"
-                  value={this.state.newQuestion.question}
-                  onChange={this.handleTF}
-                  type="text"
-                  placeholder="Write the question here"
+                  type="file"
+                  onChange={this.onInputChange}
+                  className="form-control"
+                  multiple
                 />
-                <div>
-                  <label htmlFor="choices">Choose the right solution</label>
-                  <select
-                    className="answer"
-                    name="choices"
-                    id="cars"
-                    onChange={this.handleTF}
-                  >
-                    <option value="True">True</option>
-                    <option value="False">False</option>
-                  </select>
-                </div>
-                <button onClick={this.insertNewQuestion}>Save question</button>
-              </div>
-              <div className="newMultiple" style={this.state.showMultiple}>
-                <input
-                  className="question"
-                  value={this.state.newQuestion.question}
-                  type="text"
-                  onChange={this.handleMultiple}
-                  placeholder="Write the question here"
-                />
-                <input
-                  className="choices-A"
-                  value={this.state.newQuestion.choices["A"]}
-                  type="text"
-                  onChange={this.handleMultiple}
-                  placeholder="Write the first choice here"
-                />
-                <input
-                  className="choices-B"
-                  value={this.state.newQuestion.choices["B"]}
-                  type="text"
-                  onChange={this.handleMultiple}
-                  placeholder="Write the second choice here"
-                />
-                <input
-                  className="choices-C"
-                  value={this.state.newQuestion.choices["C"]}
-                  type="text"
-                  onChange={this.handleMultiple}
-                  placeholder="Write the third choice here"
-                />
-                <input
-                  className="choices-D"
-                  value={this.state.newQuestion.choices["D"]}
-                  type="text"
-                  onChange={this.handleMultiple}
-                  placeholder="Write the fourth choice here"
-                />
-                <div>
-                  <label htmlFor="choices">Choose the right solution</label>
-                  <select
-                    className="answer"
-                    name="choices"
-                    id="cars"
-                    onChange={this.handleMultiple}
-                  >
-                    <option value="a">A</option>
-                    <option value="b">B</option>
-                    <option value="c">C</option>
-                    <option value="d">D</option>
-                  </select>
-                </div>
-                <button onClick={this.insertNewQuestion}>Save question</button>
-              </div>
-              <div onClick={this.showTF}>
-                <input type="radio" id="T/F" name="type" value="T/F" />
-                <label for="T/F">T/F</label>
-              </div>
-              <div onClick={this.showMultiple}>
-                <input
-                  type="radio"
-                  id="MULTIPLE"
-                  name="type"
-                  value="Multiple"
-                />
-                <label for="MULTIPLE">Multiple</label>
+                <button className="upladFileBtn" onClick={this.uploadPDF}>
+                  Upload file
+                </button>
               </div>
             </div>
-            <div className="displayBtn">
-              <input
-                type="text"
-                value={this.state.examName}
-                onChange={this.changeExamName}
-              />
 
-              <button onClick={this.buildQuiz} style={this.state.showBuildQuiz}>
-                Build Quiz
-              </button>
-              <button
-                onClick={this.cancelBuildQuiz}
-                style={this.state.showClearQuiz}
-              >
-                Clear Quiz
-              </button>
+            <div className="quizForm">
+              <div className="createQuiz" style={this.state.showFormQuiz}>
+                <button
+                  className="clearCourse"
+                  onClick={this.cancelBuildQuiz}
+                  style={this.state.showClearQuiz}
+                >
+                  Clear Quiz
+                </button>
+
+                {this.state.questions.map((element) => {
+                  return (
+                    <div className="choicesBorder">
+                      <p>{element.question}</p>
+                      {Object.keys(element.choices).map((choice) => (
+                        <div>
+                          <span>
+                            {choice}:{element.choices[choice]}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })}
+                <div className="NewTF" style={this.state.showTF}>
+                  <input
+                    className="question"
+                    value={this.state.newQuestion.question}
+                    onChange={this.handleTF}
+                    type="text"
+                    placeholder="Write the question here"
+                  />
+                  <div>
+                    <label htmlFor="choices">Choose the right solution</label>
+                    <select
+                      className="answer"
+                      name="choices"
+                      id="cars"
+                      onChange={this.handleTF}
+                    >
+                      <option value="True">True</option>
+                      <option value="False">False</option>
+                    </select>
+                  </div>
+                  <button className="saveQ" onClick={this.insertNewQuestion}>
+                    Save question
+                  </button>
+                </div>
+                <div className="newMultiple" style={this.state.showMultiple}>
+                  <input
+                    className="question"
+                    value={this.state.newQuestion.question}
+                    type="text"
+                    onChange={this.handleMultiple}
+                    placeholder="Write the question here"
+                  />
+                  <input
+                    className="choices-A"
+                    value={this.state.newQuestion.choices["A"]}
+                    type="text"
+                    onChange={this.handleMultiple}
+                    placeholder="Write the first choice here"
+                  />
+                  <input
+                    className="choices-B"
+                    value={this.state.newQuestion.choices["B"]}
+                    type="text"
+                    onChange={this.handleMultiple}
+                    placeholder="Write the second choice here"
+                  />
+                  <input
+                    className="choices-C"
+                    value={this.state.newQuestion.choices["C"]}
+                    type="text"
+                    onChange={this.handleMultiple}
+                    placeholder="Write the third choice here"
+                  />
+                  <input
+                    className="choices-D"
+                    value={this.state.newQuestion.choices["D"]}
+                    type="text"
+                    onChange={this.handleMultiple}
+                    placeholder="Write the fourth choice here"
+                  />
+                  <div>
+                    <label htmlFor="choices">Choose the right solution</label>
+                    <select
+                      className="answer"
+                      name="choices"
+                      id="cars"
+                      onChange={this.handleMultiple}
+                    >
+                      <option value="a">A</option>
+                      <option value="b">B</option>
+                      <option value="c">C</option>
+                      <option value="d">D</option>
+                    </select>
+                  </div>
+                  <button onClick={this.insertNewQuestion}>
+                    Save question
+                  </button>
+                </div>
+                <div onClick={this.showTF}>
+                  <input type="radio" id="T/F" name="type" value="T/F" />
+                  <label for="T/F">T/F</label>
+                </div>
+                <div onClick={this.showMultiple}>
+                  <input
+                    type="radio"
+                    id="MULTIPLE"
+                    name="type"
+                    value="Multiple"
+                  />
+                  <label for="MULTIPLE">Multiple</label>
+                </div>
+              </div>
+
+              <div className="displayBtn">
+                <input
+                  className="quzeName"
+                  type="text"
+                  placeholder="Quze Name"
+                  value={this.state.examName}
+                  onChange={this.changeExamName}
+                />
+
+                <button
+                  className="createQuzeButton"
+                  onClick={this.buildQuiz}
+                  style={this.state.showBuildQuiz}
+                >
+                  Build Quiz
+                </button>
+              </div>
             </div>
           </div>
         </div>

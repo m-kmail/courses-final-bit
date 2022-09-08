@@ -1,15 +1,114 @@
-.files input {
-    outline: 2px dashed #92b0b3;
-    outline-offset: -10px;
-    -webkit-transition: outline-offset 0.15s ease-in-out,
-      background-color 0.15s linear;
-    transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
-    padding: 120px 0px 85px 35%;
-    text-align: center !important;
-    width: 60% !important;
-  }
-  .displayBtn{
-    position: absolute;
-    left: 100px;
-    top: 300px;
-  }
+.form-group {
+  height: 300px;
+}
+
+.displayBtn {
+  width: 400px;
+  margin-left: 33%;
+  margin-top: -7%;
+}
+.upladFileBtn {
+  text-decoration: none;
+  background-color: azure;
+  height: 50px;
+  border: none;
+  border-radius: 25px;
+  width: 140px;
+  text-align: center;
+  display: block;
+  margin-left: 45%;
+  margin-top: 3%;
+  text-align: center;
+}
+.upladFileBtn:hover {
+  background-color: rgb(202, 208, 208);
+}
+.quzeName {
+  border: 0;
+  background: none;
+  margin-left: 50px;
+
+  text-align: center;
+  border: 2px solid azure;
+  padding: 14px 10px;
+  width: 60%;
+  height: 15px;
+  outline: none;
+  color: black;
+  border-radius: 24px;
+  transition: 0.25s;
+  font-size: large;
+}
+.createQuzeButton {
+  text-decoration: none;
+  background-color: azure;
+  height: 50px;
+  border: none;
+  border-radius: 25px;
+  width: 140px;
+  text-align: center;
+  display: block;
+  margin-left: 36%;
+  margin-top: 3%;
+  text-align: center;
+}
+.createQuzeButton:hover {
+  background-color: rgb(202, 208, 208);
+}
+.coursesContainerT {
+  position: absolute;
+  top: 64%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 90%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.coursesT {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+}
+.createQuiz {
+  transform: translate(70%, -80%);
+  width: 500px;
+  height: 500px;
+  background-color: white;
+  border-radius: 20px;
+  flex-wrap: wrap;
+  overflow-y: auto;
+}
+.clearCourse {
+  background-color: red;
+  width: 150px;
+  margin-left: 37%;
+}
+.saveQ {
+  background-color: green;
+  width: 150px;
+  margin-top: 20px;
+}
+.NewTF {
+  margin-top: 50px;
+}
+.choicesBorder {
+  margin-top: 5px;
+  border-style: solid;
+}
+.moodelNav {
+  width: 150%;
+  height: 80px;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-image: url("https://m.media-amazon.com/images/I/61QrCdBXSTL._SL1100_.jpg");
+}
