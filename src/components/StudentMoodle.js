@@ -187,22 +187,22 @@ class StudentMoodle extends Component {
             </div>
 
             <div className="allStudents" style={this.state.allStudents}>
-              {console.log(this.state.participants)}
+              {/*console.log(this.state.participants)}
               {this.state.participants.map((p) => {
                 console.log(p.name);
                 <h2>{p.name}</h2>;
+              })*/}
+
+              {this.state.participants.map((student) => {
+                <div className="singleStudent">
+                  <img
+                    className="studentImage"
+                    src={`http://localhost:5000/uploads/${student.img}`}
+                  />
+                  <h2 className="studentName">{student.name}</h2>
+                  <h2 className="studentEmail">{student.email}</h2>
+                </div>;
               })}
-              <p>hiiiiiiiiii</p>
-              {/* {this.state.participants.map((student) => {
-              <div className="singleStudent">
-                <img
-                  className="studentImage"
-                  src={`http://localhost:5000/uploads/${student.img}`}
-                />
-                <h2 className="studentName">{student.name}</h2>
-                <h2 className="studentEmail">{student.email}</h2>
-              </div>;
-            })} */}
             </div>
 
             <div className="fileContainer" style={this.state.chapters}>
