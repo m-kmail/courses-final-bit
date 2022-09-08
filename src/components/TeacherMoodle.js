@@ -36,8 +36,10 @@ class TeacherMoodle extends Component {
   };
   insertNewQuestion = () => {
     let copyQuestions = [...this.state.questions];
-    copyQuestions.push(this.state.newQuestion);
+
     let copyNewQuestion = { ...this.state.newQuestion };
+    copyQuestions.push(this.state.newQuestion);
+
     copyNewQuestion.courseId = this.state.courseSelected;
     this.setState(
       {
