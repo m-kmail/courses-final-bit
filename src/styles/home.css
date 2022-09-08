@@ -7,6 +7,19 @@
   box-shadow: rgba(115, 115, 115, 0.25) 0px 50px 100px -20px,
     rgba(255, 255, 255, 0.3) 0px 30px 60px -30px;
 }
+.loginImageLogin{
+padding: 30px;
+  background-image:url("https://raw.githubusercontent.com/ezatkh/courses-final-bit/91276f9edca961ead740b73a22833ea841b8224a/src/bg.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.loginImageRegister{
+    background-image:url("https://raw.githubusercontent.com/ezatkh/courses-final-bit/91276f9edca961ead740b73a22833ea841b8224a/src/bg.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 
 .button-box {
   width: 220px;
