@@ -538,9 +538,26 @@ router.put("/grade", function (req, res) {
       });
     });
 });
-router.put("/openExam/:courseId", function (req, res) {
-  let idCourse = req.params.courseId;
-  console.log(idCourse);
+router.put("/openExam", function (req, res) {
+  let status = req.body;
+  Teacher.findOne({ Email: session.email })
+    .populate({
+      path: "Courses",
+      populate: {
+        path: "Exams",
+      },
+    })
+    .exec(function (err, teacher) {
+      teacher.Courses.map((course) => {
+        if (course._id == status.courseId) {
+          let status = course.Exams.isClosed;
+          course.Exams.isClosed = !status;
+          course.Exams.save();
+          teacher.save();
+          course.save();
+        }
+      });
+    });
   res.end();
 });
 module.exports = router;
