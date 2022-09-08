@@ -12,7 +12,7 @@ const CourseSchema = new Schema({
   Exams: { type: Schema.Types.ObjectId, ref: "Exam" },
   numOfStudents: Number,
   File: Object,
-  FinalGrade: String,
+  FinalGrade: Number
 });
 const Course = mongoose.model("Course", CourseSchema);
 module.exports = Course;

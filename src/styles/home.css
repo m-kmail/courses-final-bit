@@ -8,7 +8,8 @@
     rgba(255, 255, 255, 0.3) 0px 30px 60px -30px;
 }
 .loginImageLogin{
-padding: 30px;
+padding-top: 1px;
+padding-bottom: 350px;
   background-image:url("https://raw.githubusercontent.com/ezatkh/courses-final-bit/91276f9edca961ead740b73a22833ea841b8224a/src/bg.jpeg");
   background-position: center;
   background-repeat: no-repeat;
@@ -19,6 +20,8 @@ padding: 30px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+padding-top: 1px;
+padding-bottom: 255px;
   }
 
 .button-box {

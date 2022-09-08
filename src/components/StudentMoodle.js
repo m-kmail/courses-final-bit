@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "../styles/studentMoodle.css";
+import Participants from "./Participants";
 class StudentMoodle extends Component {
   constructor() {
     super();
@@ -15,11 +16,23 @@ class StudentMoodle extends Component {
       showModel: { display: "block" },
       CourseDetail: { display: "none" },
       customDisplay: { courses: { display: "block" } },
-      participants: []
+      participants: [],
+      quiez: { display: "block" },
+      backToCourse: { display: "none" },
+      chapters: { display: "block" },
+      allStudents: { display: "none" }
     };
   }
 
   changeShowModel = (e) => {
+    axios
+      .get(
+        `http://localhost:5000/courseStudents/${e.currentTarget.getAttribute(
+          "data"
+        )}`
+      )
+      .then((students) => this.setState({ participants: students.data }));
+
     this.state.courses.map((course) => {
       if (course._id == e.currentTarget.getAttribute("data") && course.File)
         this.setState({ filePath: course.File.path.substring(8) });
@@ -106,10 +119,18 @@ class StudentMoodle extends Component {
   };
 
   loadStudents = () => {
-    axios
-      .get(`http://localhost:5000/courseStudents/${this.state.courseSelected}`)
-      .then((students) => this.setState({ participants: students.data }));
+    console.log(this.state.participants);
+
+    let q = this.state.quiez;
+    q = { display: "none" };
+    let c = this.state.chapters;
+    c = { display: "none" };
+    let all = this.state.allStudents;
+    all = { display: "block" };
+
+    this.setState({ quiez: q, chapters: c, allStudents: all });
   };
+  goBack = () => {};
   render() {
     return (
       <div className="studentMoodleContainer">
@@ -142,11 +163,35 @@ class StudentMoodle extends Component {
               ))}
           </div>
         </div>
+
         <div className="courseDetailContainer" style={this.state.CourseDetail}>
           <div className="extra">
             <button onClick={this.loadStudents}>participants</button>
+            <button style={this.state.backToCourse} onClick={this.goBack}>
+              Go Back
+            </button>
           </div>
-          <div className="fileContainer">
+
+          <div className="allStudents" style={this.state.allStudents}>
+            {console.log(this.state.participants)}
+            {this.state.participants.map((p) => {
+              console.log(p.name);
+              <h2>{p.name}</h2>;
+            })}
+            <p>hiiiiiiiiii</p>
+            {/* {this.state.participants.map((student) => {
+              <div className="singleStudent">
+                <img
+                  className="studentImage"
+                  src={`http://localhost:5000/uploads/${student.img}`}
+                />
+                <h2 className="studentName">{student.name}</h2>
+                <h2 className="studentEmail">{student.email}</h2>
+              </div>;
+            })} */}
+          </div>
+
+          <div className="fileContainer" style={this.state.chapters}>
             <div className="courseChapters">
               <h2 className="titleCourse">CHAPTER 1</h2>
               {this.state.filePath ? (
@@ -172,9 +217,9 @@ class StudentMoodle extends Component {
 
               <div className="pdfFile">No files to display</div>
             </div>
-          </div>{" "}
-          */}
-          <div className="quizField">
+          </div>
+
+          <div className="quizField" style={this.state.quiez}>
             <div className="quizTitle">Exam</div>
             {this.state.examCourse ? (
               <div className="examContent">

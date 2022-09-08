@@ -427,3 +427,7 @@ a {
 .courseCriditin:focus {
   border-color: #ec9a0a;
 }
+.invalidTime, .invalidDeletion{
+  color: red;
+}
+

@@ -22,7 +22,9 @@ class TeacherHome extends Component {
         profileStyle: { display: "none" },
         erroeMessage: { display: "none" },
         floatBox: { display: "none" },
-        emptyInput: { display: "none" }
+        emptyInput: { display: "none" },
+        invalidTime: { display: "none" },
+        invalidDeletion: { display: "none" }
       }
     };
   }
@@ -124,8 +126,14 @@ class TeacherHome extends Component {
     try {
       x = await axios.post("http://localhost:5000/courses", course);
     } catch (err) {
-      alert("this time is already taken");
+      let curr = this.state.customDisplays;
+      curr.invalidTime = { display: "block" };
+      this.setState({ customDisplays: curr });
+      return;
     }
+    let curr = this.state.customDisplays;
+    curr.invalidTime = { display: "none" };
+    this.setState({ customDisplays: curr });
   }
   async logout() {
     await axios.get("http://localhost:5000/logout");
@@ -159,9 +167,19 @@ class TeacherHome extends Component {
     return await axios.get("http://localhost:5000/courses");
   }
 
-  async deleteCourse(id) {
-    return await axios.delete(`http://localhost:5000/course/${id}`);
-  }
+  deleteCourse = async (id, coast) => {
+    let res = await axios.delete(`http://localhost:5000/course/${id}`);
+    let courses = await this.getCourses();
+    if (courses.data.length == this.state.courses.length) {
+      let cur = this.state.customDisplays;
+      cur.invalidDeletion = { display: "grid" };
+      this.setState({ customDisplays: cur });
+    } else {
+      let cur = this.state.customDisplays;
+      cur.invalidDeletion = { display: "none" };
+      this.setState({ customDisplays: cur });
+    }
+  };
   toggleAddOptions = () => {
     let current = this.state.customDisplays;
     current.profileStyle = { display: "none" };
@@ -316,6 +334,14 @@ class TeacherHome extends Component {
             className="contentView"
             style={this.state.customDisplays.contentViewStyle}
           >
+            <h1
+              className="invalidDeletion"
+              style={this.state.customDisplays.invalidDeletion}
+            >
+              Can't Delete This Course Because There's Some Student Already
+              Registered
+            </h1>
+
             <div className="coursesView">
               {this.state.courses.map((t) => (
                 <Course key={t._id} data={t} deleteCourse={this.deleteCourse} />
@@ -331,6 +357,12 @@ class TeacherHome extends Component {
                   style={this.state.customDisplays.emptyInput}
                 >
                   All The Fields Are Requierd
+                </h1>
+                <h1
+                  className="invalidTime"
+                  style={this.state.customDisplays.invalidTime}
+                >
+                  This Time Is Already Taken
                 </h1>
                 <h1 className="newCourseHeader">New courses</h1>
                 <div className="inputsDiv ">

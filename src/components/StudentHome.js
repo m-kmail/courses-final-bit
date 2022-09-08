@@ -300,6 +300,7 @@ class StudentHome extends Component {
     current.joinCourse = { display: "none" };
 
     current.profileStyle = { display: "none" };
+    current.myCourses = { display: "block" };
     this.setState({ customDisplay: current });
   };
   showFloatBox = () => {

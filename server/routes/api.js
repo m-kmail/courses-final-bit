@@ -209,20 +209,38 @@ router.get("/logout", function (req, res) {
 
 router.delete("/course/:courseid", function (req, res) {
   let courseToDel = req.params.courseid;
-  if (session.email == "Teacher") {
-    Course.findOneAndDelete({ _id: courseToDel }).exec(function (
+  let isItOkeyToDelete = "yes";
+  if (session.roll == "Teacher") {
+    Course.findOne({ _id: courseToDel, numOfStudents: 0 }).exec(function (
       err,
       course
-    ) {});
+    ) {
+      if (course != null) {
+        course.delete();
 
-    Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
-      teacher.Courses.map((c, index) => {
-        if (c._id == courseToDel) {
-          teacher.Courses.splice(index, 1);
-          teacher.save();
-        }
-      });
+        Teacher.findOne({ Email: session.email }).exec(function (err, teacher) {
+          teacher.Courses.map((c, index) => {
+            if (c._id == courseToDel) {
+              teacher.Courses.splice(index, 1);
+              teacher.save();
+            }
+          });
+        });
+      }
     });
+    /*
+    Course.forEach((c) => {
+      console.log(c);
+      if (c._id == courseToDel) {
+        if (c.numOfStudents > 0) {
+          res.send({ ok: "no" });
+        }
+        c.remove();
+        c.save();
+        console.log("found it");
+      }
+    });
+    */
   } else {
     Student.findOne({ Email: session.email }).exec(function (err, student) {
       student.Courses.map((c, index) => {
@@ -273,7 +291,9 @@ router.get("/userinfo", function (req, res) {
     } else {
       Teacher.findOne({ Email: email }).exec(function (err, teacher) {
         if (teacher) {
-          let userInfo = { email: session.email };
+          let userInfo = {
+            email: session != undefined ? session.email : undefined
+          };
           userInfo.roll = "Teacher";
           userInfo.name = teacher.Name;
           userInfo.gender = teacher.Gender;

@@ -112,3 +112,7 @@
   background-color: rgba(0, 0, 0, 0.4);
   background-image: url("https://m.media-amazon.com/images/I/61QrCdBXSTL._SL1100_.jpg");
 }
+
+.emptyERR{
+  color: red;
+}
