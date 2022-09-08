@@ -16,7 +16,7 @@ class StudentMoodle extends Component {
       showModel: { display: "block" },
       CourseDetail: { display: "none" },
       customDisplay: { courses: { display: "block" } },
-      QuizDetail: { display: "none" },,
+      QuizDetail: { display: "none" },
       participants: [],
       quiez: { display: "block" },
       backToCourse: { display: "none" },
@@ -60,7 +60,7 @@ class StudentMoodle extends Component {
       {
         showModel: moodleSHow,
         CourseDetail: detailShow,
-        courseSelected: e.currentTarget.getAttribute("data"),
+        courseSelected: e.currentTarget.getAttribute("data")
       },
       function () {
         this.getQuiz();
@@ -92,7 +92,7 @@ class StudentMoodle extends Component {
       else {
         let courses = await this.getCourses();
         this.setState({
-          courses: courses.data,
+          courses: courses.data
         });
       }
     }
@@ -174,26 +174,26 @@ class StudentMoodle extends Component {
                 ))}
             </div>
           </div>
-  
-        <div
+
+          <div
             className="courseDetailContainer"
             style={this.state.CourseDetail}
           >
             <div className="extra">
-            <button onClick={this.loadStudents}>participants</button>
-            <button style={this.state.backToCourse} onClick={this.goBack}>
-              Go Back
-            </button>
-          </div>
+              <button onClick={this.loadStudents}>participants</button>
+              <button style={this.state.backToCourse} onClick={this.goBack}>
+                Go Back
+              </button>
+            </div>
 
-          <div className="allStudents" style={this.state.allStudents}>
-            {console.log(this.state.participants)}
-            {this.state.participants.map((p) => {
-              console.log(p.name);
-              <h2>{p.name}</h2>;
-            })}
-            <p>hiiiiiiiiii</p>
-            {/* {this.state.participants.map((student) => {
+            <div className="allStudents" style={this.state.allStudents}>
+              {console.log(this.state.participants)}
+              {this.state.participants.map((p) => {
+                console.log(p.name);
+                <h2>{p.name}</h2>;
+              })}
+              <p>hiiiiiiiiii</p>
+              {/* {this.state.participants.map((student) => {
               <div className="singleStudent">
                 <img
                   className="studentImage"
@@ -203,9 +203,9 @@ class StudentMoodle extends Component {
                 <h2 className="studentEmail">{student.email}</h2>
               </div>;
             })} */}
-          </div>
+            </div>
 
-          <div className="fileContainer" style={this.state.chapters}>
+            <div className="fileContainer" style={this.state.chapters}>
               <div className="courseChapters">
                 <h2 className="titleCourse">CHAPTER 1</h2>
                 {this.state.filePath ? (
